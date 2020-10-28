@@ -1,4 +1,4 @@
-team_Name,team_ID,team_State,team_division,team_division_ID,team_conference,team_conference_ID
+team_name,team_ID,team_state,team_division,team_division_ID,team_conference,team_conference_ID
 Acadia University,10003220,NS,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
 Adams State University,627,CO,Division 2,2,Rocky Mountain,rmac
 Adelphi University,442,NY,Division 2,2,Northeast 10,ne10
