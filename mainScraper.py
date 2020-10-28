@@ -29,7 +29,7 @@ def getTeamList():
 		teams = soup.find_all('div', attrs = {'class' : 'top-box'}) #each top-box corresponds to a single team
 
 		for team in teams:
-			team_info = team.find_all('a', attrs = {'class' : 'top-box-title'})[0] #gets the a container that contains the team's id # and the team's name
+			team_info = team.find_all('a', attrs = {'class' : 'top-box-title'})[0] #contains the team's id # and the team's name
 
 			team_ID = team_info['href'].split('/')[-1] 
 			team_Name = team_info.text.splitlines()[3]
