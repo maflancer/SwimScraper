@@ -4,7 +4,7 @@ Python scraper for college swimming data.
 
 **In progress**
 
-getTeamList.py - scrapes swimcloud.com/team to get list of all college swimming teams - outputs collegeSwimmingTeams.csv
+getTeamList.py - scrapes all swimcloud.com/team pages to get list of all college swimming teams - outputs collegeSwimmingTeams.csv
 
 mainScraper.py - currently has function getTeams() which takes as an input either a list of teams, a list of divisions, or a list of conferences
                - based on the inputs, returns a data frame with the specfified teams
