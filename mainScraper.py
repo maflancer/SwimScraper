@@ -30,7 +30,7 @@ def getRoster(team, season_ID = -1, year = -1):
 
 #tests
 df = getTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
-print(df.head())s
+print(df.head())
 
 df1 = getTeams(conference_names = ['ACC', 'Ivy'])
 print(df1)
