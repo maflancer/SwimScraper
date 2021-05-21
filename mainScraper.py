@@ -5,6 +5,8 @@ import pandas as pd
 import json
 import time
 
+#test
+
 teams = pd.read_csv('https://raw.githubusercontent.com/maflancer/CollegeSwimmingScraper/main/collegeSwimmingTeams.csv')
 
 #function that takes as an input team names, a division, or a conference and returns the teams that match the input
@@ -37,9 +39,3 @@ print(df1)
 
 df2 = getTeams(division_names = ['Division 1'])
 print(df2.head())
-
-
-
-
-
-
