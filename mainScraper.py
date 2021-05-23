@@ -7,20 +7,7 @@ import time
 
 teams = pd.read_csv('https://raw.githubusercontent.com/maflancer/CollegeSwimmingScraper/main/collegeSwimmingTeams.csv')
 
-#function that takes as an input team names, a division, or a conference and returns the teams that match the input
-#example function call - getTeams(conference = "ACC") - returns a list with all teams in the ACC conference
-def getTeams(team_names = ['NONE'], division_names = ['NONE'], conference_names = ['NONE']):
-	team_df = pd.DataFrame()
-	if(team_names != ['NONE']):
-		team_df = teams[teams['team_name'].isin(team_names)].reset_index(drop = True)
-	elif(division_names != ['NONE']):
-		team_df = teams[teams['team_division'].isin(division_names)].reset_index(drop = True)
-	elif(conference_names != ['NONE']):
-		team_df = teams[teams['team_conference'].isin(conference_names)].reset_index(drop = True)
-	else:
-		team_df = teams
-
-	return team_df
+#HELPER FUNCTIONS -------------------------------------
 
 #changes name from (last, first) to (first last)
 def cleanName(webName):
@@ -65,8 +52,25 @@ def getCity(hometown):
 
 	return city
 
+#SCRAPING FUNCTIONS ------------------------------------
+
+#function that takes as an input team names, a division, or a conference and returns the teams that match the input
+#example function call - getTeams(conference = "ACC") - returns a list with all teams in the ACC conference
+def getTeams(team_names = ['NONE'], division_names = ['NONE'], conference_names = ['NONE']):
+	team_df = pd.DataFrame()
+	if(team_names != ['NONE']):
+		team_df = teams[teams['team_name'].isin(team_names)].reset_index(drop = True)
+	elif(division_names != ['NONE']):
+		team_df = teams[teams['team_division'].isin(division_names)].reset_index(drop = True)
+	elif(conference_names != ['NONE']):
+		team_df = teams[teams['team_conference'].isin(conference_names)].reset_index(drop = True)
+	else:
+		team_df = teams
+
+	return team_df
+
 #function that takes a team and gender, and either a season_ID or year as an input and returns the team's roster from that year
-#example function call - getRoster(team = "University of Pittsburgh", gender = "M") - if no season or year -> returns one dataframe with roster for each season from 2010 - 2021
+#example function call - getRoster(team = "University of Pittsburgh", gender = "M") - if no season or year -> returns roster for current season - season #24
 #                      - getRoster(team = "University of Pittsburgh", gender = "F", year = 2020) - roster for 2020-2021 team corresponds to season #24
 def getRoster(team, gender, season_ID = -1, year = -1):
 	roster = list()
@@ -104,7 +108,7 @@ def getRoster(team, gender, season_ID = -1, year = -1):
 	return roster
 
 
-#tests
+#tests ------------------------------------
 df = getTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
 print(df.head())
 
