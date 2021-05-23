@@ -34,17 +34,53 @@ def cleanName(webName):
 def getSwimmerID(href):
 	return href.split('/')[-1]
 
+#gets corresponding team number for a specified team
+def getTeamNumber(team_name):
+	team_number = -1
+
+	#search for the specified team
+	for index, row in teams.iterrows():
+		if row['team_name'] == team_name:
+			team_number = row['team_ID']
+	return team_number
+
+#gets corresponding season ID for a specified year
+def getSeasonID(year):
+	return year - 1996
+
+#extracts state or country from hometown
+def getState(hometown):
+	home = hometown.split(',')[-1].strip()
+	if(home.isalpha()):
+		return home
+	else:
+		return 'NONE'
+
+#extracts city from hometown
+def getCity(hometown):
+	home = hometown.split(',')
+	home.pop() #removes state or country to isolate the city
+
+	city = ' '.join([c.strip() for c in home])
+
+	return city
+
 #function that takes a team and gender, and either a season_ID or year as an input and returns the team's roster from that year
 #example function call - getRoster(team = "University of Pittsburgh", gender = "M") - if no season or year -> returns one dataframe with roster for each season from 2010 - 2021
 #                      - getRoster(team = "University of Pittsburgh", gender = "F", year = 2020) - roster for 2020-2021 team corresponds to season #24
 def getRoster(team, gender, season_ID = -1, year = -1):
-	team_row = teams[teams['team_name'] == team]
+	roster = list()
 
-	#team_number = (team_row['team_ID'].str.split())[1]
+	team_number = getTeamNumber(team)
 
-	#print(team_number)
+	if(year != -1):
+		season_ID = getSeasonID(year)
 
-	roster_url = 'https://www.swimcloud.com/team/' + str(405) +  '/roster/?page=1&gender=' + gender + '&season_id=' + str(24)
+	#if no season_ID or year is specified, return the roster for the most current season - might change later
+	if(season_ID == -1 and year == -1):
+		season_ID = 24
+
+	roster_url = 'https://www.swimcloud.com/team/' + str(team_number) +  '/roster/?page=1&gender=' + gender + '&season_id=' + str(season_ID)
 
 	url = requests.get(roster_url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', 'Referer' : 'https://google.com/'})
 
@@ -55,24 +91,31 @@ def getRoster(team, gender, season_ID = -1, year = -1):
 	data = soup.find('table', attrs = {'class' : 'c-table-clean c-table-clean--middle table table-hover'}).find_all('tr')[1:] #finds table of player names
 
 	for row in data:
-		print(cleanName(row.find('a').text.strip()))
-		idArray = row.find_all('a') 				 #returns array of length 1 which contains swimmer ID
+		swimmer_name = cleanName(row.find('a').text.strip())
+		idArray = row.find_all('a')  #returns array of length 1 which contains swimmer ID
 		swimmer_id = getSwimmerID(idArray[0]['href'])
 		numbers = row.find_all('td')
+		state = getState(numbers[2].text.strip())
+		city = getCity(numbers[2].text.strip())
 		grade = numbers[3].text.strip()
 
-		print(swimmer_id)
-		print(grade)
+		roster.append({'swimmer_name': swimmer_name, 'swimmer_ID' : swimmer_id, 'grade' : grade, 'hometown_state': state, 'hometown_city' : city})
+
+	return roster
 
 
 #tests
-#df = getTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
-#print(df.head())
+df = getTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
+print(df.head())
 
-#df1 = getTeams(conference_names = ['ACC', 'Ivy'])
-#print(df1)
+df1 = getTeams(conference_names = ['ACC', 'Ivy'])
+print(df1)
 
-#df2 = getTeams(division_names = ['Division 1'])
-#print(df2.head())
+df2 = getTeams(division_names = ['Division 1'])
+print(df2.head())
 
-getRoster(team = "University of Pittsburgh", gender = "M", year = 2020)
+penn_roster = getRoster(team = "University of Pennsylvania", gender = "M")
+pitt_roster = getRoster(team = "University of Pittsburgh", gender = "F", year = 2015)
+
+print(penn_roster)
+print(pitt_roster)
