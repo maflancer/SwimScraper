@@ -69,6 +69,23 @@ def getTeams(team_names = ['NONE'], division_names = ['NONE'], conference_names 
 
 	return team_df
 
+#given a swimmer's ID, return their high school power index -> this is an index used for recruiting
+def getPowerIndex(swimmer_ID):
+	swimmer_url = 'https://swimcloud.com/swimmer/' + str(swimmer_ID)
+
+	url = requests.get(swimmer_url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', 'Referer' : 'https://google.com/'})
+
+	url.encoding = 'utf-8'
+
+	soup = bs(url.text, 'html.parser')
+
+	data_array = soup.find_all('a', {'class' : 'c-list-bar__description'}) #this gets an array of 4 data points for the swimmer -> team, power_index, state rank, yearly rank
+
+	try:
+		return data_array[1].text.strip() #second data point in the array is the swimmer's power index
+	except IndexError:
+		return -1
+
 #function that takes a team and gender, and either a season_ID or year as an input and returns the team's roster from that year
 #example function call - getRoster(team = "University of Pittsburgh", gender = "M") - if no season or year -> returns roster for current season - season #24
 #                      - getRoster(team = "University of Pittsburgh", gender = "F", year = 2020) - roster for 2020-2021 team corresponds to season #24
@@ -97,13 +114,14 @@ def getRoster(team, gender, season_ID = -1, year = -1):
 	for row in data:
 		swimmer_name = cleanName(row.find('a').text.strip())
 		idArray = row.find_all('a')  #returns array of length 1 which contains swimmer ID
-		swimmer_id = getSwimmerID(idArray[0]['href'])
+		swimmer_ID = getSwimmerID(idArray[0]['href'])
 		numbers = row.find_all('td')
 		state = getState(numbers[2].text.strip())
 		city = getCity(numbers[2].text.strip())
 		grade = numbers[3].text.strip()
+		HS_power_index = getPowerIndex(swimmer_ID)
 
-		roster.append({'swimmer_name': swimmer_name, 'swimmer_ID' : swimmer_id, 'grade' : grade, 'hometown_state': state, 'hometown_city' : city})
+		roster.append({'swimmer_name': swimmer_name, 'swimmer_ID' : swimmer_ID, 'grade' : grade, 'hometown_state': state, 'hometown_city' : city, 'HS_power_index' : HS_power_index})
 
 	return roster
 
