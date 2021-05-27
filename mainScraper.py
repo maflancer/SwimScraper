@@ -3,9 +3,18 @@ import csv
 from bs4 import BeautifulSoup as bs
 import pandas as pd
 import json
-import time
+import time as _time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import StaleElementReferenceException
 
 teams = pd.read_csv('https://raw.githubusercontent.com/maflancer/CollegeSwimmingScraper/main/collegeSwimmingTeams.csv')
+events = {'25 Free' : 125, '25 Back' : 225, '25 Breast' : 325, '25 Fly' : 425, '100 Free' : 1100, '200 Free' : 1200, '400 Free' : 1400, '500 Free' : 1500, '800 Free' : 1800, '1000 Free' : 11000, '1500 Free' : 11500, '1650 Free' : 11650, '50 Back' : 250, '100 Back': 2100, '200 Back' : 2200, '50 Breast' : 350, '100 Breast' : 3100, '200 Breast' : 3200, '50 Fly' : 450, '100 Fly' : 4100, '200 Fly' : 4200, '100 IM' : 5100, '200 IM' : 5200, '400 IM' : 5400, '200 Free Relay' : 6200, '400 Free Relay' : 6400, '800 Free Relay' : 6800, '200 Medley Relay' : 7200, '400 Medley Relay' : 7400, '1 M Diving' : 'H1', '3 M Diving' : 'H3', 'Platform Diving' : 'H2'}
 
 #HELPER FUNCTIONS -------------------------------------
 
@@ -125,6 +134,122 @@ def getRoster(team, gender, season_ID = -1, year = -1):
 
 	return roster
 
+#for data from a html table (data), find the indexes where meet name, date, year, and improvement are
+#returns an array [meet_name_index, date_index, imp_index]
+def getIndexes(data):
+	meet_name_index = -1
+	date_index = -1
+	imp_index = -1
+	indexes = []
+
+	i = 0
+	for td in data:
+		if td.has_attr('class') and td['class'][0] == 'hidden-xs':
+			meet_name_index = i
+		elif td.has_attr('class') and td['class'][0] == 'u-text-truncate':
+			date_index = i
+		elif td.has_attr('class') and td['class'][0] == 'u-text-end':
+			imp_index = i
+
+		i = i + 1
+
+	indexes.append(meet_name_index)
+	indexes.append(date_index)
+	indexes.append(imp_index)
+
+	return indexes
+
+#takes as an input a swimmer's ID # and returns a list of each indivudal time for each event they have competed in  -  may change inputs
+def getTimes(swimmer_ID, event_name):
+	#set driver options
+	chrome_options = Options()
+	chrome_options.add_argument("--headless")
+	driver = webdriver.Chrome('./chromedriver.exe', options = chrome_options)
+	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
+
+	time_list = list()
+	event_ID = events.get(event_name)
+
+	swimmer_URL = 'https://www.swimcloud.com/swimmer/' + str(swimmer_ID) + '/'
+	dropdownCheck = True
+	eventCheck = True
+
+	driver.get(swimmer_URL)
+
+	tabs = driver.find_elements_by_css_selector('li.c-tabs__item')
+
+	_time.sleep(1) #makes sure the event tab pops up on website
+
+	for tab in tabs: #finds correct tab on swimmer's profile and clicks on it
+		if(tab.text == 'Event'):
+			tab.click()
+
+	wait = WebDriverWait(driver, 10, ignored_exceptions = ignored_exceptions)
+
+	try:
+		event_dropdown = wait.until(EC.element_to_be_clickable((By.ID, 'byEventDropDownList'))) #waits for the event drop down list to show up
+		event_dropdown.click()
+	except TimeoutException: #if there is no event drop down
+		dropdownCheck = False
+
+	if dropdownCheck:
+
+		swimmer_XPATH = '//a[@href="/swimmer/' + str(swimmer_ID)  + '/times/byevent/?event_id=' +  str(event_ID) + '"]'
+
+		print(swimmer_XPATH) #debug
+
+		try:
+			event = wait.until(EC.presence_of_element_located((By.XPATH, swimmer_XPATH)))
+			event.click()
+		except TimeoutException: #if a swimmer does not have the event listed in the dropdown
+			eventCheck = False
+
+		if eventCheck: #if the event is listed
+
+			_time.sleep(1)
+
+			html = driver.page_source
+
+			soup = bs(html, 'html.parser')
+
+			table = soup.find('table', attrs = {'class' : 'c-table-clean'})
+
+			try:
+				times = table.find_all('tr')[1:]
+			except AttributeError:
+				times = []
+
+			for time in times:
+				data = time.find_all('td')
+
+				indexes = getIndexes(data) #this function finds the correct indexes for the meet name, date, year, and improvement, as they are different for some swimmers
+
+				time = data[0].text.strip()
+
+				if(indexes[0] == -1): #if no meet name was found
+					meet = 'NA'
+				else:
+					meet = data[indexes[0]].text.strip()
+
+				if(indexes[1] == -1): #if no date was found
+					date = 'NA'
+					year = 'NA'
+				else:
+					date = data[indexes[1]].text.strip()
+					year = date.split(',')[-1]
+
+				if(indexes[2] == -1): #if no imp was found
+					imp = 'NA'
+				else:
+					imp = data[indexes[2]].text.strip()
+
+				if(imp == '–'): #this character gets encoded weird in an excel doc so just set to NA
+					imp = 'NA'
+
+				time_list.append({'Swimmer_ID' : swimmer_ID, 'Event': event_name, 'Time' : time, 'Meet' : meet, 'Year' : year, 'Date' : date, 'Imp' : imp})
+
+	return time_list
+
 
 #tests ------------------------------------
 df = getTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
@@ -136,8 +261,12 @@ print(df1)
 df2 = getTeams(division_names = ['Division 1'])
 print(df2.head())
 
-penn_roster = getRoster(team = "University of Pennsylvania", gender = "M")
-pitt_roster = getRoster(team = "University of Pittsburgh", gender = "F", year = 2015)
+#penn_roster = getRoster(team = "University of Pennsylvania", gender = "M")
+#pitt_roster = getRoster(team = "University of Pittsburgh", gender = "F", year = 2015)
+#bc_roster = getRoster(team = "Boston College", gender = "M", season_ID = 22)
 
-print(penn_roster)
-print(pitt_roster)
+#print(penn_roster)
+#print(pitt_roster)
+#print(bc_roster)
+
+print(getTimes(362091, '100 Free'))
