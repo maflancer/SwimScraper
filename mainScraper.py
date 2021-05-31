@@ -14,7 +14,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 
 teams = pd.read_csv('https://raw.githubusercontent.com/maflancer/CollegeSwimmingScraper/main/collegeSwimmingTeams.csv')
-events = {'25 Free' : 125, '25 Back' : 225, '25 Breast' : 325, '25 Fly' : 425, '100 Free' : 1100, '200 Free' : 1200, '400 Free' : 1400, '500 Free' : 1500, '800 Free' : 1800, '1000 Free' : 11000, '1500 Free' : 11500, '1650 Free' : 11650, '50 Back' : 250, '100 Back': 2100, '200 Back' : 2200, '50 Breast' : 350, '100 Breast' : 3100, '200 Breast' : 3200, '50 Fly' : 450, '100 Fly' : 4100, '200 Fly' : 4200, '100 IM' : 5100, '200 IM' : 5200, '400 IM' : 5400, '200 Free Relay' : 6200, '400 Free Relay' : 6400, '800 Free Relay' : 6800, '200 Medley Relay' : 7200, '400 Medley Relay' : 7400, '1 M Diving' : 'H1', '3 M Diving' : 'H3', 'Platform Diving' : 'H2'}
+events = {'25 Free' : 125, '25 Back' : 225, '25 Breast' : 325, '25 Fly' : 425, '50 Free' : 150, '75 Free' : 175, '100 Free' : 1100, '125 Free' : 1125, '200 Free' : 1200, '400 Free' : 1400, '500 Free' : 1500, '800 Free' : 1800, '1000 Free' : 11000, '1500 Free' : 11500, '1650 Free' : 11650, '50 Back' : 250, '100 Back': 2100, '200 Back' : 2200, '50 Breast' : 350, '100 Breast' : 3100, '200 Breast' : 3200, '50 Fly' : 450, '100 Fly' : 4100, '200 Fly' : 4200, '100 IM' : 5100, '200 IM' : 5200, '400 IM' : 5400, '200 Free Relay' : 6200, '400 Free Relay' : 6400, '800 Free Relay' : 6800, '200 Medley Relay' : 7200, '400 Medley Relay' : 7400, '1 M Diving' : 'H1', '3 M Diving' : 'H3', 'Platform Diving' : 'H2'}
 
 #HELPER FUNCTIONS -------------------------------------
 
@@ -159,7 +159,7 @@ def getIndexes(data):
 
 	return indexes
 
-#takes as an input a swimmer's ID # and returns a list of each indivudal time for each event they have competed in  -  may change inputs
+#takes as an input a swimmer's ID # and returns a list of each indivudal time for the specified event
 def getTimes(swimmer_ID, event_name):
 	#set driver options
 	chrome_options = Options()
@@ -196,7 +196,7 @@ def getTimes(swimmer_ID, event_name):
 
 		swimmer_XPATH = '//a[@href="/swimmer/' + str(swimmer_ID)  + '/times/byevent/?event_id=' +  str(event_ID) + '"]'
 
-		print(swimmer_XPATH) #debug
+		#print(swimmer_XPATH) #debug
 
 		try:
 			event = wait.until(EC.presence_of_element_located((By.XPATH, swimmer_XPATH)))
@@ -250,8 +250,48 @@ def getTimes(swimmer_ID, event_name):
 
 	return time_list
 
+def getSwimmerEvents(swimmer_ID):
+	#set driver options
+	chrome_options = Options()
+	chrome_options.add_argument("--headless")
+	driver = webdriver.Chrome('./chromedriver.exe', options = chrome_options)
+	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
 
-#tests ------------------------------------
+	events = []
+	swimmer_URL = 'https://www.swimcloud.com/swimmer/' + str(swimmer_ID) + '/'
+
+	driver.get(swimmer_URL)
+
+	tabs = driver.find_elements_by_css_selector('li.c-tabs__item')
+
+	_time.sleep(1) #makes sure the event tab pops up on website
+
+	for tab in tabs: #finds correct tab on swimmer's profile and clicks on it
+		if(tab.text == 'Event'):
+			tab.click()
+
+	wait = WebDriverWait(driver, 10, ignored_exceptions = ignored_exceptions)
+
+	try:
+		event_dropdown = wait.until(EC.element_to_be_clickable((By.ID, 'byEventDropDownList'))) #waits for the event drop down list to show up
+		event_dropdown.click()
+
+		#find which events the swimmer has participated in
+		html = driver.page_source
+		soup = bs(html, 'html.parser')
+		event_list = soup.find('ul', attrs = {'aria-labelledby' : 'byEventDropDownList'}).find_all('li')
+
+		for event_li in event_list:
+			events.append(event_li.text.strip())
+
+	except TimeoutException: #if there are no events found for the swimmer
+		return []
+
+	return events
+
+
+#getTeams tests ------------------------------------
+
 df = getTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
 print(df.head())
 
@@ -261,12 +301,22 @@ print(df1)
 df2 = getTeams(division_names = ['Division 1'])
 print(df2.head())
 
+#getRoster tests -----------------------------------------------
+
 #penn_roster = getRoster(team = "University of Pennsylvania", gender = "M")
 #pitt_roster = getRoster(team = "University of Pittsburgh", gender = "F", year = 2015)
 #bc_roster = getRoster(team = "Boston College", gender = "M", season_ID = 22)
 
-#print(penn_roster)
+#print(penn_roster[0])
 #print(pitt_roster)
 #print(bc_roster)
 
-print(getTimes(362091, '100 Free'))
+#getSwimmerEvents tests ---------------------------------------------
+
+#get a list of all events that swimmer #362091 (Blaise Vera) has participated in
+event_list = getSwimmerEvents(362091)
+
+#loop through all of his events, and get all of his times in each event
+for event_name in event_list:
+	print(event_name)
+	print(getTimes(362091, event_name)[0])
