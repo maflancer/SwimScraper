@@ -61,6 +61,32 @@ def getCity(hometown):
 
 	return city
 
+
+#for data from a html table (data), find the indexes where meet name, date, year, and improvement are
+#returns an array [meet_name_index, date_index, imp_index]
+def getIndexes(data):
+	meet_name_index = -1
+	date_index = -1
+	imp_index = -1
+	indexes = []
+
+	i = 0
+	for td in data:
+		if td.has_attr('class') and td['class'][0] == 'hidden-xs':
+			meet_name_index = i
+		elif td.has_attr('class') and td['class'][0] == 'u-text-truncate':
+			date_index = i
+		elif td.has_attr('class') and td['class'][0] == 'u-text-end':
+			imp_index = i
+
+		i = i + 1
+
+	indexes.append(meet_name_index)
+	indexes.append(date_index)
+	indexes.append(imp_index)
+
+	return indexes
+
 #SCRAPING FUNCTIONS ------------------------------------
 
 #function that takes as an input team names, a division, or a conference and returns the teams that match the input
@@ -133,31 +159,6 @@ def getRoster(team, gender, season_ID = -1, year = -1):
 		roster.append({'swimmer_name': swimmer_name, 'swimmer_ID' : swimmer_ID, 'grade' : grade, 'hometown_state': state, 'hometown_city' : city, 'HS_power_index' : HS_power_index})
 
 	return roster
-
-#for data from a html table (data), find the indexes where meet name, date, year, and improvement are
-#returns an array [meet_name_index, date_index, imp_index]
-def getIndexes(data):
-	meet_name_index = -1
-	date_index = -1
-	imp_index = -1
-	indexes = []
-
-	i = 0
-	for td in data:
-		if td.has_attr('class') and td['class'][0] == 'hidden-xs':
-			meet_name_index = i
-		elif td.has_attr('class') and td['class'][0] == 'u-text-truncate':
-			date_index = i
-		elif td.has_attr('class') and td['class'][0] == 'u-text-end':
-			imp_index = i
-
-		i = i + 1
-
-	indexes.append(meet_name_index)
-	indexes.append(date_index)
-	indexes.append(imp_index)
-
-	return indexes
 
 #takes as an input a swimmer's ID # and returns a list of each indivudal time for the specified event
 def getTimes(swimmer_ID, event_name):
@@ -250,6 +251,7 @@ def getTimes(swimmer_ID, event_name):
 
 	return time_list
 
+#takes as an input a swimmer's ID and returns a list of all events that they have participated in
 def getSwimmerEvents(swimmer_ID):
 	#set driver options
 	chrome_options = Options()
@@ -289,23 +291,63 @@ def getSwimmerEvents(swimmer_ID):
 
 	return events
 
+#takes as an input a team_name or team_ID and either a season_ID or year ->   getTeamMeetList('University of Pittsburgh', season_ID = 23)
+def getTeamMeetList(team_name = '', team_ID = -1, season_ID = -1, year = -1):
+	meet_list = list()
+
+	if(team_name != ''):
+		team_number = getTeamNumber(team_name)
+	elif(team_ID != -1):
+		team_number = team_ID
+
+	if(year != -1):
+		season_ID = getSeasonID(year)
+
+	#if no season_ID or year is specified, return the roster for the most current season - might change later
+	if(season_ID == -1 and year == -1):
+		season_ID = 24
+
+	team_url = 'https://www.swimcloud.com/team/' + str(team_number) +  '/results/?page=1&name=&meettype=&season=' + str(season_ID)
+
+	url = requests.get(team_url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', 'Referer' : 'https://google.com/'})
+
+	url.encoding = 'utf-8'
+
+	soup = bs(url.text, 'html.parser')
+
+	#finds the list of meets which includes meet name, meet ID#
+	meets = soup.find('section', attrs = {'class' : 'c-list-grid'}).find_all('a', attrs = {'class' : 'c-list-grid__item'})
+
+	for meet in meets:
+		meet_ID = (meet['href']).split('/')[-1] #extracts the meet_ID from the link's href
+
+		meet_name = meet.find('article').find('h3').text.strip()
+
+		meet_date = meet.find('time').text.strip()
+
+		meet_location = (meet.find_all('li')[-1]).text.strip()
+
+		meet_list.append({'meet_ID' : meet_ID, 'meet_name' : meet_name, 'meet_date' : meet_date, 'meet_location' : meet_location})
+
+	return meet_list
+
 
 #getTeams tests ------------------------------------
 
-df = getTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
-print(df.head())
+#df = getTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
+#print(df.head())
 
-df1 = getTeams(conference_names = ['ACC', 'Ivy'])
-print(df1)
+#df1 = getTeams(conference_names = ['ACC', 'Ivy'])
+#print(df1)
 
-df2 = getTeams(division_names = ['Division 1'])
-print(df2.head())
+#df2 = getTeams(division_names = ['Division 1'])
+#print(df2.head())
 
 #getRoster tests -----------------------------------------------
 
-#penn_roster = getRoster(team = "University of Pennsylvania", gender = "M")
-#pitt_roster = getRoster(team = "University of Pittsburgh", gender = "F", year = 2015)
-#bc_roster = getRoster(team = "Boston College", gender = "M", season_ID = 22)
+#penn_roster = getRoster(team = 'University of Pennsylvania', gender = 'M')
+#pitt_roster = getRoster(team = 'University of Pittsburgh', gender = 'F', year = 2015)
+#bc_roster = getRoster(team = 'Boston College', gender = 'M', season_ID = 22)
 
 #print(penn_roster[0])
 #print(pitt_roster)
@@ -314,9 +356,16 @@ print(df2.head())
 #getSwimmerEvents tests ---------------------------------------------
 
 #get a list of all events that swimmer #362091 (Blaise Vera) has participated in
-event_list = getSwimmerEvents(362091)
+#event_list = getSwimmerEvents(362091)
 
 #loop through all of his events, and get all of his times in each event
-for event_name in event_list:
-	print(event_name)
-	print(getTimes(362091, event_name)[0])
+#for event_name in event_list:
+#	print(event_name)
+#	print(getTimes(362091, event_name)[0])
+
+
+#getTeamMeetList tests -----------------------------------------------------
+
+pitt_meet_list = getTeamMeetList(team_name = 'University of Pittsburgh', year = 2019)
+
+print(pitt_meet_list[8])
