@@ -87,6 +87,26 @@ def getIndexes(data):
 
 	return indexes
 
+def getIndexesResults(data):
+	team_index = -1
+	time_index = -1
+	indexes = []
+
+	i = 0
+	for td in data:
+		if(i > 1 and i < 4):
+			if td.has_attr('class') and td['class'][0] == 'u-nowrap':
+				team_index = i
+			elif td.has_attr('class') and td['class'][0] == 'u-text-end':
+				time_index = i
+
+		i = i + 1
+
+	indexes.append(team_index)
+	indexes.append(time_index)
+
+	return indexes
+
 #SCRAPING FUNCTIONS ------------------------------------
 
 #function that takes as an input team names, a division, or a conference and returns the teams that match the input
@@ -161,7 +181,7 @@ def getRoster(team, gender, season_ID = -1, year = -1):
 	return roster
 
 #takes as an input a swimmer's ID # and returns a list of each indivudal time for the specified event
-def getTimes(swimmer_ID, event_name):
+def getSwimmerTimes(swimmer_ID, event_name):
 	#set driver options
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
@@ -331,6 +351,71 @@ def getTeamMeetList(team_name = '', team_ID = -1, season_ID = -1, year = -1):
 
 	return meet_list
 
+#takes as an input a meet's ID # and an event's name and a gender and returns a list of all times for the specified event
+def getMeetResults(meet_ID, event_name, gender):
+	#set driver options
+	chrome_options = Options()
+	chrome_options.add_argument("--headless")
+	driver = webdriver.Chrome('./chromedriver.exe', options = chrome_options)
+	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
+
+	results = list()
+
+	if(gender == 'M'):
+		full_event_name = event_name + ' Men'
+	else:
+		full_event_name = event_name + ' Women'
+
+	results_url = 'https://www.swimcloud.com/results/' + str(meet_ID) + '/event/1/'
+	event_url = 'none'
+
+	driver.get(results_url)
+
+	html = driver.page_source
+
+	soup = bs(html, 'html.parser')
+
+	#events are numbered starting from 1 so we need to find out the correct event number for the specified event name
+	event_list = soup.find('ul', attrs = {'class' : 'c-sticky-filters__list'}).find_all('li')
+
+	for event in event_list:
+		web_event_name = event.find('div', attrs = {'class' : 'o-media__body'}).text.strip()
+		event_href = event.find('a')['href']
+
+		#check if this event in the list is the event that we want results for
+		if(web_event_name == full_event_name):
+			event_url = 'https://www.swimcloud.com' + event_href
+
+	#now we have the correct url for the specified event
+	driver.get(event_url)
+
+	html = driver.page_source
+
+	soup = bs(html, 'html.parser')
+
+	times_list = soup.find('div', attrs = {'class' : 'c-table-clean--responsive'}).find('tbody').find_all('tr')
+
+	for time in times_list:
+		data = time.find_all('td')
+
+		indexes = getIndexesResults(data)
+
+		swimmer_name = data[1].text.strip()
+		swimmer_ID = getSwimmerID(data[1].find('a')['href'])
+		if(indexes[0] == -1):
+			team = 'None'
+			team_ID = 'None'
+		else:
+			team = data[indexes[0]].text.strip()
+			team_ID = getSwimmerID(data[indexes[0]].find('a')['href'])
+		time = data[indexes[1]].text.strip()
+		score = data[indexes[1] + 2].text.strip()
+
+		results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team' : team, 'team_ID' : team_ID, 'time' : time, 'score' : score})
+
+	return results
+
+# TESTS ---------------------------------------------------------------------------------------------------------------------------
 
 #getTeams tests ------------------------------------
 
@@ -349,7 +434,7 @@ def getTeamMeetList(team_name = '', team_ID = -1, season_ID = -1, year = -1):
 #pitt_roster = getRoster(team = 'University of Pittsburgh', gender = 'F', year = 2015)
 #bc_roster = getRoster(team = 'Boston College', gender = 'M', season_ID = 22)
 
-#print(penn_roster[0])
+#print(penn_roster)
 #print(pitt_roster)
 #print(bc_roster)
 
@@ -361,11 +446,18 @@ def getTeamMeetList(team_name = '', team_ID = -1, season_ID = -1, year = -1):
 #loop through all of his events, and get all of his times in each event
 #for event_name in event_list:
 #	print(event_name)
-#	print(getTimes(362091, event_name)[0])
+#	print(getSwimmerTimes(362091, event_name)[0]) - just print out first time to check
 
 
 #getTeamMeetList tests -----------------------------------------------------
 
-pitt_meet_list = getTeamMeetList(team_name = 'University of Pittsburgh', year = 2019)
+#pitt_meet_list = getTeamMeetList(team_name = 'University of Pittsburgh', year = 2019)
 
-print(pitt_meet_list[8])
+#print(pitt_meet_list[8])
+
+#getMeetResults tests -----------------------------------------------------------
+
+r = getMeetResults(189095, '100 Free', 'F')
+
+print(r[0])
+print(r[4])
