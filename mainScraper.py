@@ -26,8 +26,8 @@ def cleanName(webName):
 
 	return first_name + ' ' +  last_name
 
-#extracts swimmer id from href
-def getSwimmerID(href):
+#extracts id from href
+def getID(href):
 	return href.split('/')[-1]
 
 #gets corresponding team number for a specified team
@@ -84,26 +84,6 @@ def getIndexes(data):
 	indexes.append(meet_name_index)
 	indexes.append(date_index)
 	indexes.append(imp_index)
-
-	return indexes
-
-def getIndexesResults(data):
-	team_index = -1
-	time_index = -1
-	indexes = []
-
-	i = 0
-	for td in data:
-		if(i > 1 and i < 4):
-			if td.has_attr('class') and td['class'][0] == 'u-nowrap':
-				team_index = i
-			elif td.has_attr('class') and td['class'][0] == 'u-text-end':
-				time_index = i
-
-		i = i + 1
-
-	indexes.append(team_index)
-	indexes.append(time_index)
 
 	return indexes
 
@@ -169,7 +149,7 @@ def getRoster(team, gender, season_ID = -1, year = -1):
 	for row in data:
 		swimmer_name = cleanName(row.find('a').text.strip())
 		idArray = row.find_all('a')  #returns array of length 1 which contains swimmer ID
-		swimmer_ID = getSwimmerID(idArray[0]['href'])
+		swimmer_ID = getID(idArray[0]['href'])
 		numbers = row.find_all('td')
 		state = getState(numbers[2].text.strip())
 		city = getCity(numbers[2].text.strip())
@@ -396,22 +376,36 @@ def getMeetResults(meet_ID, event_name, gender):
 	times_list = soup.find('div', attrs = {'class' : 'c-table-clean--responsive'}).find('tbody').find_all('tr')
 
 	for time in times_list:
-		data = time.find_all('td')
+		if 'Relay' not in full_event_name:
+			data = time.find_all('td')
 
-		indexes = getIndexesResults(data)
+			swimmer_name = data[1].text.strip()
+			swimmer_ID = getID(data[1].find('a')['href'])
 
-		swimmer_name = data[1].text.strip()
-		swimmer_ID = getSwimmerID(data[1].find('a')['href'])
-		if(indexes[0] == -1):
-			team = 'None'
-			team_ID = 'None'
+			team = data[2].text.strip()
+			team_ID = getID(data[2].find('a')['href'])
+
+			swim_time = data[3].text.strip()
+			score = data[5].text.strip()
+			imp = data[7].text.strip()
+
+			results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team' : team, 'team_ID' : team_ID, 'time' : swim_time, 'score' : score, 'Improvement' : imp})
 		else:
-			team = data[indexes[0]].text.strip()
-			team_ID = getSwimmerID(data[indexes[0]].find('a')['href'])
-		time = data[indexes[1]].text.strip()
-		score = data[indexes[1] + 2].text.strip()
+			team = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a').text.strip()
+			team_ID = getID(time.find('td', attrs = {'class' : 'u-nowrap'}).find('a')['href'])
 
-		results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team' : team, 'team_ID' : team_ID, 'time' : time, 'score' : score})
+			swim_info = time.find_all('td', attrs = {'class' : 'u-text-end'})
+			swim_time = swim_info[0].text.strip()
+			score = swim_info[1].text.strip()
+
+			print(team)
+			print(team_ID)
+			print(swim_time)
+			print(score)
+
+			#THERE are more table rows than just the time rows so we need to skip the other rows where it just has the relay swimmer's names
+
+			results.append({'team_name' : team, 'team_ID' : team_ID, 'time' : swim_time, 'score' : score})
 
 	return results
 
@@ -457,7 +451,7 @@ def getMeetResults(meet_ID, event_name, gender):
 
 #getMeetResults tests -----------------------------------------------------------
 
-r = getMeetResults(189095, '100 Free', 'F')
+r = getMeetResults(189095, '200 Medley Relay', 'F')
 
 print(r[0])
 print(r[4])
