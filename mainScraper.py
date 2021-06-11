@@ -390,22 +390,25 @@ def getMeetResults(meet_ID, event_name, gender):
 			imp = data[7].text.strip()
 
 			results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team' : team, 'team_ID' : team_ID, 'time' : swim_time, 'score' : score, 'Improvement' : imp})
-		else:
-			team = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a').text.strip()
-			team_ID = getID(time.find('td', attrs = {'class' : 'u-nowrap'}).find('a')['href'])
 
-			swim_info = time.find_all('td', attrs = {'class' : 'u-text-end'})
-			swim_time = swim_info[0].text.strip()
-			score = swim_info[1].text.strip()
+		else: #page is in a different format for relay events
+			try:
+				team = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a').text.strip()
+				team_ID = getID(time.find('td', attrs = {'class' : 'u-nowrap'}).find('a')['href'])
 
-			print(team)
-			print(team_ID)
-			print(swim_time)
-			print(score)
+				swim_info = time.find_all('td', attrs = {'class' : 'u-text-end'})
+				swim_time = swim_info[0].text.strip()
+				score = swim_info[1].text.strip()
 
+				results.append({'team_name' : team, 'team_ID' : team_ID, 'time' : swim_time, 'score' : score})
+
+				print(team)
+				print(team_ID)
+				print(swim_time)
+				print(score)
+			except AttributeError:
+				pass
 			#THERE are more table rows than just the time rows so we need to skip the other rows where it just has the relay swimmer's names
-
-			results.append({'team_name' : team, 'team_ID' : team_ID, 'time' : swim_time, 'score' : score})
 
 	return results
 
