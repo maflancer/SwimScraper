@@ -14,7 +14,16 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 
 teams = pd.read_csv('https://raw.githubusercontent.com/maflancer/CollegeSwimmingScraper/main/collegeSwimmingTeams.csv')
+
 events = {'25 Free' : 125, '25 Back' : 225, '25 Breast' : 325, '25 Fly' : 425, '50 Free' : 150, '75 Free' : 175, '100 Free' : 1100, '125 Free' : 1125, '200 Free' : 1200, '400 Free' : 1400, '500 Free' : 1500, '800 Free' : 1800, '1000 Free' : 11000, '1500 Free' : 11500, '1650 Free' : 11650, '50 Back' : 250, '100 Back': 2100, '200 Back' : 2200, '50 Breast' : 350, '100 Breast' : 3100, '200 Breast' : 3200, '50 Fly' : 450, '100 Fly' : 4100, '200 Fly' : 4200, '100 IM' : 5100, '200 IM' : 5200, '400 IM' : 5400, '200 Free Relay' : 6200, '400 Free Relay' : 6400, '800 Free Relay' : 6800, '200 Medley Relay' : 7200, '400 Medley Relay' : 7400, '1 M Diving' : 'H1', '3 M Diving' : 'H3', 'Platform Diving' : 'H2'}
+
+us_states = {
+	'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA', 'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'District of Columbia': 'DC', 'Florida': 'FL', 'Georgia': 'GA', 'Hawaii': 'HI', 'Idaho': 'ID',
+	'Illinois': 'IL', 'Indiana': 'IN', 'Iowa': 'IA', 'Kansas': 'KS', 'Kentucky': 'KY', 'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD', 'Massachusetts': 'MA', 'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS', 'Missouri': 'MO',
+	'Montana': 'MT', 'Nebraska': 'NE', 'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ', 'New Mexico': 'NM', 'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND', 'Ohio': 'OH', 'Oklahoma': 'OK', 'Oregon': 'OR',
+	'Pennsylvania': 'PA', 'Rhode Island': 'RI', 'South Carolina': 'SC', 'South Dakota': 'SD', 'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT', 'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV','Wisconsin': 'WI',
+	'Wyoming': 'WY'
+}
 
 #HELPER FUNCTIONS -------------------------------------
 
@@ -392,7 +401,7 @@ def getMeetResults(meet_ID, event_name, gender):
 			results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team' : team, 'team_ID' : team_ID, 'time' : swim_time, 'score' : score, 'Improvement' : imp})
 
 		else: #page is in a different format for relay events
-			try:
+			try: #skip over the rows with no data
 				team = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a').text.strip()
 				team_ID = getID(time.find('td', attrs = {'class' : 'u-nowrap'}).find('a')['href'])
 
@@ -401,16 +410,58 @@ def getMeetResults(meet_ID, event_name, gender):
 				score = swim_info[1].text.strip()
 
 				results.append({'team_name' : team, 'team_ID' : team_ID, 'time' : swim_time, 'score' : score})
-
-				print(team)
-				print(team_ID)
-				print(swim_time)
-				print(score)
 			except AttributeError:
 				pass
-			#THERE are more table rows than just the time rows so we need to skip the other rows where it just has the relay swimmer's names
-
 	return results
+
+#only from 2016 - current year   -    currently gets top 50 recruits
+#takes as an input a year and gender and optionally a state or state_abbreviation and returns list of the top 50 HS recruits for that year with recruiting score, hometown info, team_info
+def getHSRecruitRankings(year, gender, state = 'none', state_abbreviation = 'none', international = False):
+	recruits = list()
+
+	if(state != 'none'):
+		state_abbreviation = us_states.get(state)
+
+	if(gender != 'M' and gender != 'F'):
+		print('ERROR: need to input either M or F for gender')
+		return
+
+	if(state == 'none' and state_abbreviation == 'none'):
+		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(year) + '/' + str(gender)
+
+	url = requests.get(recruiting_url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', 'Referer' : 'https://google.com/'})
+
+	url.encoding = 'utf-8'
+
+	soup = bs(url.text, 'html.parser')
+
+	recruit_list = (soup.find('div', attrs = {'class' : 'c-table-clean--responsive'}).find_all('tr'))[1:]
+
+	print(len(recruit_list))
+
+	for recruit in recruit_list:
+		swimmer_name = recruit.find('a', attrs = {'class' : 'u-text-semi'}).text.strip()
+		swimmer_ID = getID(recruit.find('a', attrs = {'class' : 'u-text-semi'})['href'])
+
+		hometown_info = recruit.find('td', attrs = {'class' : 'u-color-mute'}).text.strip()
+		state = getState(hometown_info)
+		city = getCity(hometown_info)
+
+		power_index = recruit.find('td', attrs = {'class' : 'u-text-end'}).text.strip()
+
+		try:
+			team_info = recruit.find('a', attrs = {'class' : 'u-inline-block'})
+			team_name = team_info.find('img')['alt'].split(' ')
+			team_name.pop() #removes logo from the end of the team name
+			team = ' '.join([t.strip() for t in team_name])
+			team_ID = getID(team_info['href'])
+		except (TypeError, AttributeError) as e: #if no team is listed for the recruit
+			team = 'None'
+			team_ID = 'None'
+
+		recruits.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_ID, 'hometown_state' : state, 'hometown_city' : city, 'HS_power_index' : power_index})
+
+	return recruits
 
 # TESTS ---------------------------------------------------------------------------------------------------------------------------
 
@@ -454,7 +505,14 @@ def getMeetResults(meet_ID, event_name, gender):
 
 #getMeetResults tests -----------------------------------------------------------
 
-r = getMeetResults(189095, '200 Medley Relay', 'F')
+#r = getMeetResults(136218, '400 Medley Relay', 'F')
 
-print(r[0])
-print(r[4])
+#print(r[0])
+#print(r[3])
+
+#getHSRecruitRankings tests -------------------------------------------------
+
+recruits_2018 = getHSRecruitRankings(2018, 'M')
+
+print(recruits_2018[0])
+print(recruits_2018[23])
