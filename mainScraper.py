@@ -8,6 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
@@ -389,10 +390,10 @@ def getMeetResults(meet_ID, event_name, gender):
 			data = time.find_all('td')
 
 			swimmer_name = data[1].text.strip()
-			swimmer_ID = getID(data[1].find('a')['href'])
+			swimmer_ID = data[1].find('a')['href'].split('/')[-2]
 
 			team = data[2].text.strip()
-			team_ID = getID(data[2].find('a')['href'])
+			team_ID = data[2].find('a')['href'].split('/')[-2]
 
 			swim_time = data[3].text.strip()
 			score = data[5].text.strip()
@@ -403,7 +404,7 @@ def getMeetResults(meet_ID, event_name, gender):
 		else: #page is in a different format for relay events
 			try: #skip over the rows with no data
 				team = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a').text.strip()
-				team_ID = getID(time.find('td', attrs = {'class' : 'u-nowrap'}).find('a')['href'])
+				team_ID = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a')['href'].split('/')[-2]
 
 				swim_info = time.find_all('td', attrs = {'class' : 'u-text-end'})
 				swim_time = swim_info[0].text.strip()
@@ -463,6 +464,78 @@ def getHSRecruitRankings(year, gender, state = 'none', state_abbreviation = 'non
 
 	return recruits
 
+#takes any number of teams as an input and returns the "simulated" results of the inputted event based on times from the specified year
+def getMeetSimulator(teams, gender, event_name, year = -1, event_ID = -1):
+	chrome_options = Options()
+	chrome_options.add_argument("--headless")
+	driver = webdriver.Chrome('./chromedriver.exe', options = chrome_options)
+	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
+
+	times = list()
+
+	if(gender != 'M' and gender != 'F'):
+		print('ERROR: need to input either M or F for gender')
+		return
+
+	if(event_ID == -1):
+		event_ID = events.get(event_name)
+
+	meet_url = 'https://www.swimcloud.com/meetsimulator/?event=' + str(event_ID) + 'Y/&teams=' + ','.join(str(team) for team in teams)
+
+	print(meet_url)
+
+	if(year != -1):
+		#TODO - set year based on input - need to access side menu of the webpage - cant change in URL
+		pass
+	if(gender == 'F'):
+		#TODO - need to nagivate to women times
+		pass
+
+	driver.get(meet_url)
+
+	#make sure all javascript is run on page so times show up
+	_time.sleep(5)
+
+	#select the specified event from the dropdown
+	event_select = Select(driver.find_element_by_id('select_2'))
+	event_select.select_by_visible_text(event_name)
+
+	html = driver.page_source
+
+	soup = bs(html, 'html.parser')
+
+	times_table = soup.find_all('table', attrs = {'class' : 'c-table-clean'})[1]
+
+	times_list = times_table.find('tbody').find_all('tr')
+
+	for time in times_list:
+		if 'Relay' not in event_name:
+			swimmer_info = time.find('div', attrs = {'class' : 'u-text-truncate'}).find('a')
+			swimmer_name = cleanName(swimmer_info.text.strip())
+			swimmer_ID = swimmer_info['href'].split('/')[-2]
+
+			team_info = time.find('td', attrs = {'class' : 'u-text-center'})
+			team_name = team_info.find('img')['alt']
+			team_ID = team_info.find('a')['href'].split('/')[-2]
+
+			swimmer_time = time.find('input')['value']
+			swimmer_points = time.find_all('td', attrs = {'class': 'u-text-end'})[1].text.strip()
+			swimmer_entries = time.find('button').text.strip()
+
+			times.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team_name, 'team_ID' : team_ID, 'time' : swimmer_time, 'points' : swimmer_points, 'entries' : swimmer_entries})
+		else: #different format for relay events
+			team_info = time.find('div', attrs = {'class' : 'u-flex'}).find('a')
+			team = team_info.text.strip()
+			team_ID = team_info['href'].split('/')[-2]
+
+			time_info = time.find_all('td', attrs = {'class' : 'u-text-end'})
+			team_time = time_info[0].text.strip()
+			team_points = time_info[1].text.strip()
+
+			times.append({'team_name' : team, 'team_ID' : team_ID, 'time' : team_time, 'points' : team_points})
+
+	return times
+
 # TESTS ---------------------------------------------------------------------------------------------------------------------------
 
 #getTeams tests ------------------------------------
@@ -505,14 +578,20 @@ def getHSRecruitRankings(year, gender, state = 'none', state_abbreviation = 'non
 
 #getMeetResults tests -----------------------------------------------------------
 
-#r = getMeetResults(136218, '400 Medley Relay', 'F')
+#r = getMeetResults(136218, '100 Free', 'F')
 
 #print(r[0])
 #print(r[3])
 
 #getHSRecruitRankings tests -------------------------------------------------
 
-recruits_2018 = getHSRecruitRankings(2018, 'M')
+#recruits_2018 = getHSRecruitRankings(2018, 'M')
 
-print(recruits_2018[0])
-print(recruits_2018[23])
+#print(recruits_2018[0])
+#print(recruits_2018[23])
+
+#getMeetSimulator tests ---------------------------------------------------
+
+times = getMeetSimulator([405,394], 'M', event_name = '200 Medley Relay')
+for time in times:
+	print(time)
