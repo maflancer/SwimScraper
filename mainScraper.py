@@ -13,6 +13,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver.common.action_chains import ActionChains
 
 teams = pd.read_csv('https://raw.githubusercontent.com/maflancer/CollegeSwimmingScraper/main/collegeSwimmingTeams.csv')
 
@@ -482,19 +483,16 @@ def getMeetSimulator(teams, gender, event_name, year = -1, event_ID = -1):
 
 	meet_url = 'https://www.swimcloud.com/meetsimulator/?event=' + str(event_ID) + 'Y/&teams=' + ','.join(str(team) for team in teams)
 
-	print(meet_url)
-
-	if(year != -1):
-		#TODO - set year based on input - need to access side menu of the webpage - cant change in URL
-		pass
-	if(gender == 'F'):
-		#TODO - need to nagivate to women times
-		pass
-
 	driver.get(meet_url)
 
 	#make sure all javascript is run on page so times show up
 	_time.sleep(5)
+
+	#if we need to change the gender
+	if(gender == 'F'):
+		pass
+	if(year != -1):
+		pass
 
 	#select the specified event from the dropdown
 	event_select = Select(driver.find_element_by_id('select_2'))
@@ -592,6 +590,7 @@ def getMeetSimulator(teams, gender, event_name, year = -1, event_ID = -1):
 
 #getMeetSimulator tests ---------------------------------------------------
 
-times = getMeetSimulator([405,394], 'M', event_name = '200 Medley Relay')
+times = getMeetSimulator([405,394], 'M', event_name = '100 Free')
+
 for time in times:
 	print(time)
