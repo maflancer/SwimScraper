@@ -400,7 +400,7 @@ def getMeetResults(meet_ID, event_name, gender):
 			score = data[5].text.strip()
 			imp = data[7].text.strip()
 
-			results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team' : team, 'team_ID' : team_ID, 'time' : swim_time, 'score' : score, 'Improvement' : imp})
+			results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'time' : swim_time, 'score' : score, 'Improvement' : imp})
 
 		else: #page is in a different format for relay events
 			try: #skip over the rows with no data
@@ -534,6 +534,76 @@ def getMeetSimulator(teams, gender, event_name, year = -1, event_ID = -1):
 
 	return times
 
+def getTrialResults(meet_ID, event_name, gender):
+	#set driver options
+	chrome_options = Options()
+	chrome_options.add_argument("--headless")
+	driver = webdriver.Chrome('./chromedriver.exe', options = chrome_options)
+	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
+
+	results = list()
+
+	if(gender == 'M'):
+		full_event_name = event_name + ' Men'
+	else:
+		full_event_name = event_name + ' Women'
+
+	results_url = 'https://www.swimcloud.com/results/' + str(meet_ID) + '/event/1/'
+	event_url = 'none'
+
+	driver.get(results_url)
+
+	html = driver.page_source
+
+	soup = bs(html, 'html.parser')
+
+	#events are numbered starting from 1 so we need to find out the correct event number for the specified event name
+	event_list = soup.find('ul', attrs = {'class' : 'c-sticky-filters__list'}).find_all('li')
+
+	for event in event_list:
+		web_event_name = event.find('div', attrs = {'class' : 'o-media__body'}).text.strip()
+		event_href = event.find('a')['href']
+
+		#check if this event in the list is the event that we want results for
+		if(web_event_name == full_event_name):
+			event_url = 'https://www.swimcloud.com' + event_href
+
+	#now we have the correct url for the specified event
+	driver.get(event_url)
+
+	html = driver.page_source
+
+	soup = bs(html, 'html.parser')
+
+	event_groups = soup.find_all('div', attrs = {'class' : 'o-table-group'})
+
+	#loop through each event group (A Final, B final, Semi-final, Preliminaries)
+	for group in event_groups:
+		group_label = group.find('caption', attrs = {'class' : 'c-table-clean__caption'}).text.strip()
+
+		times_list = group.find('tbody').find_all('tr')
+
+		for time in times_list:
+			data = time.find_all('td')
+
+			swimmer_name = data[1].find('a').text.strip()
+			swimmer_ID = (data[1].find('a')['href']).split('/')[-2]
+
+			team = data[2].find('span').text.strip()
+			try:
+				team_ID = (data[2].find('a')['href']).split('/')[-2]
+			except TypeError:
+				team_ID = -1
+
+			swim_time = data[3].text.strip()
+			swim_FINA_score = data[5].text.strip()
+			imp = data[6].text.strip()
+
+			results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_type' : group_label, 'time' : swim_time, 'FINA_score' : swim_FINA_score, 'Improvement' : imp})
+
+	return results
+
+
 # TESTS ---------------------------------------------------------------------------------------------------------------------------
 
 #getTeams tests ------------------------------------
@@ -565,7 +635,7 @@ def getMeetSimulator(teams, gender, event_name, year = -1, event_ID = -1):
 #loop through all of his events, and get all of his times in each event
 #for event_name in event_list:
 #	print(event_name)
-#	print(getSwimmerTimes(362091, event_name)[0]) - just print out first time to check
+#	print(getSwimmerTimes(362091, event_name)[0]) #- just print out first time to check
 
 
 #getTeamMeetList tests -----------------------------------------------------
@@ -590,7 +660,22 @@ def getMeetSimulator(teams, gender, event_name, year = -1, event_ID = -1):
 
 #getMeetSimulator tests ---------------------------------------------------
 
-times = getMeetSimulator([405,394], 'M', event_name = '100 Free')
+#times = getMeetSimulator([405,394], 'M', event_name = '100 Free')
 
-for time in times:
-	print(time)
+#for time in times:
+#	print(time)
+
+#test for US olympic swimmer Nathan Adrian----------------
+#event_list = getSwimmerEvents(257824)
+
+#loop through all of his events, and get all of his times in each event
+#for event_name in event_list:
+#	print(event_name)
+#	print(getSwimmerTimes(257824, event_name)[0]) #- just print out first time
+
+#getTrialResults tests----------------------------------------------
+
+#test for USA olympic team trials - wave 1
+#r = getTrialResults(2020, '400 Free', 'M')
+
+#print(r[1])
