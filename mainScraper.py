@@ -37,10 +37,6 @@ def cleanName(webName):
 
 	return first_name + ' ' +  last_name
 
-#extracts id from href
-def getID(href):
-	return href.split('/')[-1]
-
 #gets corresponding team number for a specified team
 def getTeamNumber(team_name):
 	team_number = -1
@@ -160,7 +156,7 @@ def getRoster(team, gender, season_ID = -1, year = -1):
 	for row in data:
 		swimmer_name = cleanName(row.find('a').text.strip())
 		idArray = row.find_all('a')  #returns array of length 1 which contains swimmer ID
-		swimmer_ID = getID(idArray[0]['href'])
+		swimmer_ID = (idArray[0]['href']).split('/')[-1]
 		numbers = row.find_all('td')
 		state = getState(numbers[2].text.strip())
 		city = getCity(numbers[2].text.strip())
@@ -443,7 +439,7 @@ def getHSRecruitRankings(year, gender, state = 'none', state_abbreviation = 'non
 
 	for recruit in recruit_list:
 		swimmer_name = recruit.find('a', attrs = {'class' : 'u-text-semi'}).text.strip()
-		swimmer_ID = getID(recruit.find('a', attrs = {'class' : 'u-text-semi'})['href'])
+		swimmer_ID = (recruit.find('a', attrs = {'class' : 'u-text-semi'})['href']).split('/')[-1]
 
 		hometown_info = recruit.find('td', attrs = {'class' : 'u-color-mute'}).text.strip()
 		state = getState(hometown_info)
@@ -456,7 +452,7 @@ def getHSRecruitRankings(year, gender, state = 'none', state_abbreviation = 'non
 			team_name = team_info.find('img')['alt'].split(' ')
 			team_name.pop() #removes logo from the end of the team name
 			team = ' '.join([t.strip() for t in team_name])
-			team_ID = getID(team_info['href'])
+			team_ID = (team_info['href']).split('/')[-1]
 		except (TypeError, AttributeError) as e: #if no team is listed for the recruit
 			team = 'None'
 			team_ID = 'None'
