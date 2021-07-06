@@ -1,9 +1,3 @@
-import os
-import sys
-
-root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.append(root_folder)
-
 from mainScraper import *
 
 # TESTS ---------------------------------------------------------------------------------------------------------------------------
@@ -80,4 +74,4 @@ from mainScraper import *
 #test for USA olympic team trials - wave 1
 r = getTrialResults(2020, '400 Free', 'M')
 
-print(r[1])
+print(r)
