@@ -30,7 +30,7 @@ us_states = {
 
 #SCRAPING FUNCTIONS ------------------------------------
 
-#function that takes as an input team names, a division, or a conference and returns the teams that match the input
+#function that takes as an input any number of team names, a division, or a conference and returns the teams that match the input
 #example function call - getTeams(conference = "ACC") - returns a list with all teams in the ACC conference
 def getTeams(team_names = ['NONE'], division_names = ['NONE'], conference_names = ['NONE']):
 	team_df = pd.DataFrame()
@@ -58,17 +58,42 @@ def getPowerIndex(swimmer_ID):
 	data_array = soup.find_all('a', {'class' : 'c-list-bar__description'}) #this gets an array of 4 data points for the swimmer -> team, power_index, state rank, yearly rank
 
 	try:
-		return data_array[1].text.strip() #second data point in the array is the swimmer's power index
+		return data_array[1].text.strip() #second element in the array is the swimmer's power index
 	except IndexError:
-		return -1
+		#now we can try with the swimmer's name on a different page->
+		try:
+			swimmer_name = soup.find('h1', {'class' : 'c-title'}).text.strip()
+
+			swimmer_name_url = 'https://swimcloud.com/recruiting/rankings/?name=' + swimmer_name.replace(' ', '+')
+
+			name_url = requests.get(swimmer_name_url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', 'Referer' : 'https://google.com/'})
+
+			name_url.encoding = 'utf-8'
+
+			name_soup = bs(name_url.text, 'html.parser')
+
+			swimmer_list = name_soup.find('tbody').find_all('tr')
+
+			for swimmer in swimmer_list:
+				#check if this is the correct swimmer using swimmer_ID
+				id = swimmer.find_all('td')[1].find('a')['href'].split('/')[-1]
+				if(int(id) == swimmer_ID):
+					return name_soup.find('td', {'class' : 'u-text-end'}).text.strip()
+
+			return -1
+		except IndexError:
+			return -1
 
 #function that takes a team and gender, and either a season_ID or year as an input and returns the team's roster from that year
 #example function call - getRoster(team = "University of Pittsburgh", gender = "M") - if no season or year -> returns roster for current season - season #24
 #                      - getRoster(team = "University of Pittsburgh", gender = "F", year = 2020) - roster for 2020-2021 team corresponds to season #24
-def getRoster(team, gender, season_ID = -1, year = -1):
+def getRoster(team, gender, team_ID = -1, season_ID = -1, year = -1):
 	roster = list()
 
-	team_number = getTeamNumber(team)
+	if(team_ID != -1):
+		team_number = team_ID
+	else:
+		team_number = getTeamNumber(team)
 
 	if(year != -1):
 		season_ID = getSeasonID(year)
@@ -85,7 +110,11 @@ def getRoster(team, gender, season_ID = -1, year = -1):
 
 	soup = bs(url.text, 'html.parser')
 
-	data = soup.find('table', attrs = {'class' : 'c-table-clean c-table-clean--middle table table-hover'}).find_all('tr')[1:] #finds table of player names
+	try:
+		data = soup.find('table', attrs = {'class' : 'c-table-clean c-table-clean--middle table table-hover'}).find_all('tr')[1:] #finds table of player names
+	except AttributeError:
+		print('An invalid team was entered, causing the following error:')
+		raise
 
 	for row in data:
 		swimmer_name = cleanName(row.find('a').text.strip())
@@ -97,7 +126,7 @@ def getRoster(team, gender, season_ID = -1, year = -1):
 		grade = numbers[3].text.strip()
 		HS_power_index = getPowerIndex(swimmer_ID)
 
-		roster.append({'swimmer_name': swimmer_name, 'swimmer_ID' : swimmer_ID, 'grade' : grade, 'hometown_state': state, 'hometown_city' : city, 'HS_power_index' : HS_power_index})
+		roster.append({'swimmer_name': swimmer_name, 'swimmer_ID' : swimmer_ID, 'team' : team, 'team_ID' : team_number, 'grade' : grade, 'hometown_state': state, 'hometown_city' : city, 'HS_power_index' : HS_power_index})
 
 	return roster
 

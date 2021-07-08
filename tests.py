@@ -13,15 +13,27 @@ from mainScraper import *
 #df2 = getTeams(division_names = ['Division 1'])
 #print(df2.head())
 
+#getPowerIndex tests ----------------------------------------
+#invalid swimmer_ID
+#print(getPowerIndex(3834))
+#print(getPowerIndex(433591))
+
+#test two people with the same name -
+#print(getPowerIndex(295739))
+#print(getPowerIndex(501834))
+
 #getRoster tests -----------------------------------------------
 
-#penn_roster = getRoster(team = 'University of Pennsylvania', gender = 'M')
-#pitt_roster = getRoster(team = 'University of Pittsburgh', gender = 'F', year = 2015)
+#check invalid team tame
+#penn_roster = getRoster(team = 'Universit of Pennsylvania', team_ID = 300, gender = 'M')
+
+#pitt_roster = getRoster(team = 'University of Pittsburgh', gender = 'F', year = 2020)
 #bc_roster = getRoster(team = 'Boston College', gender = 'M', season_ID = 22)
 
 #print(penn_roster)
 #print(pitt_roster)
 #print(bc_roster)
+
 
 #getSwimmerEvents tests ---------------------------------------------
 
@@ -72,6 +84,6 @@ from mainScraper import *
 #getTrialResults tests----------------------------------------------
 
 #test for USA olympic team trials - wave 1
-r = getTrialResults(2020, '400 Free', 'M')
+#r = getTrialResults(2020, '400 Free', 'M')
 
-print(r)
+#print(r)
