@@ -91,6 +91,10 @@ def getPowerIndex(swimmer_ID):
 def getRoster(team, gender, team_ID = -1, season_ID = -1, year = -1):
 	roster = list()
 
+	if(gender != 'M' and gender != 'F'):
+		print('ERROR: need to input either M or F for gender')
+		return
+
 	if(team_ID != -1):
 		team_number = team_ID
 	else:
@@ -316,6 +320,10 @@ def getMeetResults(meet_ID, event_name, gender):
 
 	results = list()
 
+	if(gender != 'M' and gender != 'F'):
+		print('ERROR: need to input either M or F for gender')
+		return
+
 	if(gender == 'M'):
 		full_event_name = event_name + ' Men'
 	else:
@@ -520,6 +528,10 @@ def getTrialResults(meet_ID, event_name, gender):
 	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
 
 	results = list()
+
+	if(gender != 'M' and gender != 'F'):
+		print('ERROR: need to input either M or F for gender')
+		return
 
 	if(gender == 'M'):
 		full_event_name = event_name + ' Men'

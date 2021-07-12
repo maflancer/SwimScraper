@@ -76,10 +76,10 @@ from mainScraper import *
 
 #getMeetSimulator tests ---------------------------------------------------
 
-#times = getMeetSimulator([405,394], 'M', event_name = '100 Free')
+times = getMeetSimulator([405,394], 'F', event_name = '100 Free')
 
-#for time in times:
-#	print(time)
+for time in times:
+	print(time)
 
 #test for US olympic swimmer Nathan Adrian----------------
 #event_list = getSwimmerEvents(257824)
