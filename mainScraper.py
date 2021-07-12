@@ -46,6 +46,7 @@ def getTeams(team_names = ['NONE'], division_names = ['NONE'], conference_names 
 	return team_df
 
 #given a swimmer's ID, return their high school power index -> this is an index used for recruiting
+#returns -1 if no swimmer found
 def getPowerIndex(swimmer_ID):
 	swimmer_url = 'https://swimcloud.com/swimmer/' + str(swimmer_ID)
 
@@ -286,7 +287,11 @@ def getTeamMeetList(team_name = '', team_ID = -1, season_ID = -1, year = -1):
 	soup = bs(url.text, 'html.parser')
 
 	#finds the list of meets which includes meet name, meet ID#
-	meets = soup.find('section', attrs = {'class' : 'c-list-grid'}).find_all('a', attrs = {'class' : 'c-list-grid__item'})
+	try:
+		meets = soup.find('section', attrs = {'class' : 'c-list-grid'}).find_all('a', attrs = {'class' : 'c-list-grid__item'})
+	except AttributeError:
+		print('An invalid team was entered, causing the following error:')
+		raise
 
 	for meet in meets:
 		meet_ID = (meet['href']).split('/')[-1] #extracts the meet_ID from the link's href
@@ -326,7 +331,11 @@ def getMeetResults(meet_ID, event_name, gender):
 	soup = bs(html, 'html.parser')
 
 	#events are numbered starting from 1 so we need to find out the correct event number for the specified event name
-	event_list = soup.find('ul', attrs = {'class' : 'c-sticky-filters__list'}).find_all('li')
+	try:
+		event_list = soup.find('ul', attrs = {'class' : 'c-sticky-filters__list'}).find_all('li')
+	except AttributeError:
+		print('An invalid meet_ID was entered, causing the following error:')
+		raise
 
 	for event in event_list:
 		web_event_name = event.find('div', attrs = {'class' : 'o-media__body'}).text.strip()
@@ -375,7 +384,7 @@ def getMeetResults(meet_ID, event_name, gender):
 				pass
 	return results
 
-#only from 2016 - current year   -    currently gets top 50 recruits
+#only from 2016 - current year   -    currently gets top 200 recruits
 #takes as an input a year and gender and optionally a state or state_abbreviation and returns list of the top 50 HS recruits for that year with recruiting score, hometown info, team_info
 def getHSRecruitRankings(year, gender, state = 'none', state_abbreviation = 'none', international = False):
 	recruits = list()
@@ -387,40 +396,50 @@ def getHSRecruitRankings(year, gender, state = 'none', state_abbreviation = 'non
 		print('ERROR: need to input either M or F for gender')
 		return
 
-	if(state == 'none' and state_abbreviation == 'none'):
-		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(year) + '/' + str(gender)
+	#if only international recruits are wanted
+	if(international == True):
+		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(year) + '/' + str(gender) + '/2/'
+	#if recruits from a certain state are wanted
+	elif(state_abbreviation != 'none'):
+		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(year) + '/' + str(gender) + '/1/' + state_abbreviation + '/'
+	elif(state != 'none'):
+		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(year) + '/' + str(gender) + '/1/'  + us_states.get(state) + '/'
+	#if rankings are wanted for US and international
+	else:
+		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(year) + '/' + str(gender) + '/'
 
-	url = requests.get(recruiting_url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', 'Referer' : 'https://google.com/'})
+	for page in range(1, 5):
+		page_url = recruiting_url + '?page=' + str(page)
 
-	url.encoding = 'utf-8'
+		url = requests.get(page_url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', 'Referer' : 'https://google.com/'})
 
-	soup = bs(url.text, 'html.parser')
+		url.encoding = 'utf-8'
 
-	recruit_list = (soup.find('div', attrs = {'class' : 'c-table-clean--responsive'}).find_all('tr'))[1:]
+		soup = bs(url.text, 'html.parser')
 
-	print(len(recruit_list))
+		recruit_list = (soup.find('div', attrs = {'class' : 'c-table-clean--responsive'}).find_all('tr'))[1:]
 
-	for recruit in recruit_list:
-		swimmer_name = recruit.find('a', attrs = {'class' : 'u-text-semi'}).text.strip()
-		swimmer_ID = (recruit.find('a', attrs = {'class' : 'u-text-semi'})['href']).split('/')[-1]
+		for recruit in recruit_list:
+			swimmer_name = recruit.find('a', attrs = {'class' : 'u-text-semi'}).text.strip()
+			swimmer_ID = (recruit.find('a', attrs = {'class' : 'u-text-semi'})['href']).split('/')[-1]
 
-		hometown_info = recruit.find('td', attrs = {'class' : 'u-color-mute'}).text.strip()
-		state = getState(hometown_info)
-		city = getCity(hometown_info)
+			hometown_info = recruit.find('td', attrs = {'class' : 'u-color-mute'}).text.strip()
+			state = getState(hometown_info)
+			city = getCity(hometown_info)
 
-		power_index = recruit.find('td', attrs = {'class' : 'u-text-end'}).text.strip()
+			power_index = recruit.find('td', attrs = {'class' : 'u-text-end'}).text.strip()
 
-		try:
-			team_info = recruit.find('a', attrs = {'class' : 'u-inline-block'})
-			team_name = team_info.find('img')['alt'].split(' ')
-			team_name.pop() #removes logo from the end of the team name
-			team = ' '.join([t.strip() for t in team_name])
-			team_ID = (team_info['href']).split('/')[-1]
-		except (TypeError, AttributeError) as e: #if no team is listed for the recruit
-			team = 'None'
-			team_ID = 'None'
+			try:
+				team_info = recruit.find('a', attrs = {'class' : 'u-inline-block'})
+				team_name = team_info.find('img')['alt'].split(' ')
+				team_name.pop() #removes logo from the end of the team name
+				team = ' '.join([t.strip() for t in team_name])
+				team_ID = (team_info['href']).split('/')[-1]
+			except (TypeError, AttributeError) as e: #if no team is listed for the recruit
+				team = 'None'
+				team_ID = 'None'
 
-		recruits.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_ID, 'hometown_state' : state, 'hometown_city' : city, 'HS_power_index' : power_index})
+			recruits.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_ID, 'hometown_state' : state, 'hometown_city' : city, 'HS_power_index' : power_index})
 
 	return recruits
 

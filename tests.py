@@ -37,6 +37,9 @@ from mainScraper import *
 
 #getSwimmerEvents tests ---------------------------------------------
 
+#check invalid swimmer
+#print(getSwimmerEvents(1815112121))
+
 #get a list of all events that swimmer #362091 (Blaise Vera) has participated in
 #event_list = getSwimmerEvents(362091)
 
@@ -45,6 +48,8 @@ from mainScraper import *
 #	print(event_name)
 #	print(getSwimmerTimes(362091, event_name)[0]) #- just print out first time to check
 
+#check invalid swimemrTimes
+#print(getSwimmerTimes(1815112121, '100 Free'))
 
 #getTeamMeetList tests -----------------------------------------------------
 
@@ -54,6 +59,9 @@ from mainScraper import *
 
 #getMeetResults tests -----------------------------------------------------------
 
+#check invalid meet_ID
+#i = getMeetResults(1111111111, '100 Free', 'F')
+
 #r = getMeetResults(136218, '100 Free', 'F')
 
 #print(r[0])
@@ -61,10 +69,10 @@ from mainScraper import *
 
 #getHSRecruitRankings tests -------------------------------------------------
 
-#recruits_2018 = getHSRecruitRankings(2018, 'M')
+#recruits_2018 = getHSRecruitRankings(2018, 'M', state = 'Hawaii')
 
 #print(recruits_2018[0])
-#print(recruits_2018[23])
+#print(recruits_2018[49])
 
 #getMeetSimulator tests ---------------------------------------------------
 
