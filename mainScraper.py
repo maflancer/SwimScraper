@@ -60,8 +60,8 @@ def getPowerIndex(swimmer_ID):
 
 	try:
 		return data_array[1].text.strip() #second element in the array is the swimmer's power index
-	except IndexError:
-		#now we can try with the swimmer's name on a different page->
+
+	except IndexError: #there will be an indexError if no power index is found on the swimmer's page -> now, check an alternate page that may have the power index
 		try:
 			swimmer_name = soup.find('h1', {'class' : 'c-title'}).text.strip()
 
@@ -79,10 +79,11 @@ def getPowerIndex(swimmer_ID):
 				#check if this is the correct swimmer using swimmer_ID
 				id = swimmer.find_all('td')[1].find('a')['href'].split('/')[-1]
 				if(int(id) == swimmer_ID):
+					#a power index was found for the specified swimmer_ID!
 					return name_soup.find('td', {'class' : 'u-text-end'}).text.strip()
 
-			return -1
-		except IndexError:
+			return -1 #if no swimmer is found with the correct swimmer ID #, return -1
+		except IndexError: #if 0 swimmers show up on the page
 			return -1
 
 #function that takes a team and gender, and either a season_ID or year as an input and returns the team's roster from that year
@@ -136,7 +137,9 @@ def getRoster(team, gender, team_ID = -1, season_ID = -1, year = -1):
 	return roster
 
 #takes as an input a swimmer's ID # and returns a list of each indivudal time for the specified event
-def getSwimmerTimes(swimmer_ID, event_name):
+def getSwimmerTimes(swimmer_ID, event_name, event_ID = -1):
+	#used chromedriver to interact with the swimcloud website and click on different dropdown menus
+
 	#set driver options
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
@@ -144,7 +147,10 @@ def getSwimmerTimes(swimmer_ID, event_name):
 	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
 
 	time_list = list()
-	event_ID = events.get(event_name)
+	if(event_ID == -1):
+		event_ID = events.get(event_name)
+	if(event_name == ''):
+		event_name = list(events.keys())[list(events.values()).index(event_ID)]
 
 	swimmer_URL = 'https://www.swimcloud.com/swimmer/' + str(swimmer_ID) + '/'
 	dropdownCheck = True
@@ -188,41 +194,48 @@ def getSwimmerTimes(swimmer_ID, event_name):
 
 			soup = bs(html, 'html.parser')
 
-			table = soup.find('table', attrs = {'class' : 'c-table-clean'})
+			tables = soup.find_all('table', attrs = {'class' : 'c-table-clean'})
+			i = 0
 
-			try:
-				times = table.find_all('tr')[1:]
-			except AttributeError:
-				times = []
+			#three different tables for the three pool types (LCM (long course meters), SCY (short course yards), SCM (long course meters))
+			for table in tables:
+				pool_type = table.find('caption').text.strip()
 
-			for time in times:
-				data = time.find_all('td')
+				try:
+					times = tables[i].find_all('tr')[1:]
+				except AttributeError:
+					times = []
 
-				indexes = getIndexes(data) #this function finds the correct indexes for the meet name, date, year, and improvement, as they are different for some swimmers
+				for time in times:
+					data = time.find_all('td')
 
-				time = data[0].text.strip()
+					indexes = getIndexes(data) #this function finds the correct indexes for the meet name, date, year, and improvement, as they are different for some swimmers
 
-				if(indexes[0] == -1): #if no meet name was found
-					meet = 'NA'
-				else:
-					meet = data[indexes[0]].text.strip()
+					time = data[0].text.strip()
 
-				if(indexes[1] == -1): #if no date was found
-					date = 'NA'
-					year = 'NA'
-				else:
-					date = data[indexes[1]].text.strip()
-					year = date.split(',')[-1]
+					if(indexes[0] == -1): #if no meet name was found
+						meet = 'NA'
+					else:
+						meet = data[indexes[0]].text.strip()
 
-				if(indexes[2] == -1): #if no imp was found
-					imp = 'NA'
-				else:
-					imp = data[indexes[2]].text.strip()
+					if(indexes[1] == -1): #if no date was found
+						date = 'NA'
+						year = 'NA'
+					else:
+						date = data[indexes[1]].text.strip()
+						year = date.split(',')[-1]
 
-				if(imp == '–'): #this character gets encoded weird in an excel doc so just set to NA
-					imp = 'NA'
+					if(indexes[2] == -1): #if no imp was found
+						imp = 'NA'
+					else:
+						imp = data[indexes[2]].text.strip()
 
-				time_list.append({'Swimmer_ID' : swimmer_ID, 'Event': event_name, 'Time' : time, 'Meet' : meet, 'Year' : year, 'Date' : date, 'Imp' : imp})
+					if(imp == '–'): #this character gets encoded weird in an excel doc so just set to NA
+						imp = 'NA'
+
+					time_list.append({'Swimmer_ID' : swimmer_ID, 'pool_type' : pool_type, 'Event': event_name, 'event_ID' : event_ID, 'Time' : time, 'Meet' : meet, 'Year' : year, 'Date' : date, 'Imp' : imp})
+
+				i += 1
 
 	return time_list
 
