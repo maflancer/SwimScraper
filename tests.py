@@ -57,12 +57,15 @@ from mainScraper import *
 
 #print(pitt_meet_list[8])
 
-#getMeetResults tests -----------------------------------------------------------
+#USA_meet_list = getTeamMeetList(team_name = '', team_ID = 10008158, season_ID = 23)
+#print(USA_meet_list)
+
+#getCollegeMeetResults tests -----------------------------------------------------------
 
 #check invalid meet_ID
-#i = getMeetResults(1111111111, '100 Free', 'F')
+#i = getCollegeMeetResults(1111111111, '100 Free', 'F')
 
-#r = getMeetResults(136218, '100 Free', 'F')
+#r = getCollegeMeetResults(190690, '100 Free', 'F')
 
 #print(r[0])
 #print(r[3])
@@ -91,9 +94,15 @@ from mainScraper import *
 
 #print(getSwimmerTimes(257824, '', 150))
 
-#getTrialResults tests----------------------------------------------
+#getProMeetResults tests----------------------------------------------
 
 #test for USA olympic team trials - wave 1
-#r = getTrialResults(2020, '400 Free', 'M')
+#r = getProMeetResults(2020, '400 Free', 'M')
 
 #print(r)
+
+#olympic_200_Free_men_results = getProMeetResults(106117, event_name = '200 Free', gender = 'M')
+#print(olympic_200_Free_men_results)
+
+#olympic_400_medley_relay_women_results = getProMeetResults(106117, event_name = '400 Medley Relay', gender = 'F')
+#print(olympic_400_medley_relay_women_results)

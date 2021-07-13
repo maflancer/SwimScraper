@@ -132,7 +132,7 @@ def getRoster(team, gender, team_ID = -1, season_ID = -1, year = -1):
 		grade = numbers[3].text.strip()
 		HS_power_index = getPowerIndex(swimmer_ID)
 
-		roster.append({'swimmer_name': swimmer_name, 'swimmer_ID' : swimmer_ID, 'team' : team, 'team_ID' : team_number, 'grade' : grade, 'hometown_state': state, 'hometown_city' : city, 'HS_power_index' : HS_power_index})
+		roster.append({'swimmer_name': swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_number, 'grade' : grade, 'hometown_state': state, 'hometown_city' : city, 'HS_power_index' : HS_power_index})
 
 	return roster
 
@@ -150,7 +150,8 @@ def getSwimmerTimes(swimmer_ID, event_name, event_ID = -1):
 	if(event_ID == -1):
 		event_ID = events.get(event_name)
 	if(event_name == ''):
-		event_name = list(events.keys())[list(events.values()).index(event_ID)]
+		event_name = getEventName(event_ID)
+		#event_name = list(events.keys())[list(events.values()).index(event_ID)]
 
 	swimmer_URL = 'https://www.swimcloud.com/swimmer/' + str(swimmer_ID) + '/'
 	dropdownCheck = True
@@ -233,7 +234,7 @@ def getSwimmerTimes(swimmer_ID, event_name, event_ID = -1):
 					if(imp == '–'): #this character gets encoded weird in an excel doc so just set to NA
 						imp = 'NA'
 
-					time_list.append({'Swimmer_ID' : swimmer_ID, 'pool_type' : pool_type, 'Event': event_name, 'event_ID' : event_ID, 'Time' : time, 'Meet' : meet, 'Year' : year, 'Date' : date, 'Imp' : imp})
+					time_list.append({'swimmer_ID' : swimmer_ID, 'pool_type' : pool_type, 'event': event_name, 'event_ID' : event_ID, 'time' : time, 'meet_name' : meet, 'year' : year, 'date' : date, 'imp' : imp})
 
 				i += 1
 
@@ -288,14 +289,14 @@ def getTeamMeetList(team_name = '', team_ID = -1, season_ID = -1, year = -1):
 	elif(team_ID != -1):
 		team_number = team_ID
 
-	if(year != -1):
-		season_ID = getSeasonID(year)
+	if(season_ID != -1):
+		year = getYear(season_ID)
 
 	#if no season_ID or year is specified, return the roster for the most current season - might change later
 	if(season_ID == -1 and year == -1):
-		season_ID = 24
+		year = 2021
 
-	team_url = 'https://www.swimcloud.com/team/' + str(team_number) +  '/results/?page=1&name=&meettype=&season=' + str(season_ID)
+	team_url = 'https://www.swimcloud.com/team/' + str(team_number) +  '/results/?page=1&name=&meettype=&year=' + str(year)
 
 	url = requests.get(team_url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', 'Referer' : 'https://google.com/'})
 
@@ -319,12 +320,12 @@ def getTeamMeetList(team_name = '', team_ID = -1, season_ID = -1, year = -1):
 
 		meet_location = (meet.find_all('li')[-1]).text.strip()
 
-		meet_list.append({'meet_ID' : meet_ID, 'meet_name' : meet_name, 'meet_date' : meet_date, 'meet_location' : meet_location})
+		meet_list.append({'team_ID': team_number, 'meet_ID' : meet_ID, 'meet_name' : meet_name, 'meet_date' : meet_date, 'meet_location' : meet_location})
 
 	return meet_list
 
 #takes as an input a meet's ID # and an event's name and a gender and returns a list of all times for the specified event
-def getMeetResults(meet_ID, event_name, gender):
+def getCollegeMeetResults(meet_ID, event_name, gender, event_ID = -1):
 	#set driver options
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
@@ -336,6 +337,9 @@ def getMeetResults(meet_ID, event_name, gender):
 	if(gender != 'M' and gender != 'F'):
 		print('ERROR: need to input either M or F for gender')
 		return
+
+	if(event_ID != -1):
+		event_name = getEventName(event_ID)
 
 	if(gender == 'M'):
 		full_event_name = event_name + ' Men'
@@ -373,36 +377,42 @@ def getMeetResults(meet_ID, event_name, gender):
 
 	soup = bs(html, 'html.parser')
 
-	times_list = soup.find('div', attrs = {'class' : 'c-table-clean--responsive'}).find('tbody').find_all('tr')
+	event_groups = soup.find_all('div', attrs = {'class' : 'o-table-group'})
 
-	for time in times_list:
-		if 'Relay' not in full_event_name:
-			data = time.find_all('td')
+	#loop through each event group (A Final, B final, Semi-final, Preliminaries)
+	for group in event_groups:
+		group_label = group.find('caption', attrs = {'class' : 'c-table-clean__caption'}).text.strip()
 
-			swimmer_name = data[1].text.strip()
-			swimmer_ID = data[1].find('a')['href'].split('/')[-2]
+		times_list = soup.find('div', attrs = {'class' : 'c-table-clean--responsive'}).find('tbody').find_all('tr')
 
-			team = data[2].text.strip()
-			team_ID = data[2].find('a')['href'].split('/')[-2]
+		for time in times_list:
+			if 'Relay' not in full_event_name:
+				data = time.find_all('td')
 
-			swim_time = data[3].text.strip()
-			score = data[5].text.strip()
-			imp = data[7].text.strip()
+				swimmer_name = data[1].text.strip()
+				swimmer_ID = data[1].find('a')['href'].split('/')[-2]
 
-			results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'time' : swim_time, 'score' : score, 'Improvement' : imp})
+				team = data[2].text.strip()
+				team_ID = data[2].find('a')['href'].split('/')[-2]
 
-		else: #page is in a different format for relay events
-			try: #skip over the rows with no data
-				team = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a').text.strip()
-				team_ID = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a')['href'].split('/')[-2]
+				swim_time = data[3].text.strip()
+				score = data[5].text.strip()
+				imp = data[7].text.strip()
 
-				swim_info = time.find_all('td', attrs = {'class' : 'u-text-end'})
-				swim_time = swim_info[0].text.strip()
-				score = swim_info[1].text.strip()
+				results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_type' : group_label, 'time' : swim_time, 'score' : score, 'Improvement' : imp})
 
-				results.append({'team_name' : team, 'team_ID' : team_ID, 'time' : swim_time, 'score' : score})
-			except AttributeError:
-				pass
+			else: #page is in a different format for relay events
+				try: #skip over the rows with no data
+					team = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a').text.strip()
+					team_ID = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a')['href'].split('/')[-2]
+
+					swim_info = time.find_all('td', attrs = {'class' : 'u-text-end'})
+					swim_time = swim_info[0].text.strip()
+					score = swim_info[1].text.strip()
+
+					results.append({'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_type' : group_label, 'time' : swim_time, 'score' : score})
+				except AttributeError:
+					pass
 	return results
 
 #only from 2016 - current year   -    currently gets top 200 recruits
@@ -533,7 +543,7 @@ def getMeetSimulator(teams, gender, event_name, year = -1, event_ID = -1):
 
 	return times
 
-def getTrialResults(meet_ID, event_name, gender):
+def getProMeetResults(meet_ID, event_name, gender, event_ID = -1):
 	#set driver options
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
@@ -545,6 +555,9 @@ def getTrialResults(meet_ID, event_name, gender):
 	if(gender != 'M' and gender != 'F'):
 		print('ERROR: need to input either M or F for gender')
 		return
+
+	if(event_ID != -1):
+		event_name = getEventName(event_ID)
 
 	if(gender == 'M'):
 		full_event_name = event_name + ' Men'
@@ -561,7 +574,11 @@ def getTrialResults(meet_ID, event_name, gender):
 	soup = bs(html, 'html.parser')
 
 	#events are numbered starting from 1 so we need to find out the correct event number for the specified event name
-	event_list = soup.find('ul', attrs = {'class' : 'c-sticky-filters__list'}).find_all('li')
+	try:
+		event_list = soup.find('ul', attrs = {'class' : 'c-sticky-filters__list'}).find_all('li')
+	except AttributeError:
+		print('An invalid meet_ID was entered, causing the following error:')
+		raise
 
 	for event in event_list:
 		web_event_name = event.find('div', attrs = {'class' : 'o-media__body'}).text.strip()
@@ -587,21 +604,34 @@ def getTrialResults(meet_ID, event_name, gender):
 		times_list = group.find('tbody').find_all('tr')
 
 		for time in times_list:
-			data = time.find_all('td')
+			if 'Relay' not in full_event_name:
+				data = time.find_all('td')
 
-			swimmer_name = data[1].find('a').text.strip()
-			swimmer_ID = (data[1].find('a')['href']).split('/')[-2]
+				swimmer_name = data[1].find('a').text.strip()
+				swimmer_ID = (data[1].find('a')['href']).split('/')[-2]
 
-			team = data[2].find('span').text.strip()
-			try:
-				team_ID = (data[2].find('a')['href']).split('/')[-2]
-			except TypeError:
-				team_ID = -1
+				team = data[2].find('span').text.strip()
+				try:
+					team_ID = (data[2].find('a')['href']).split('/')[-2]
+				except TypeError:
+					team_ID = -1
 
-			swim_time = data[3].text.strip()
-			swim_FINA_score = data[5].text.strip()
-			imp = data[6].text.strip()
+				swim_time = data[3].text.strip()
+				swim_FINA_score = data[5].text.strip()
+				imp = data[6].text.strip()
 
-			results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_type' : group_label, 'time' : swim_time, 'FINA_score' : swim_FINA_score, 'Improvement' : imp})
+				results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_type' : group_label, 'time' : swim_time, 'FINA_score' : swim_FINA_score, 'Improvement' : imp})
+			else: #relay events are different format
+				try:
+					team = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a').text.strip()
+					team_ID = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a')['href'].split('/')[-2]
+
+					swim_info = time.find_all('td', attrs = {'class' : 'u-text-end'})
+					swim_time = swim_info[0].text.strip()
+					FINA_score = swim_info[1].text.strip()
+
+					results.append({'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_type' : group_label.split('\n')[0], 'time' : swim_time, 'FINA_score' : FINA_score})
+				except AttributeError:
+					pass
 
 	return results
