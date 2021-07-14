@@ -16,6 +16,7 @@ from mainScraper import *
 #getPowerIndex tests ----------------------------------------
 #invalid swimmer_ID
 #print(getPowerIndex(3834))
+
 #print(getPowerIndex(433591))
 
 #test two people with the same name -
@@ -54,7 +55,6 @@ from mainScraper import *
 #getTeamMeetList tests -----------------------------------------------------
 
 #pitt_meet_list = getTeamMeetList(team_name = 'University of Pittsburgh', year = 2019)
-
 #print(pitt_meet_list[8])
 
 #USA_meet_list = getTeamMeetList(team_name = '', team_ID = 10008158, season_ID = 23)
@@ -106,3 +106,19 @@ from mainScraper import *
 
 #olympic_400_medley_relay_women_results = getProMeetResults(106117, event_name = '400 Medley Relay', gender = 'F')
 #print(olympic_400_medley_relay_women_results)
+
+
+#getMeetEventList tests ----------------------------------------------------
+
+#invalid meet
+#print(getMeetEventList(-1))
+
+#2012 olympic games:
+#olympics_event_list_2012 = getMeetEventList(196380)
+#check getProMeetResults with event_href input from event_list
+#print(getProMeetResults(196380, event_name = '', gender = 'M', event_href = olympics_event_list_2012[0]['event_href']))
+
+
+#college test - pitt vs UVA - 2018
+#print(getMeetEventList(132606))
+#print(getCollegeMeetResults(132606, event_name = '', gender = 'F', event_ID = 7200))

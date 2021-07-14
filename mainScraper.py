@@ -18,7 +18,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 teams = pd.read_csv('https://raw.githubusercontent.com/maflancer/CollegeSwimmingScraper/main/collegeSwimmingTeams.csv')
 
-events = {'25 Free' : 125, '25 Back' : 225, '25 Breast' : 325, '25 Fly' : 425, '50 Free' : 150, '75 Free' : 175, '100 Free' : 1100, '125 Free' : 1125, '200 Free' : 1200, '400 Free' : 1400, '500 Free' : 1500, '800 Free' : 1800, '1000 Free' : 11000, '1500 Free' : 11500, '1650 Free' : 11650, '50 Back' : 250, '100 Back': 2100, '200 Back' : 2200, '50 Breast' : 350, '100 Breast' : 3100, '200 Breast' : 3200, '50 Fly' : 450, '100 Fly' : 4100, '200 Fly' : 4200, '100 IM' : 5100, '200 IM' : 5200, '400 IM' : 5400, '200 Free Relay' : 6200, '400 Free Relay' : 6400, '800 Free Relay' : 6800, '200 Medley Relay' : 7200, '400 Medley Relay' : 7400, '1 M Diving' : 'H1', '3 M Diving' : 'H3', 'Platform Diving' : 'H2'}
+events = {'25 Free' : 125, '25 Back' : 225, '25 Breast' : 325, '25 Fly' : 425, '50 Free' : 150, '75 Free' : 175, '100 Free' : 1100, '125 Free' : 1125, '200 Free' : 1200, '400 Free' : 1400, '500 Free' : 1500, '800 Free' : 1800, '1000 Free' : 11000, '1500 Free' : 11500, '1650 Free' : 11650, '50 Back' : 250, '100 Back': 2100, '200 Back' : 2200, '50 Breast' : 350, '100 Breast' : 3100, '200 Breast' : 3200, '50 Fly' : 450, '100 Fly' : 4100, '200 Fly' : 4200, '100 IM' : 5100, '200 IM' : 5200, '400 IM' : 5400, '200 Free Relay' : 6200, '400 Free Relay' : 6400, '800 Free Relay' : 6800, '200 Medley Relay' : 7200, '400 Medley Relay' : 7400, '1 M Diving' : 'H1', '3 M Diving' : 'H3', '7M Diving' : 'H75', 'Platform Diving' : 'H2'}
 
 us_states = {
 	'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA', 'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'District of Columbia': 'DC', 'Florida': 'FL', 'Georgia': 'GA', 'Hawaii': 'HI', 'Idaho': 'ID',
@@ -324,8 +324,34 @@ def getTeamMeetList(team_name = '', team_ID = -1, season_ID = -1, year = -1):
 
 	return meet_list
 
+#takes as an input a meet's ID# and returns a list of all events from the specified meet
+def getMeetEventList(meet_ID):
+	events = list()
+
+	meet_url = 'https://swimcloud.com/results/' + str(meet_ID)
+
+	url = requests.get(meet_url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', 'Referer' : 'https://google.com/'})
+
+	url.encoding = 'utf-8'
+
+	soup = bs(url.text, 'html.parser')
+
+	try:
+		event_list = soup.find('ul', attrs = {'class' : 'c-sticky-filters__list'}).find_all('li')
+	except AttributeError:
+		print('An invalid meet_ID was entered, causing the following error:')
+		raise
+
+	for event in event_list:
+		event_name = event.find('div', attrs = {'class' : 'o-media__body'}).text.strip()
+		event_href = event.find('a')['href']
+
+		events.append({'event_name' : event_name, 'event_href' : event_href})
+
+	return events
+
 #takes as an input a meet's ID # and an event's name and a gender and returns a list of all times for the specified event
-def getCollegeMeetResults(meet_ID, event_name, gender, event_ID = -1):
+def getCollegeMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href = 'None'):
 	#set driver options
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
@@ -341,41 +367,49 @@ def getCollegeMeetResults(meet_ID, event_name, gender, event_ID = -1):
 	if(event_ID != -1):
 		event_name = getEventName(event_ID)
 
-	if(gender == 'M'):
-		full_event_name = event_name + ' Men'
+	if('Women' not in event_name and 'Men' not in event_name): #if men or women are not already in the event name
+		if(gender == 'M'):
+			full_event_name = event_name + ' Men'
+		else:
+			full_event_name = event_name + ' Women'
+
+	if(event_href =='None'):
+		results_url = 'https://www.swimcloud.com/results/' + str(meet_ID) + '/event/1/'
+		event_url = 'none'
+
+		driver.get(results_url)
+
+		html = driver.page_source
+
+		soup = bs(html, 'html.parser')
+
+		#events are numbered starting from 1 so we need to find out the correct event number for the specified event name
+		try:
+			event_list = soup.find('ul', attrs = {'class' : 'c-sticky-filters__list'}).find_all('li')
+		except AttributeError:
+			print('An invalid meet_ID was entered, causing the following error:')
+			raise
+
+		for event in event_list:
+			web_event_name = event.find('div', attrs = {'class' : 'o-media__body'}).text.strip()
+			event_href = event.find('a')['href']
+
+			#check if this event in the list is the event that we want results for
+			if(web_event_name == full_event_name):
+				event_url = 'https://www.swimcloud.com' + event_href
 	else:
-		full_event_name = event_name + ' Women'
+		event_url = 'https://www.swimcloud.com' + event_href
 
-	results_url = 'https://www.swimcloud.com/results/' + str(meet_ID) + '/event/1/'
-	event_url = 'none'
-
-	driver.get(results_url)
-
-	html = driver.page_source
-
-	soup = bs(html, 'html.parser')
-
-	#events are numbered starting from 1 so we need to find out the correct event number for the specified event name
-	try:
-		event_list = soup.find('ul', attrs = {'class' : 'c-sticky-filters__list'}).find_all('li')
-	except AttributeError:
-		print('An invalid meet_ID was entered, causing the following error:')
-		raise
-
-	for event in event_list:
-		web_event_name = event.find('div', attrs = {'class' : 'o-media__body'}).text.strip()
-		event_href = event.find('a')['href']
-
-		#check if this event in the list is the event that we want results for
-		if(web_event_name == full_event_name):
-			event_url = 'https://www.swimcloud.com' + event_href
-
-	#now we have the correct url for the specified event
+	#now we have the correct page for the specified event
 	driver.get(event_url)
 
 	html = driver.page_source
 
 	soup = bs(html, 'html.parser')
+
+	if(event_name == ''):
+		event_name = soup.find('li', attrs = {'class' : 'active'}).find('a').text.strip()
+		event_ID = events.get(event_name)
 
 	event_groups = soup.find_all('div', attrs = {'class' : 'o-table-group'})
 
@@ -399,7 +433,7 @@ def getCollegeMeetResults(meet_ID, event_name, gender, event_ID = -1):
 				score = data[5].text.strip()
 				imp = data[7].text.strip()
 
-				results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_type' : group_label, 'time' : swim_time, 'score' : score, 'Improvement' : imp})
+				results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label, 'time' : swim_time, 'score' : score, 'Improvement' : imp})
 
 			else: #page is in a different format for relay events
 				try: #skip over the rows with no data
@@ -410,7 +444,7 @@ def getCollegeMeetResults(meet_ID, event_name, gender, event_ID = -1):
 					swim_time = swim_info[0].text.strip()
 					score = swim_info[1].text.strip()
 
-					results.append({'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_type' : group_label, 'time' : swim_time, 'score' : score})
+					results.append({'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label.split('\n')[0], 'time' : swim_time, 'score' : score})
 				except AttributeError:
 					pass
 	return results
@@ -543,7 +577,7 @@ def getMeetSimulator(teams, gender, event_name, year = -1, event_ID = -1):
 
 	return times
 
-def getProMeetResults(meet_ID, event_name, gender, event_ID = -1):
+def getProMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href = 'None'):
 	#set driver options
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
@@ -559,41 +593,49 @@ def getProMeetResults(meet_ID, event_name, gender, event_ID = -1):
 	if(event_ID != -1):
 		event_name = getEventName(event_ID)
 
-	if(gender == 'M'):
-		full_event_name = event_name + ' Men'
+	if('Women' not in event_name and 'Men' not in event_name):
+		if(gender == 'M'):
+			full_event_name = event_name + ' Men'
+		else:
+			full_event_name = event_name + ' Women'
+
+	if(event_href == 'None'):
+		results_url = 'https://www.swimcloud.com/results/' + str(meet_ID) + '/event/1/'
+		event_url = 'none'
+
+		driver.get(results_url)
+
+		html = driver.page_source
+
+		soup = bs(html, 'html.parser')
+
+		#events are numbered starting from 1 so we need to find out the correct event number for the specified event name
+		try:
+			event_list = soup.find('ul', attrs = {'class' : 'c-sticky-filters__list'}).find_all('li')
+		except AttributeError:
+			print('An invalid meet_ID was entered, causing the following error:')
+			raise
+
+		for event in event_list:
+			web_event_name = event.find('div', attrs = {'class' : 'o-media__body'}).text.strip()
+			event_href = event.find('a')['href']
+
+			#check if this event in the list is the event that we want results for
+			if(web_event_name == full_event_name):
+				event_url = 'https://www.swimcloud.com' + event_href
 	else:
-		full_event_name = event_name + ' Women'
+		event_url = 'https://www.swimcloud.com' + event_href
 
-	results_url = 'https://www.swimcloud.com/results/' + str(meet_ID) + '/event/1/'
-	event_url = 'none'
-
-	driver.get(results_url)
-
-	html = driver.page_source
-
-	soup = bs(html, 'html.parser')
-
-	#events are numbered starting from 1 so we need to find out the correct event number for the specified event name
-	try:
-		event_list = soup.find('ul', attrs = {'class' : 'c-sticky-filters__list'}).find_all('li')
-	except AttributeError:
-		print('An invalid meet_ID was entered, causing the following error:')
-		raise
-
-	for event in event_list:
-		web_event_name = event.find('div', attrs = {'class' : 'o-media__body'}).text.strip()
-		event_href = event.find('a')['href']
-
-		#check if this event in the list is the event that we want results for
-		if(web_event_name == full_event_name):
-			event_url = 'https://www.swimcloud.com' + event_href
-
-	#now we have the correct url for the specified event
+	#now we have the correct page for the specified event
 	driver.get(event_url)
 
 	html = driver.page_source
 
 	soup = bs(html, 'html.parser')
+
+	if(event_name == ''):
+		event_name = soup.find('li', attrs = {'class' : 'active'}).find('a').text.strip()
+		event_ID = events.get(event_name)
 
 	event_groups = soup.find_all('div', attrs = {'class' : 'o-table-group'})
 
@@ -620,7 +662,7 @@ def getProMeetResults(meet_ID, event_name, gender, event_ID = -1):
 				swim_FINA_score = data[5].text.strip()
 				imp = data[6].text.strip()
 
-				results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_type' : group_label, 'time' : swim_time, 'FINA_score' : swim_FINA_score, 'Improvement' : imp})
+				results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label, 'time' : swim_time, 'FINA_score' : swim_FINA_score, 'Improvement' : imp})
 			else: #relay events are different format
 				try:
 					team = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a').text.strip()
@@ -630,7 +672,7 @@ def getProMeetResults(meet_ID, event_name, gender, event_ID = -1):
 					swim_time = swim_info[0].text.strip()
 					FINA_score = swim_info[1].text.strip()
 
-					results.append({'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_type' : group_label.split('\n')[0], 'time' : swim_time, 'FINA_score' : FINA_score})
+					results.append({'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label.split('\n')[0], 'time' : swim_time, 'FINA_score' : FINA_score})
 				except AttributeError:
 					pass
 
