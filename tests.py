@@ -35,6 +35,15 @@ from mainScraper import *
 #print(pitt_roster)
 #print(bc_roster)
 
+#test on a country's team
+
+#japan_roster = getRoster(team = 'Japan', team_ID = 10008082, gender = 'M', year = 2020)
+
+#print(japan_roster)
+
+#print(getSwimmerTimes(japan_roster[0]['swimmer_ID'], '50 Individual'))
+#print(getSwimmerTimes(japan_roster[1]['swimmer_ID'], '50 Back'))
+
 
 #getSwimmerEvents tests ---------------------------------------------
 
@@ -122,3 +131,7 @@ from mainScraper import *
 #college test - pitt vs UVA - 2018
 #print(getMeetEventList(132606))
 #print(getCollegeMeetResults(132606, event_name = '', gender = 'F', event_ID = 7200))
+
+
+#check on swimmer Jeff Rouse who competed for USA in 1992 and 1996 olympics
+#print(getSwimmerTimes(1447896, '100 Back'))

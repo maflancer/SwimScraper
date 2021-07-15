@@ -18,7 +18,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 teams = pd.read_csv('https://raw.githubusercontent.com/maflancer/CollegeSwimmingScraper/main/collegeSwimmingTeams.csv')
 
-events = {'25 Free' : 125, '25 Back' : 225, '25 Breast' : 325, '25 Fly' : 425, '50 Free' : 150, '75 Free' : 175, '100 Free' : 1100, '125 Free' : 1125, '200 Free' : 1200, '400 Free' : 1400, '500 Free' : 1500, '800 Free' : 1800, '1000 Free' : 11000, '1500 Free' : 11500, '1650 Free' : 11650, '50 Back' : 250, '100 Back': 2100, '200 Back' : 2200, '50 Breast' : 350, '100 Breast' : 3100, '200 Breast' : 3200, '50 Fly' : 450, '100 Fly' : 4100, '200 Fly' : 4200, '100 IM' : 5100, '200 IM' : 5200, '400 IM' : 5400, '200 Free Relay' : 6200, '400 Free Relay' : 6400, '800 Free Relay' : 6800, '200 Medley Relay' : 7200, '400 Medley Relay' : 7400, '1 M Diving' : 'H1', '3 M Diving' : 'H3', '7M Diving' : 'H75', 'Platform Diving' : 'H2'}
+events = {'25 Free' : 125, '25 Back' : 225, '25 Breast' : 325, '25 Fly' : 425, '50 Free' : 150, '75 Free' : 175, '100 Free' : 1100, '125 Free' : 1125, '200 Free' : 1200, '400 Free' : 1400, '500 Free' : 1500, '800 Free' : 1800, '1000 Free' : 11000, '1500 Free' : 11500, '1650 Free' : 11650, '50 Back' : 250, '100 Back': 2100, '200 Back' : 2200, '50 Breast' : 350, '100 Breast' : 3100, '200 Breast' : 3200, '50 Fly' : 450, '100 Fly' : 4100, '200 Fly' : 4200, '100 IM' : 5100, '200 IM' : 5200, '400 IM' : 5400, '200 Free Relay' : 6200, '400 Free Relay' : 6400, '800 Free Relay' : 6800, '200 Medley Relay' : 7200, '400 Medley Relay' : 7400, '1 M Diving' : 'H1', '3 M Diving' : 'H3', '7M Diving' : 'H75', 'Platform Diving' : 'H2', '50 Individual' : 'H50', '100 Individual' : 'H100', '200 Individual' : 'H200'}
 
 us_states = {
 	'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA', 'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'District of Columbia': 'DC', 'Florida': 'FL', 'Georgia': 'GA', 'Hawaii': 'HI', 'Idaho': 'ID',
@@ -89,7 +89,7 @@ def getPowerIndex(swimmer_ID):
 #function that takes a team and gender, and either a season_ID or year as an input and returns the team's roster from that year
 #example function call - getRoster(team = "University of Pittsburgh", gender = "M") - if no season or year -> returns roster for current season - season #24
 #                      - getRoster(team = "University of Pittsburgh", gender = "F", year = 2020) - roster for 2020-2021 team corresponds to season #24
-def getRoster(team, gender, team_ID = -1, season_ID = -1, year = -1):
+def getRoster(team, gender, team_ID = -1, season_ID = -1, year = -1, pro = False):
 	roster = list()
 
 	if(gender != 'M' and gender != 'F'):
@@ -129,7 +129,10 @@ def getRoster(team, gender, team_ID = -1, season_ID = -1, year = -1):
 		numbers = row.find_all('td')
 		state = getState(numbers[2].text.strip())
 		city = getCity(numbers[2].text.strip())
-		grade = numbers[3].text.strip()
+		if(pro == False):
+			grade = numbers[3].text.strip()
+		else:
+			grade = 'None'
 		HS_power_index = getPowerIndex(swimmer_ID)
 
 		roster.append({'swimmer_name': swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_number, 'grade' : grade, 'hometown_state': state, 'hometown_city' : city, 'HS_power_index' : HS_power_index})
@@ -238,6 +241,7 @@ def getSwimmerTimes(swimmer_ID, event_name, event_ID = -1):
 
 				i += 1
 
+	driver.close()
 	return time_list
 
 #takes as an input a swimmer's ID and returns a list of all events that they have participated in
@@ -278,6 +282,7 @@ def getSwimmerEvents(swimmer_ID):
 	except TimeoutException: #if there are no events found for the swimmer
 		return []
 
+	driver.close()
 	return events
 
 #takes as an input a team_name or team_ID and either a season_ID or year ->   getTeamMeetList('University of Pittsburgh', season_ID = 23)
@@ -447,6 +452,8 @@ def getCollegeMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href
 					results.append({'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label.split('\n')[0], 'time' : swim_time, 'score' : score})
 				except AttributeError:
 					pass
+
+	driver.close()
 	return results
 
 #only from 2016 - current year   -    currently gets top 200 recruits
@@ -575,6 +582,7 @@ def getMeetSimulator(teams, gender, event_name, year = -1, event_ID = -1):
 
 			times.append({'team_name' : team, 'team_ID' : team_ID, 'time' : team_time, 'points' : team_points})
 
+	driver.close()
 	return times
 
 def getProMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href = 'None'):
@@ -675,5 +683,5 @@ def getProMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href = '
 					results.append({'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label.split('\n')[0], 'time' : swim_time, 'FINA_score' : FINA_score})
 				except AttributeError:
 					pass
-
+	driver.close()
 	return results
