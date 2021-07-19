@@ -135,3 +135,10 @@ from mainScraper import *
 
 #check on swimmer Jeff Rouse who competed for USA in 1992 and 1996 olympics
 #print(getSwimmerTimes(1447896, '100 Back'))
+
+
+#getTeamRankingsList tests ----------------------------------------
+
+#rankings_2015 = getTeamRankingsList('M', 19)
+
+#print(rankings_2015)

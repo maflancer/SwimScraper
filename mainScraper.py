@@ -685,3 +685,44 @@ def getProMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href = '
 					pass
 	driver.close()
 	return results
+
+#function that takes a gender and season_ID as an input and returns a list of top 50 countries from that year
+def getTeamRankingsList(gender, season_ID, year = -1):
+	#set driver options
+	chrome_options = Options()
+	chrome_options.add_argument("--headless")
+	driver = webdriver.Chrome('./chromedriver.exe', options = chrome_options)
+	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
+
+	teams = list()
+
+	if(gender != 'M' and gender != 'F'):
+		print('ERROR: need to input either M or F for gender')
+		return
+
+	if(year != -1):
+		season_ID = getSeasonID(year)
+
+	page_url = 'https://swimcloud.com/team/rankings/?eventCourse=L?gender=' + gender + '&page=1&region&seasonId=' + str(season_ID)
+
+	driver.get(page_url)
+
+	_time.sleep(3)
+
+	html = driver.page_source
+
+	soup = bs(html, 'html.parser')
+
+	teams_list = soup.find('table', attrs = {'class' : 'c-table-clean'}).find('tbody').find_all('tr')
+
+	for team in teams_list:
+		data = team.find_all('td')
+
+		team =  data[1].find('strong').text.strip()
+		team_ID = data[1].find('a')['href'].split('/')[-1]
+
+		swimcloud_points = data[2].find('a').text.strip()
+
+		teams.append({'team_name' : team, 'team_ID' : team_ID, 'swimcloud_points' : swimcloud_points})
+
+	return teams
