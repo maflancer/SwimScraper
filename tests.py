@@ -4,8 +4,8 @@ from mainScraper import *
 
 #getTeams tests ------------------------------------
 
-#df = getTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
-#print(df.head())
+df = getTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
+print(df)
 
 #df1 = getTeams(conference_names = ['ACC', 'Ivy'])
 #print(df1)

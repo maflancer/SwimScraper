@@ -43,7 +43,7 @@ def getTeams(team_names = ['NONE'], division_names = ['NONE'], conference_names 
 	else:
 		team_df = teams
 
-	return team_df
+	return team_df.to_dict('records')
 
 #given a swimmer's ID, return their high school power index -> this is an index used for recruiting
 #returns -1 if no swimmer found
