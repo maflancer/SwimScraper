@@ -1,22 +1,57 @@
 # CollegeSwimmingScraper
 
-Python scraper for college swimming data. - all data is from Swimcloud.com
+Python scraper for college and professional swimming data -  all data from Swimcloud.com
 
-**In progress**
+## Functions
 
-getTeamList.py - scrapes all swimcloud.com/team pages to get list of all college swimming teams - outputs collegeSwimmingTeams.csv
+**Getting Team Lists**
 
-mainScraper.py - 
-* **getTeams(team_names, division_names, conference_names)** takes as an input either a list of teams, a list of divisions, or a list of conferences -> based on the inputs, returns a data frame with the specfified teams.
-* **getRoster(team, gender, season_ID, year)** takes as an input a team's name, a gender (M or F), and either a season_ID or year -> returns a list of the team's roster for specified season -> includes swimmer_name, swimmer_ID, grade, and hometown information.
-* **getPowerIndex(swimmer_ID)** takes as an input a swimmer's ID # and returns their high school power index which is an index used for recruiting - the scale is from 1-100 with 1 being the best power index and 100 being the worst.
-* **getSwimmerTimes(swimmer_ID,  event_name)** takes as an input a swimmer's ID # and an event name and returns a list of all of the swimmer's times in the specified event.
-* **getSwimmerEvents(swimmer_ID)** takes as an input a swimmer's ID # and returns a list of all of the event names that the swimmer has participated in.
-* **getTeamMeetList(team_name, team_ID, season_ID, year)** takes as an input either a team's name or ID # and returns a list of all the meets the team has competed in for the specififed season or year.
-* **getMeetEventList(meet_ID)** takes as an input a meet_ID and returns a list of which events took place at the specified meet
-* **getCollegeMeetResults(meet_ID, event_name, gender)** used for college meets - takes as an input a meet id# and an event name and gender and returns a list of all times for the specified event.
-* **getProMeetResults(meet_ID, event_name, gender)** used for professional meets - takes as an input a meet id# and an event name and gender and returns a list of all times for the specified event. This function is specifically set up to scrape the US olympic team trials meets
-* **getHSRecruitRankings(year, gender, state, state_abbreviation, international)** takes as an input a year and gender and optionally a state or state_abbreviation and returns the top 50 HS recruits from the specified year
-* **getMeetSimulator(teams, gender, event_name, year, event_ID)** takes as an input any number of team ID #s, a gender and event_name and optionally a year and event_ID and returns a list of top times in the simulated event
+* **getCollegeTeams(team_names, conference_names, division_names)** -> returns list of teams where each team has a team_name, team_ID, team_state, team_division, team_division_ID, team_conference, team_conference_ID
+  * **Select one of the three inputs:**
+  * team_names - ```team_list = getTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])```
+  * conference_names - ```ACC_teams = getTeams(division_names = ['ACC'])```
+  * division_names - ```d1_teams = getTeams(conference_names = ['Division 1'])```
+* **getTeamRankingsList(gender, season_ID, year)** -> returns list of top 50 countries where each team has a team_name, team_ID, and swimcloud_points (score given by swimcloud.com based on team's fastest times)
+  * **Select a gender and either a season_ID (e.g., 24 for the 2020-21 season, 19 for the 2015-16 season) or year**
+  * season_ID - ```male_rankings_2015 = getTeamRankingsList('M', season_ID = 19)```
+  * year - ```female_rankings_2019 = getTeamRankingsList('F', year = 2019)```
 
-collegeSwimmingTeams.csv - team_name, team_ID (unique ID used on swimcloud), team_state (location), team_division (e.g., Division 1, Division 2), team_division_ID (unique division ID), team_conference (e.g., ACC, Ivy), team_conference_ID (unique confernce ID)
+**Getting Roster Lists**
+
+* **getRoster(team, gender, team_ID, season_ID, year, pro)** -> returns list of swimmers where each swimmer has a swimmer_name, swimmer_ID, team_name, team_ID, grade, hometown_state, hometown_city, HS_power_index (a score given to high school students for recruiting - scale is from 1.00 (best) to 100.00)
+  * **Select a gender, a team name or team_ID, a season_ID or year, and set pro = True for non-College teams**
+  * team - ```pitt_F_roster_2020 = getRoster(team = 'University of Pittsburgh', gender = 'F', year = 2020)```
+  * team_ID - ```boston_college_M_roster_2018 = getRoster(team = '', team_ID = 228, gender = 'M', season_ID = 22)```
+  * pro - ```japan_M_roster_2020 = getRoster(team = 'Japan', team_ID = 10008082, gender = 'M', year = 2020, pro = True)```
+* **getHSRecruitRankings(class_year, gender, state, state_abbreviation, international)** -> returns list of the top 200 High School recruits from the specified class where each swimmer has a swimmer_name, swimmer_ID, team_name, team_ID, hometown_state, hometown_city, HS_power_index
+  * **Select a year, gender, a state or state_abbreviation, and set international = True for international HS students**
+  * ```male_recruits_2018 = getHSRecruitRankings(2018, 'M')```
+  * state - ```female_recruits_2020_Hawaii = getHSRecruitRankings(2020, 'F', state = 'Hawaii')```
+  * state_abbreviation - ```female_recruits_2020_Hawaii = getHSRecruitRankings(2020, 'F', state_abbreviation = 'HI')```
+
+**Getting Swimmer Data**
+
+* **getPowerIndex(swimmer_ID)** -> returns a swimmer's HS recruiting power index
+  * ```swimmer_433591_power_index = getPowerIndex(433591)```
+* **getSwimmerEvents(swimmer_ID)** -> returns a list of all events that the specified swimmer has participated in
+  * ```swimmer_362091_event_list = getSwimmerEvents(362091)``` 
+* **getSwimmerTimes(swimmer_ID,  event_name, event_ID)** -> returns a list of all of the swimmer's times in the specified event where each time has a swimmer_ID, pool_type, event, event_ID, time, meet_name, year, date, improvement (improvement from last time)
+  * event_name - ```swimmer_257824_50free_times = getSwimmerTimes(257824, '50 Free')```
+  * event_ID - ```swimmer_257824_50free_times = getSwimmerTimes(257824, '', event_ID = 150)```
+
+**Getting Meet Data**
+
+* **getTeamMeetList(team_name, team_ID, season_ID, year)** -> returns a list of all the meets the team has competed in for the specififed season or year where each meet has a team_ID, meet_ID, meet_name, meet_date, meet_location
+  * ```pitt_2019_meet_list = getTeamMeetList(team_name = 'University of Pittsburgh', year = 2019)```
+  * ```USA_2019_meet_list = getTeamMeetList(team_name = '', team_ID = 10008158, season_ID = 23)```
+* **getMeetEventList(meet_ID)** -> returns a list of which events took place at the specified meet where each event has an event_name, event_ID and an event_href which can be used as an input in the following functions that get meet results
+  * ```olympics_2012_event_list = getMeetEventList(196380)``` 
+* **getCollegeMeetResults(meet_ID, event_name, gender, event_ID, event_href)** -> returns a list of all times for the specified event where each time has a swimmer_name, swimmer_ID, team_name, team_ID, event_name, event_ID, event_type (prelims, finals,...), time, score, and improvement
+  * event_name - ```pitt_army_100free_results = getCollegeMeetResults(190690,'100 Free', 'F')```
+  * event_ID - ```pitt_army_100free_results = getCollegeMeetResults(190690, '', 'F', event_ID = 1100)```
+  * event_href - ```pitt_army_100free_results = getCollegeMeetResults(190690, '', 'F', event_href = '/results/190690/event/17/')```
+* **getProMeetResults(meet_ID, event_name, gender, event_ID, event_href)** -> returns a list of all times for the specified event where each time has a swimmer_name, swimmer_ID, team_name, team_ID, event_name, event_ID, event_type (prelims, finals,...), time, FINA_score, and improvement
+  * ```olympics2016_200free_male_times = getProMeetResults(106117, event_name = '200 Free', gender = 'M')```
+  * ```olympics2016_400medleyrelay_women_times = getProMeetResults(106117, event_name = '', gender = 'F', event_ID = 7400)```
+  * ```olympics2012_50free_women_times = getProMeetResults(196380, event_name = '', gender = 'F', event_href = '/results/196380/event/1/')```
+
