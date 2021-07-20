@@ -4,14 +4,14 @@ from mainScraper import *
 
 #getTeams tests ------------------------------------
 
-df = getTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
-print(df)
+#df = getCollegeTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
+#print(df)
 
-#df1 = getTeams(conference_names = ['ACC', 'Ivy'])
-#print(df1)
+#ACC_teams = getCollegeTeams(conference_names = ['ACC'])
+#print(ACC_teams)
 
-#df2 = getTeams(division_names = ['Division 1'])
-#print(df2.head())
+#div1_teams = getCollegeTeams(division_names = ['Division 1'])
+#print(div1_teams)
 
 #getPowerIndex tests ----------------------------------------
 #invalid swimmer_ID
@@ -29,7 +29,7 @@ print(df)
 #penn_roster = getRoster(team = 'Universit of Pennsylvania', team_ID = 300, gender = 'M')
 
 #pitt_roster = getRoster(team = 'University of Pittsburgh', gender = 'F', year = 2020)
-#bc_roster = getRoster(team = 'Boston College', gender = 'M', season_ID = 22)
+#bc_roster = getRoster(team = '', team_ID = 228, gender = 'M', season_ID = 22)
 
 #print(penn_roster)
 #print(pitt_roster)
@@ -37,7 +37,7 @@ print(df)
 
 #test on a country's team
 
-#japan_roster = getRoster(team = 'Japan', team_ID = 10008082, gender = 'M', year = 2020)
+#japan_roster = getRoster(team = 'Japan', team_ID = 10008082, gender = 'M', year = 2020, pro = True)
 
 #print(japan_roster)
 
@@ -75,13 +75,18 @@ print(df)
 #i = getCollegeMeetResults(1111111111, '100 Free', 'F')
 
 #r = getCollegeMeetResults(190690, '100 Free', 'F')
+#r = getCollegeMeetResults(190690, '', 'F', event_ID = 1100)
 
 #print(r[0])
 #print(r[3])
 
 #getHSRecruitRankings tests -------------------------------------------------
 
-#recruits_2018 = getHSRecruitRankings(2018, 'M', state = 'Hawaii')
+#recruits_2018 = getHSRecruitRankings(2018, 'M')
+
+#female_recruits_2020_Hawaii = getHSRecruitRankings(2020, 'F', state_abbreviation = 'HI')
+
+#print(female_recruits_2020_Hawaii)
 
 #print(recruits_2018[0])
 #print(recruits_2018[49])
@@ -124,6 +129,7 @@ print(df)
 
 #2012 olympic games:
 #olympics_event_list_2012 = getMeetEventList(196380)
+#print(olympics_event_list_2012)
 #check getProMeetResults with event_href input from event_list
 #print(getProMeetResults(196380, event_name = '', gender = 'M', event_href = olympics_event_list_2012[0]['event_href']))
 
@@ -142,3 +148,5 @@ print(df)
 #rankings_2015 = getTeamRankingsList('M', 19)
 
 #print(rankings_2015)
+
+print(getProMeetResults(196380, event_name = '', gender = 'F', event_href = '/results/196380/event/1/'))

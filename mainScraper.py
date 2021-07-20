@@ -32,7 +32,7 @@ us_states = {
 
 #function that takes as an input any number of team names, a division, or a conference and returns the teams that match the input
 #example function call - getTeams(conference = "ACC") - returns a list with all teams in the ACC conference
-def getTeams(team_names = ['NONE'], division_names = ['NONE'], conference_names = ['NONE']):
+def getCollegeTeams(team_names = ['NONE'], conference_names = ['NONE'], division_names = ['NONE']):
 	team_df = pd.DataFrame()
 	if(team_names != ['NONE']):
 		team_df = teams[teams['team_name'].isin(team_names)].reset_index(drop = True)
@@ -44,6 +44,49 @@ def getTeams(team_names = ['NONE'], division_names = ['NONE'], conference_names 
 		team_df = teams
 
 	return team_df.to_dict('records')
+
+#function that takes a gender and season_ID as an input and returns a list of top 50 countries from that year
+def getTeamRankingsList(gender, season_ID = -1, year = -1):
+	#set driver options
+	chrome_options = Options()
+	chrome_options.add_argument("--headless")
+	driver = webdriver.Chrome('./chromedriver.exe', options = chrome_options)
+	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
+
+	teams = list()
+
+	if(gender != 'M' and gender != 'F'):
+		print('ERROR: need to input either M or F for gender')
+		return
+
+	if(year != -1):
+		season_ID = getSeasonID(year)
+	elif(season_ID == -1 and year == -1):
+		season_ID = 24 #most recent season
+
+	page_url = 'https://swimcloud.com/team/rankings/?eventCourse=L?gender=' + gender + '&page=1&region&seasonId=' + str(season_ID)
+
+	driver.get(page_url)
+
+	_time.sleep(3)
+
+	html = driver.page_source
+
+	soup = bs(html, 'html.parser')
+
+	teams_list = soup.find('table', attrs = {'class' : 'c-table-clean'}).find('tbody').find_all('tr')
+
+	for team in teams_list:
+		data = team.find_all('td')
+
+		team =  data[1].find('strong').text.strip()
+		team_ID = data[1].find('a')['href'].split('/')[-1]
+
+		swimcloud_points = data[2].find('a').text.strip()
+
+		teams.append({'team_name' : team, 'team_ID' : team_ID, 'swimcloud_points' : swimcloud_points})
+
+	return teams
 
 #given a swimmer's ID, return their high school power index -> this is an index used for recruiting
 #returns -1 if no swimmer found
@@ -131,9 +174,10 @@ def getRoster(team, gender, team_ID = -1, season_ID = -1, year = -1, pro = False
 		city = getCity(numbers[2].text.strip())
 		if(pro == False):
 			grade = numbers[3].text.strip()
+			HS_power_index = getPowerIndex(swimmer_ID)
 		else:
 			grade = 'None'
-		HS_power_index = getPowerIndex(swimmer_ID)
+			HS_power_index = -1
 
 		roster.append({'swimmer_name': swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_number, 'grade' : grade, 'hometown_state': state, 'hometown_city' : city, 'HS_power_index' : HS_power_index})
 
@@ -237,7 +281,7 @@ def getSwimmerTimes(swimmer_ID, event_name, event_ID = -1):
 					if(imp == '–'): #this character gets encoded weird in an excel doc so just set to NA
 						imp = 'NA'
 
-					time_list.append({'swimmer_ID' : swimmer_ID, 'pool_type' : pool_type, 'event': event_name, 'event_ID' : event_ID, 'time' : time, 'meet_name' : meet, 'year' : year, 'date' : date, 'imp' : imp})
+					time_list.append({'swimmer_ID' : swimmer_ID, 'pool_type' : pool_type, 'event': event_name, 'event_ID' : event_ID, 'time' : time, 'meet_name' : meet, 'year' : year, 'date' : date, 'improvement' : imp})
 
 				i += 1
 
@@ -331,7 +375,7 @@ def getTeamMeetList(team_name = '', team_ID = -1, season_ID = -1, year = -1):
 
 #takes as an input a meet's ID# and returns a list of all events from the specified meet
 def getMeetEventList(meet_ID):
-	events = list()
+	meet_event_list = list()
 
 	meet_url = 'https://swimcloud.com/results/' + str(meet_ID)
 
@@ -351,9 +395,9 @@ def getMeetEventList(meet_ID):
 		event_name = event.find('div', attrs = {'class' : 'o-media__body'}).text.strip()
 		event_href = event.find('a')['href']
 
-		events.append({'event_name' : event_name, 'event_href' : event_href})
+		meet_event_list.append({'event_name' : event_name, 'event_ID' : events.get(' '.join(event_name.split(' ')[:-1])),'event_href' : event_href})
 
-	return events
+	return meet_event_list
 
 #takes as an input a meet's ID # and an event's name and a gender and returns a list of all times for the specified event
 def getCollegeMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href = 'None'):
@@ -371,6 +415,9 @@ def getCollegeMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href
 
 	if(event_ID != -1):
 		event_name = getEventName(event_ID)
+
+	if(event_ID == -1):
+		event_ID = events.get(event_name)
 
 	if('Women' not in event_name and 'Men' not in event_name): #if men or women are not already in the event name
 		if(gender == 'M'):
@@ -456,9 +503,9 @@ def getCollegeMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href
 	driver.close()
 	return results
 
-#only from 2016 - current year   -    currently gets top 200 recruits
+#only from 2017 - current year   -    currently gets top 200 recruits
 #takes as an input a year and gender and optionally a state or state_abbreviation and returns list of the top 50 HS recruits for that year with recruiting score, hometown info, team_info
-def getHSRecruitRankings(year, gender, state = 'none', state_abbreviation = 'none', international = False):
+def getHSRecruitRankings(class_year, gender, state = 'none', state_abbreviation = 'none', international = False):
 	recruits = list()
 
 	if(state != 'none'):
@@ -470,15 +517,15 @@ def getHSRecruitRankings(year, gender, state = 'none', state_abbreviation = 'non
 
 	#if only international recruits are wanted
 	if(international == True):
-		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(year) + '/' + str(gender) + '/2/'
+		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(class_year) + '/' + str(gender) + '/2/'
 	#if recruits from a certain state are wanted
 	elif(state_abbreviation != 'none'):
-		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(year) + '/' + str(gender) + '/1/' + state_abbreviation + '/'
+		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(class_year) + '/' + str(gender) + '/1/' + state_abbreviation + '/'
 	elif(state != 'none'):
-		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(year) + '/' + str(gender) + '/1/'  + us_states.get(state) + '/'
+		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(class_year) + '/' + str(gender) + '/1/'  + us_states.get(state) + '/'
 	#if rankings are wanted for US and international
 	else:
-		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(year) + '/' + str(gender) + '/'
+		recruiting_url = 'https://www.swimcloud.com/recruiting/rankings/' + str(class_year) + '/' + str(gender) + '/'
 
 	for page in range(1, 5):
 		page_url = recruiting_url + '?page=' + str(page)
@@ -601,6 +648,9 @@ def getProMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href = '
 	if(event_ID != -1):
 		event_name = getEventName(event_ID)
 
+	if(event_ID == -1):
+		event_ID = events.get(event_name)
+
 	if('Women' not in event_name and 'Men' not in event_name):
 		if(gender == 'M'):
 			full_event_name = event_name + ' Men'
@@ -685,44 +735,3 @@ def getProMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href = '
 					pass
 	driver.close()
 	return results
-
-#function that takes a gender and season_ID as an input and returns a list of top 50 countries from that year
-def getTeamRankingsList(gender, season_ID, year = -1):
-	#set driver options
-	chrome_options = Options()
-	chrome_options.add_argument("--headless")
-	driver = webdriver.Chrome('./chromedriver.exe', options = chrome_options)
-	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
-
-	teams = list()
-
-	if(gender != 'M' and gender != 'F'):
-		print('ERROR: need to input either M or F for gender')
-		return
-
-	if(year != -1):
-		season_ID = getSeasonID(year)
-
-	page_url = 'https://swimcloud.com/team/rankings/?eventCourse=L?gender=' + gender + '&page=1&region&seasonId=' + str(season_ID)
-
-	driver.get(page_url)
-
-	_time.sleep(3)
-
-	html = driver.page_source
-
-	soup = bs(html, 'html.parser')
-
-	teams_list = soup.find('table', attrs = {'class' : 'c-table-clean'}).find('tbody').find_all('tr')
-
-	for team in teams_list:
-		data = team.find_all('td')
-
-		team =  data[1].find('strong').text.strip()
-		team_ID = data[1].find('a')['href'].split('/')[-1]
-
-		swimcloud_points = data[2].find('a').text.strip()
-
-		teams.append({'team_name' : team, 'team_ID' : team_ID, 'swimcloud_points' : swimcloud_points})
-
-	return teams
