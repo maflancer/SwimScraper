@@ -4,7 +4,7 @@ Python scraper for college and professional swimming data -  all data from Swimc
 
 ## Functions
 
-**Getting Team Lists**
+**Getting Team Data**
 
 * **getCollegeTeams(team_names, conference_names, division_names)** -> returns list of teams where each team has a team_name, team_ID, team_state, team_division, team_division_ID, team_conference, team_conference_ID
   * **Select one of the three inputs:**
@@ -16,7 +16,7 @@ Python scraper for college and professional swimming data -  all data from Swimc
   * season_ID - ```male_rankings_2015 = getTeamRankingsList('M', season_ID = 19)```
   * year - ```female_rankings_2019 = getTeamRankingsList('F', year = 2019)```
 
-**Getting Roster Lists**
+**Getting Roster Data**
 
 * **getRoster(team, gender, team_ID, season_ID, year, pro)** -> returns list of swimmers where each swimmer has a swimmer_name, swimmer_ID, team_name, team_ID, grade, hometown_state, hometown_city, HS_power_index (a score given to high school students for recruiting - scale is from 1.00 (best) to 100.00)
   * **Select a gender, a team name or team_ID, a season_ID or year, and set pro = True for non-College teams**
