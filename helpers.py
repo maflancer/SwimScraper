@@ -24,6 +24,15 @@ def getTeamNumber(team_name):
 			team_number = row['team_ID']
 	return team_number
 
+#gets corresponding team name for a specified team_ID
+def getTeamName(team_ID):
+    team_name = ''
+
+    for index, row in teams.iterrows():
+        if row['team_ID'] == team_ID:
+            team_name = row['team_name']
+    return team_name
+
 #gets corresponding season ID for a specified year
 def getSeasonID(year):
 	return year - 1996

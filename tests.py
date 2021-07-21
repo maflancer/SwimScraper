@@ -28,7 +28,6 @@ from mainScraper import *
 #check invalid team tame
 #penn_roster = getRoster(team = 'Universit of Pennsylvania', team_ID = 300, gender = 'M')
 
-#pitt_roster = getRoster(team = 'University of Pittsburgh', gender = 'F', year = 2020)
 #bc_roster = getRoster(team = '', team_ID = 228, gender = 'M', season_ID = 22)
 
 #print(penn_roster)
@@ -145,8 +144,8 @@ from mainScraper import *
 
 #getTeamRankingsList tests ----------------------------------------
 
-#rankings_2015 = getTeamRankingsList('M', 19)
+#rankings_2015 = getTeamRankingsList('M', season_ID = 19)
 
 #print(rankings_2015)
 
-print(getProMeetResults(196380, event_name = '', gender = 'F', event_href = '/results/196380/event/1/'))
+#print(getProMeetResults(196380, event_name = '', gender = 'F', event_href = '/results/196380/event/1/'))
