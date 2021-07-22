@@ -1,0 +1,926 @@
+team_name,team_ID,team_state,team_division,team_division_ID,team_conference,team_conference_ID
+Acadia University,10003220,NS,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Adams State University,627,CO,Division 2,2,Rocky Mountain,rmac
+Adelphi University,442,NY,Division 2,2,Northeast 10,ne10
+Agnes Scott College,208,GA,NONE,NONE,NONE,NONE
+Alabama A&M University,10002634,AL,NONE,NONE,NONE,NONE
+Albertus Magnus College,10009436,CT,Division 3,3,GNAC,gnac
+Albion College,210,MI,Division 3,3,MIAA,miaa
+Albright College,211,PA,Division 3,3,Middle Atlantic,mid-atlantic
+Alderson Broaddus University,10002388,WV,Division 2,2,GMAC,GMAC
+Alfred State College,642,NY,Division 3,3,Allegheny,amcc
+Alfred University,212,NY,Division 3,3,Empire 8,empire8
+Allan Hancock College,10009168,CA,CCCAA,6,NONE,NONE
+Allegheny College,19,PA,Division 3,3,North Coast,ncac
+Alma College,213,MI,Division 3,3,MIAA,miaa
+American River College,569,CA,CCCAA,6,NONE,NONE
+American University,214,DC,Division 1,1,Patriot,patriot
+Amherst College,103,MA,Division 3,3,NESCAC,nescac
+Anderson University,10008403,IN,Division 3,3,Heartland,hcac
+Anne Arundel Community College,10009581,MD,NONE,NONE,NONE,NONE
+Arcadia University,222,PA,Division 3,3,Middle Atlantic,mid-atlantic
+Arizona Christian University,10010278,AZ,NAIA,4,PCSC,paccoast
+Arizona State University,87,AZ,Division 1,1,Pac 12,pac-12
+Asbury University,381,KY,NAIA,4,Appalachian Athletic,App
+Ashland University,217,OH,Division 2,2,GLIAC,gliac
+Assumption College,564,MA,Division 2,2,Northeast 10,ne10
+Auburn University,127,AL,Division 1,1,SEC,sec
+Augsburg University,559,MN,Division 3,3,MIAC,miac
+Augustana College,232,IL,Division 3,3,CCIW,cciw
+Augustana University (SD),10007690,SD,Division 2,2,Northern Sun,nsic
+Austin College,219,TX,Division 3,3,SCAC,scac
+Azuza Pacific University,639,CA,Division 2,2,PCSC,paccoast
+Babson College,207,MA,Division 3,3,NEWMAC,newmac
+Bakersfield College,570,CA,CCCAA,6,NONE,NONE
+Baldwin-Wallace University,1,OH,Division 3,3,Ohio,oac
+Ball State University,221,IN,Division 1,1,Mid-American,mac
+Bard College,8478,NY,Division 3,3,Liberty,liberty
+Bard College-Simon's Rock,10006628,MA,NONE,NONE,NONE,NONE
+Barton College,10008686,NC,Division 2,2,Carolinas,carolinas
+Barton County Community College,10012513,KS,NJCAA,5,Independent,independen
+Baruch College,563,NY,Division 3,3,CUNYAC,cunyac
+Bates College,76,ME,Division 3,3,NESCAC,nescac
+Bellarmine University,10002386,KY,Division 1,1,CCSA,ccsa
+Beloit College,223,WI,Division 3,3,Midwest,midwest
+Bemidji State University,10009582,MN,NONE,NONE,NONE,NONE
+Benedictine University (AZ),10011100,AZ,NONE,NONE,NONE,NONE
+Benedictine University (Illinois),224,IL,Liberal Arts,libarts,NONE,NONE
+Bentley University,225,MA,Division 2,2,Northeast 10,ne10
+Berea College,382,KY,Appalachian Swim,asc,NONE,NONE
+Bergen Community College,10009583,NJ,NONE,NONE,NONE,NONE
+Berry College,611,GA,Division 3,3,SAA,saa
+Bethany College (WV),226,WV,Division 3,3,Presidents,presidents
+Bethel College (KS),10022957,KS,NAIA,4,NONE,NONE
+Bethel University,10000397,TN,NAIA,4,Mid-South,mid-south
+Bethel University (Indiana),8024,IN,NAIA,4,NONE,NONE
+Binghamton University,383,NY,Division 1,1,America East,americaeast
+Biola University,384,CA,Division 2,2,PCSC,paccoast
+Birmingham Southern College,10001786,AL,Division 3,3,SAA,saa
+Bloomsburg University,227,PA,Division 2,2,PSAC,psac
+Bluefield State College,10025546,WV,Division 2,2,NONE,NONE
+Boise State University,516,ID,Division 1,1,Mountain West,mwc
+Borough of Manhattan Community College,643,NY,NJCAA,5,Independent,independen
+Boston College,228,MA,Division 1,1,ACC,acc
+Boston University,229,MA,Division 1,1,Patriot,patriot
+Bowdoin College,36,ME,Division 3,3,NESCAC,nescac
+Bowling Green State University,230,OH,Division 1,1,Mid-American,mac
+Bradley University,10007642,IL,NONE,NONE,NONE,NONE
+Brandeis University,4,MA,Division 3,3,UAA,uaa
+Brenau University,624,GA,NAIA,4,Appalachian Athletic,App
+Brevard Community College,10009584,FL,NONE,NONE,NONE,NONE
+Bridgewater College,549,VA,Division 3,3,ODAC,odac
+Bridgewater State University,195,MA,Division 3,3,NEISDA,neisda
+Brigham Young University,220,UT,Division 1,1,MPSF,mpsf
+Brock University,10010708,ON,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Brooklyn College,218,NY,Division 3,3,CUNYAC,cunyac
+Broward Community College,10009580,FL,NONE,NONE,NONE,NONE
+Brown University,17,RI,Division 1,1,Ivy,ivy
+Bryant University,522,RI,Division 1,1,MAAC,maac
+Bryn Mawr College,183,PA,Division 3,3,Centennial,centennial
+Bucknell University,184,PA,Division 1,1,Patriot,patriot
+Buena Vista College,10002638,IA,NONE,NONE,NONE,NONE
+Buffalo State College,353,NY,Division 3,3,SUNYAC,sunyac
+Burlington Community College,10009634,NJ,NONE,NONE,NONE,NONE
+Butler University,186,IN,Division 1,1,Big East,bigeast
+Cabrillo College,571,CA,CCCAA,6,NONE,NONE
+Cabrini University,8471,PA,Division 3,3,Atlantic East,aec
+Cal Poly-Pomona,10002639,CA,NONE,NONE,NONE,NONE
+California (PA) University,67,PA,Division 2,2,PSAC,psac
+California Baptist University,385,CA,Division 1,1,WAC,wac
+California Institute of Technology,187,CA,Division 3,3,SCIAC,sciac
+California Lutheran University,619,CA,Division 3,3,SCIAC,sciac
+California Polytechnic State University,188,CA,Division 1,1,MPSF,mpsf
+California State University East Bay,190,CA,Division 2,2,PCSC,paccoast
+"California State University, Bakersfield",116,CA,Division 1,1,WAC,wac
+"California State University, Chico",10002640,CA,NONE,NONE,NONE,NONE
+"California State University, Fullerton",10002641,CA,NONE,NONE,NONE,NONE
+"California State University, Los Angeles",10002643,CA,NONE,NONE,NONE,NONE
+"California State University, Northridge",191,CA,NONE,NONE,NONE,NONE
+"California State University, Sacramento",10009437,CA,NONE,NONE,NONE,NONE
+"California State University, San Bernardino",10002644,CA,NONE,NONE,NONE,NONE
+Calvin College,55,MI,Division 3,3,MIAA,miaa
+Campbell University,566,NC,Division 1,1,CCSA,ccsa
+Campbellsville University,541,KY,NAIA,4,Mid-South,mid-south
+Canisius College,196,NY,Division 1,1,MAAC,maac
+Capital University,10009585,OH,NONE,NONE,NONE,NONE
+Carleton College,197,MN,Division 3,3,MIAC,miac
+Carleton University,10010714,ON,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Carnegie Mellon University,33,PA,Division 3,3,UAA,uaa
+Carroll University (WI),198,WI,Division 3,3,CCIW,cciw
+Carson-Newman University,10003343,TN,Division 2,2,Bluegrass,bluegrass
+Carthage College,199,WI,Division 3,3,CCIW,cciw
+Case Western Reserve University,200,OH,Division 3,3,UAA,uaa
+Catawba College,201,NC,Division 2,2,Bluegrass,bluegrass
+Catholic University,202,DC,Division 3,3,Landmark,landmark
+Catonsville Community College,10009586,MD,NONE,NONE,NONE,NONE
+Cazenovia College,640,NY,Division 3,3,NEAC,neac
+Cedar Crest College,10004596,PA,Division 3,3,NEAC,neac
+Centenary College,520,LA,Division 3,3,SCAC,scac
+Central Arkansas University,10009631,AR,NONE,NONE,NONE,NONE
+Central Connecticut State University,203,CT,Division 1,1,Northeast,nec
+Central Michigan University,10002646,MI,NONE,NONE,NONE,NONE
+Central Missouri State University,10002647,MO,NONE,NONE,NONE,NONE
+Central Washington University,204,WA,NONE,NONE,NONE,NONE
+Centre College,244,KY,Division 3,3,SAA,saa
+Cerritos College,572,CA,CCCAA,6,NONE,NONE
+Chabot College,573,CA,CCCAA,6,NONE,NONE
+Chaffey College,574,CA,CCCAA,6,NONE,NONE
+Chapman University,85,CA,Division 3,3,SCIAC,sciac
+Chatham University,636,PA,Division 3,3,Presidents,presidents
+Chicago State University,10002648,IL,NONE,NONE,NONE,NONE
+Chowan University,10007086,NC,Division 2,2,Bluegrass,bluegrass
+Citrus College,553,CA,CCCAA,6,NONE,NONE
+City College of New York,10002665,NY,NONE,NONE,NONE,NONE
+City College of San Francisco,8481,CA,CCCAA,6,NONE,NONE
+Claremont McKenna-Harvey Mudd-Scripps Colleges,261,CA,Division 3,3,SCIAC,sciac
+Clarion University,114,PA,Division 2,2,PSAC,psac
+Clark University,262,MA,Division 3,3,NEWMAC,newmac
+Clarkson University,263,NY,Division 3,3,Liberty,liberty
+Clemson University,20,SC,NONE,NONE,NONE,NONE
+Cleveland State University,264,OH,Division 1,1,Horizon,horizon
+Clovis Community College,10009479,CA,NONE,NONE,NONE,NONE
+Coe College,265,IA,Division 3,3,Liberal Arts,libarts
+Colby College,69,ME,Division 3,3,NESCAC,nescac
+Colby-Sawyer College,386,NH,Division 3,3,GNAC,gnac
+Colgate University,266,NY,Division 1,1,Patriot,patriot
+College of Charleston,193,SC,Division 1,1,NONE,NONE
+College of DuPage,622,IL,NONE,NONE,NONE,NONE
+College of Holy Cross,170,MA,Division 1,1,Patriot,patriot
+College of Idaho,365,ID,NAIA,4,Independent,independen
+College of Marin,576,CA,CCCAA,6,NONE,NONE
+College of Mount Saint Vincent,436,NY,NONE,NONE,NONE,NONE
+College of New Rochelle,407,NY,NONE,NONE,NONE,NONE
+College of Notre Dame (Maryland),403,MD,Division 3,3,ODAC,odac
+College of Saint Benedict,456,MN,Division 3,3,MIAC,miac
+College of Saint Elizabeth,490,NJ,NONE,NONE,NONE,NONE
+College of Saint Mary (NE),631,NE,NAIA,4,Liberal Arts,libarts
+College of San Mateo,10009179,CA,NONE,NONE,NONE,NONE
+College of Staten Island,312,NY,Division 2,2,Metro,metro
+College of the Canyons,556,CA,CCCAA,6,NONE,NONE
+College of the Sequoias,577,CA,CCCAA,6,NONE,NONE
+College of Wooster,108,OH,Division 3,3,North Coast,ncac
+Colorado College,13,CO,Division 3,3,SCAC,scac
+Colorado Mesa University,517,CO,Division 2,2,Rocky Mountain,rmac
+Colorado School of Mines,50,CO,Division 2,2,Rocky Mountain,rmac
+Colorado State University,268,CO,Division 1,1,Mountain West,mwc
+Colorado State University-Pueblo,10005046,CO,Division 2,2,Rocky Mountain,rmac
+Columbia College (SC),10004938,SC,NAIA,4,Appalachian Athletic,App
+Columbia University,283,NY,Division 1,1,Ivy,ivy
+Concordia College (IL),10007643,IL,NONE,NONE,NONE,NONE
+Concordia College-Moorhead,270,MN,Division 3,3,MIAC,miac
+Concordia University,542,CA,Division 2,2,PCSC,paccoast
+Concordia University-Saint Paul,10021455,MN,Division 2,2,Northern Sun,nsic
+Connecticut College,74,CT,Division 3,3,NESCAC,nescac
+Converse College,8475,SC,Division 2,2,Bluegrass,bluegrass
+Cornell College (IA),10009273,IA,NONE,NONE,NONE,NONE
+Cornell University,258,NY,Division 1,1,Ivy,ivy
+Cosumnes River College,10009170,CA,NONE,NONE,NONE,NONE
+Cuesta College,552,CA,CCCAA,6,NONE,NONE
+Cumberlands,387,KY,NAIA,4,Mid-South,mid-south
+Cuyahoga Community College,10009587,OH,NONE,NONE,NONE,NONE
+Cypress College,579,CA,CCCAA,6,NONE,NONE
+Daemen College,10009703,NY,NONE,NONE,NONE,NONE
+Dalhousie University,10003568,NS,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Dartmouth College,272,NH,Division 1,1,Ivy,ivy
+Darton College,356,GA,NJCAA,5,NONE,NONE
+Davenport University,10012529,MI,Division 2,2,GLIAC,gliac
+Davidson College,273,NC,Division 1,1,Atlantic 10,a-10
+Davis and Elkins College,628,WV,Division 2,2,GMAC,GMAC
+Daytona State College,635,FL,NJCAA,5,NONE,NONE
+DeAnza College,580,CA,CCCAA,6,NONE,NONE
+Defiance College,10000433,OH,Division 3,3,Ohio,oac
+Delta State University,48,MS,Division 2,2,New South,nsisc
+Denison University,118,OH,Division 3,3,North Coast,ncac
+DePauw University,274,IN,Division 3,3,North Coast,ncac
+Diablo Valley College,581,CA,CCCAA,6,NONE,NONE
+Dickinson College,277,PA,Division 3,3,Centennial,centennial
+Dixie State University,10008406,UT,Division 1,1,WAC,wac
+Douglas College,10007840,,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Drake University,10009171,IA,NONE,NONE,NONE,NONE
+Drew University,278,NJ,Division 3,3,Landmark,landmark
+Drexel University,279,PA,Division 1,1,Colonial,caa
+Drury University,122,MO,Division 2,2,GLVC,glvc
+Duke University,280,NC,Division 1,1,ACC,acc
+Duquesne University,281,PA,Division 1,1,Atlantic 10,a-10
+East Carolina University,246,NC,Division 1,1,American Athletic,american
+East Los Angeles College,10009172,CA,NONE,NONE,NONE,NONE
+East Stroudsburg University,271,PA,Division 2,2,PSAC,psac
+Eastern Connecticut State University,269,CT,Division 3,3,Little East,little-east
+Eastern Illinois University,234,IL,Division 1,1,Summit,summit
+Eastern Kentucky University,10002649,KY,NONE,NONE,NONE,NONE
+Eastern Michigan University,235,MI,Division 1,1,Mid-American,mac
+Eastern Washington University,10007644,WA,NONE,NONE,NONE,NONE
+Edinboro University,236,PA,Division 2,2,PSAC,psac
+Eisenhower University,10002650,NY,NONE,NONE,NONE,NONE
+El Camino College,582,CA,CCCAA,6,NONE,NONE
+Elizabethtown College,237,PA,Division 3,3,Landmark,landmark
+Elms College,238,MA,Division 3,3,GNAC,gnac
+Emmanuel College,10003592,GA,Division 2,2,Carolinas,carolinas
+Emory & Henry College,638,VA,Division 3,3,ODAC,odac
+Emory University,123,GA,Division 3,3,UAA,uaa
+Emporia State University,10009588,KS,NONE,NONE,NONE,NONE
+Erie Community College,644,NY,NJCAA,5,NONE,NONE
+Eureka College,239,IL,Division 3,3,Liberal Arts,libarts
+Evergreen State University,10009589,WA,NONE,NONE,NONE,NONE
+Fairfield University,165,CT,Division 1,1,MAAC,maac
+"Fairleigh Dickinson University, Madison",241,NJ,Division 3,3,Middle Atlantic,mid-atlantic
+Fairmont State University,205,WV,Division 2,2,Mountain East,mountain-east
+Farmingdale State College,10009590,NY,NONE,NONE,NONE,NONE
+Fashion Institute of Technology,645,NY,NJCAA,5,NONE,NONE
+Ferris State University,10002651,MI,NONE,NONE,NONE,NONE
+Ferrum College,10000436,VA,Division 3,3,ODAC,odac
+Florida A&M University,243,FL,Division 1,1,NONE,NONE
+Florida Atlantic University,257,FL,Division 1,1,CCSA,ccsa
+Florida Gulf Coast University,531,FL,Division 1,1,CCSA,ccsa
+Florida Institute of Technology,10001800,FL,Division 2,2,Sunshine,ssc
+Florida International University,351,FL,Division 1,1,C-USA,c-usa
+Florida Southern College,354,FL,Division 2,2,Sunshine,ssc
+Florida State University,77,FL,Division 1,1,ACC,acc
+Florissant Valley College,10009591,MO,NONE,NONE,NONE,NONE
+Foothill College,583,CA,CCCAA,6,NONE,NONE
+Fordham University,245,NY,Division 1,1,Atlantic 10,a-10
+Fort Lewis College,10009592,CO,NONE,NONE,NONE,NONE
+Franciscan University of Steubensville,10001801,OH,Division 3,3,Allegheny,amcc
+Franklin & Marshall College,64,PA,Division 3,3,Centennial,centennial
+Franklin College,654,IN,Division 3,3,Heartland,hcac
+Franklin Pierce University,10009314,NH,Division 2,2,Northeast 10,ne10
+Fredonia University,389,NY,Division 3,3,SUNYAC,sunyac
+Fresno City College,10009173,CA,NONE,NONE,NONE,NONE
+Fresno Pacific University,534,CA,Division 2,2,PCSC,paccoast
+Fresno State,390,CA,Division 1,1,Mountain West,mwc
+Frostburg State University,233,MD,Division 2,2,ECAC,ecac
+Fullerton College,584,CA,CCCAA,6,NONE,NONE
+Furman University,10002652,SC,NONE,NONE,NONE,NONE
+Gallaudet University,247,DC,Division 3,3,NEAC,neac
+Gannon University,248,PA,Division 2,2,PSAC,psac
+Gardner-Webb University,249,NC,Division 1,1,CCSA,ccsa
+Genesee Community College,355,NY,NJCAA,5,NONE,NONE
+George Fox University,10011286,OR,Division 3,3,Northwest,nwc
+George Mason University,250,VA,Division 1,1,Atlantic 10,a-10
+George Washington University,251,DC,Division 1,1,Atlantic 10,a-10
+George Williams College,10007645,IL,NONE,NONE,NONE,NONE
+Georgetown University,252,DC,Division 1,1,Big East,bigeast
+Georgia Institute of Technology,34,GA,Division 1,1,ACC,acc
+Georgia Southern University,253,GA,Division 1,1,CCSA,ccsa
+Gettysburg College,254,PA,Division 3,3,Centennial,centennial
+Golden West College,543,CA,NONE,NONE,NONE,NONE
+Gordon College (GA),646,GA,NJCAA,5,Independent,independen
+Gordon College (MA),255,MA,Division 3,3,NEISDA,neisda
+Goucher College,256,MD,Division 3,3,Landmark,landmark
+Grand Canyon University,548,AZ,Division 1,1,WAC,wac
+Grand Rapids Junior College,10009593,MI,NONE,NONE,NONE,NONE
+Grand Valley State University,86,MI,Division 2,2,GLIAC,gliac
+Greensboro College,282,NC,Division 3,3,ODAC,odac
+Grinnell College,2,IA,Division 3,3,Midwest,midwest
+Grossmont College,586,CA,CCCAA,6,NONE,NONE
+Grove City College,42,PA,Division 3,3,Presidents,presidents
+Guilford College,637,NC,Division 3,3,ODAC,odac
+Gustavus Adolphus College,88,MN,Division 3,3,MIAC,miac
+Hamilton College,84,NY,Division 3,3,NESCAC,nescac
+Hamline University,139,MN,Division 3,3,MIAC,miac
+Hampden-Sydney College,10001913,VA,Division 3,3,ODAC,odac
+Hannibal-LaGrange College,613,MO,NONE,NONE,NONE,NONE
+Hanover College,10012517,IN,Division 3,3,Heartland,hcac
+Harper College,10009594,IL,NONE,NONE,NONE,NONE
+Hartnell College,10009595,CA,NONE,NONE,NONE,NONE
+Hartwick College,22,NY,Division 3,3,Empire 8,empire8
+Harvard University,134,MA,Division 1,1,Ivy,ivy
+Hastings College,630,NE,NONE,NONE,NONE,NONE
+Hawaii Pacific University,10009596,HI,NONE,NONE,NONE,NONE
+Henderson State University,58,AR,Division 2,2,New South,nsisc
+Hendrix College,142,AR,Division 3,3,SAA,saa
+Herkimer County Community College,647,NY,NJCAA,5,NONE,NONE
+Hillsdale College,129,MI,Division 2,2,GMAC,GMAC
+Hiram College,66,OH,Division 3,3,North Coast,ncac
+Hobart and William Smith Colleges,7,NY,Division 3,3,Liberty,liberty
+Hollins University,167,VA,Division 3,3,ODAC,odac
+Hood College,171,MD,Division 3,3,Middle Atlantic,mid-atlantic
+Hope College,99,MI,Division 3,3,MIAA,miaa
+Howard University,179,DC,Division 1,1,Northeast,nec
+Humboldt State University,10007646,CA,NONE,NONE,NONE,NONE
+Hunter College,180,NY,Division 3,3,CUNYAC,cunyac
+Husson University,10000208,ME,Division 3,3,NEISDA,neisda
+Idaho State University,10002654,ID,NONE,NONE,NONE,NONE
+Illinois College,612,IL,Division 3,3,Midwest,midwest
+Illinois Institute of Technology,364,IL,Division 3,3,Liberal Arts,libarts
+Illinois State University,172,IL,Division 1,1,Missouri Valley,mvc
+Illinois Wesleyan University,25,IL,Division 3,3,CCIW,cciw
+Immaculata University,10012097,PA,Division 3,3,Atlantic East,aec
+Indian River State College,358,FL,NJCAA,5,Independent,independen
+Indiana State University,10007691,IN,Division 1,1,Missouri Valley,mvc
+Indiana University of Pennsylvania,79,PA,Division 2,2,PSAC,psac
+Indiana University-Bloomington,92,IN,Division 1,1,Big Ten,big10
+Indiana University-Purdue University at Indianapolis,181,IN,Division 1,1,Horizon,horizon
+Indiana Wesleyan University,10009088,IN,NAIA,4,Mid-South,mid-south
+Iona College,161,NY,Division 1,1,MAAC,maac
+Iowa Central Community College,623,IA,NJCAA,5,Independent,independen
+Iowa Lakes Community College,8574,IA,NJCAA,5,Independent,independen
+Iowa State University,162,IA,Division 1,1,Big 12,big12
+Ithaca College,35,NY,Division 3,3,Liberty,liberty
+James Madison University,159,VA,Division 1,1,Colonial,caa
+Jamestown Community College,648,NY,NJCAA,5,Independent,independen
+John Brown University,352,AR,NONE,NONE,NONE,NONE
+John Carroll University,150,OH,Division 3,3,Ohio,oac
+John Jay College,8477,NY,Division 3,3,CUNYAC,cunyac
+Johns Hopkins University,111,MD,Division 3,3,Independent,independen
+Judson University,10014456,IL,NONE,NONE,NONE,NONE
+Juniata College,11,PA,Division 3,3,Landmark,landmark
+Kalamazoo College,153,MI,Division 3,3,MIAA,miaa
+Kansas State University,10002656,KS,NONE,NONE,NONE,NONE
+Kean University,178,NJ,Division 3,3,Metro,metro
+Keene State College,177,NH,Division 3,3,Little East,little-east
+Keiser University,339,FL,NAIA,4,Sun Coast,SCC
+Kellogg Community College,10009636,MI,NONE,NONE,NONE,NONE
+Kent State University,10007647,OH,NONE,NONE,NONE,NONE
+Kenyon College,125,OH,Division 3,3,North Coast,ncac
+King University,614,TN,Division 2,2,Bluegrass,bluegrass
+Kings College (Pennsylvania),175,PA,Division 3,3,Middle Atlantic,mid-atlantic
+Knox College,173,IL,Division 3,3,Midwest,midwest
+Kutztown University,151,PA,Division 2,2,PSAC,psac
+La Salle University,146,PA,Division 1,1,Atlantic 10,a-10
+Lafayette College,130,PA,Division 1,1,Patriot,patriot
+LaGrange College,168,GA,Division 3,3,Sun Coast,SCC
+Lake Erie College,8473,OH,NONE,NONE,NONE,NONE
+Lake Forest College,15,IL,Division 3,3,Midwest,midwest
+Lamar University,10009599,TX,NONE,NONE,NONE,NONE
+Lambuth University,615,TN,NONE,NONE,NONE,NONE
+Laney College,587,CA,CCCAA,6,NONE,NONE
+Lansing Community College,10009600,MI,NONE,NONE,NONE,NONE
+Las Positas College,10009174,CA,NONE,NONE,NONE,NONE
+Laurentian University,10010763,ON,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Lawrence University,140,WI,Division 3,3,Midwest,midwest
+Le Moyne College,145,NY,Division 2,2,Northeast 10,ne10
+Lebanon Valley College,143,PA,Division 3,3,Middle Atlantic,mid-atlantic
+Lee College,10009601,TX,NONE,NONE,NONE,NONE
+Lees-McRae College,10012525,NC,Division 2,2,Carolinas,carolinas
+Lehigh University,141,PA,Division 1,1,Patriot,patriot
+Lehman College,149,NY,Division 3,3,CUNYAC,cunyac
+Lenoir-Rhyne University,550,NC,Division 2,2,Bluegrass,bluegrass
+Lewis and Clark College,137,OR,Division 3,3,Northwest,nwc
+Lewis University,57,IL,Division 2,2,GLVC,glvc
+Liberty University,452,VA,Division 1,1,CCSA,ccsa
+Life University,10004766,GA,NAIA,4,Mid-South,mid-south
+Limestone College,523,SC,Division 2,2,Bluegrass,bluegrass
+Lincoln College,363,IL,NAIA,4,KCAC,kcac
+Lindenwood University,379,MO,Division 2,2,GLVC,glvc
+Lindenwood University (Belleville) ,10005291,IL,NONE,NONE,NONE,NONE
+Lindsey Wilson College,641,KY,NAIA,4,Mid-South,mid-south
+Linfield College,135,OR,Division 3,3,Northwest,nwc
+Lock Haven University,160,PA,Division 2,2,PSAC,psac
+Long Beach City College,588,CA,CCCAA,6,NONE,NONE
+Long Beach State University,10002657,CA,NONE,NONE,NONE,NONE
+Long Island University,10005731,NY,Division 1,1,Northeast,nec
+"Long Island University, Post Campus",533,NY,NONE,NONE,NONE,NONE
+Loras College,136,IA,Division 3,3,Liberal Arts,libarts
+Los Angeles Harbor College,10009597,CA,NONE,NONE,NONE,NONE
+Los Angeles Trade-Technical College,590,CA,CCCAA,6,NONE,NONE
+Los Angeles Valley College,555,CA,CCCAA,6,NONE,NONE
+Louisiana State University,56,LA,Division 1,1,SEC,sec
+Loyola (Ill.) University,10002658,IL,NONE,NONE,NONE,NONE
+Loyola Marymount University,155,CA,Division 1,1,PCSC,paccoast
+Loyola University (Maryland),156,MD,Division 1,1,Patriot,patriot
+Loyola University New Orleans,10007688,LA,NAIA,4,Mid-South,mid-south
+Luther College,157,IA,Division 3,3,Liberal Arts,libarts
+Lycoming College,164,PA,Division 3,3,Middle Atlantic,mid-atlantic
+Lynn University,10002387,FL,Division 2,2,Sunshine,ssc
+Macalester College,5,MN,Division 3,3,MIAC,miac
+MacMurray College (IL),163,IL,Liberal Arts,libarts,NONE,NONE
+Macomb Community College,10009602,MI,NONE,NONE,NONE,NONE
+Maine Maritime Academy,10011027,ME,Division 3,3,NEISDA,neisda
+Malone University,626,OH,Division 2,2,GMAC,GMAC
+Manchester University,10006394,IN,Division 3,3,Heartland,hcac
+Manhattan College,128,NY,Division 1,1,MAAC,maac
+Manhattanville College,10002659,NY,NONE,NONE,NONE,NONE
+Mansfield University,132,PA,NONE,NONE,NONE,NONE
+Marist College,147,NY,Division 1,1,MAAC,maac
+Mars Hill University,536,NC,Division 2,2,Bluegrass,bluegrass
+Marshall University,377,WV,Division 1,1,C-USA,c-usa
+Martin Methodist College,10023526,TN,NAIA,4,Mid-South,mid-south
+Marymount University (Virginia),473,VA,Division 3,3,Atlantic East,aec
+Maryville University,10002186,MO,Division 2,2,GLVC,glvc
+Marywood University,8480,PA,Division 3,3,Atlantic East,aec
+Massachusetts Institute of Technology,14,MA,Division 3,3,NEWMAC,newmac
+Mc Murry University,423,TX,Division 3,3,SCAC,scac
+McDaniel College,299,MD,Division 3,3,Centennial,centennial
+McGill University,10010767,QC,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+McKendree University,10008207,IL,Division 2,2,GLVC,glvc
+McMaster University,10003275,ON,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Medaille College,10020159,NY,Division 3,3,Allegheny,amcc
+Memorial University of Newfoundland,10010769,NF,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Meramec Community College,10009603,MO,NONE,NONE,NONE,NONE
+Merced College,591,CA,CCCAA,6,NONE,NONE
+Mercer College,10009604,NJ,NONE,NONE,NONE,NONE
+Mercyhurst Northeast,10002434,AL,NONE,NONE,NONE,NONE
+Mercyhurst University,10002943,PA,NJCAA,5,NONE,NONE
+Merrimack College,10002057,MA,Division 1,1,Northeast,nec
+Messiah College,568,PA,Division 3,3,Middle Atlantic,mid-atlantic
+Metropolitan State College of Denver,424,CO,NONE,NONE,NONE,NONE
+MIami Dade College,10009605,FL,NONE,NONE,NONE,NONE
+Miami Dade North,10009606,FL,NONE,NONE,NONE,NONE
+Miami Dade South,10009607,FL,NONE,NONE,NONE,NONE
+Miami University (Ohio),426,OH,Division 1,1,Mid-American,mac
+Michigan State University,427,MI,Division 1,1,Big Ten,big10
+Middlebury College,101,VT,Division 3,3,NESCAC,nescac
+Midland University,10009577,NE,NAIA,4,KCAC,kcac
+Midway University,10025443,KY,NAIA,4,Mid-South,mid-south
+Millersville University,428,PA,Division 2,2,PSAC,psac
+Milligan University,539,TN,NAIA,4,Appalachian Athletic,App
+Millikin University,429,IL,Division 3,3,CCIW,cciw
+Mills College,430,CA,Division 3,3,Liberal Arts,libarts
+Millsaps College,10016801,MS,Division 3,3,SAA,saa
+Minnesota State University Moorhead,41,MN,Division 2,2,Northern Sun,nsic
+Minnesota State University-Mankato,71,MN,Division 2,2,Northern Sun,nsic
+Misericordia University,267,PA,Division 3,3,Middle Atlantic,mid-atlantic
+Missouri State University,454,MO,Division 1,1,Mid-American,mac
+Missouri University of Science & Technology,447,MO,Division 2,2,GLIAC,gliac
+Modesto Junior College,592,CA,CCCAA,6,NONE,NONE
+Monmouth College,361,IL,Division 3,3,Midwest,midwest
+Monmouth University,10007454,NJ,Division 1,1,MAAC,maac
+Monroe Community College,649,NY,NJCAA,5,NONE,NONE
+Montclair State University,433,NJ,Division 3,3,Metro,metro
+Monterrey Peninsula College,10009633,CA,NONE,NONE,NONE,NONE
+Montgomery College,10009608,MD,NONE,NONE,NONE,NONE
+Moravian College,10025302,PA,Division 3,3,Landmark,landmark
+Morningside College,546,IA,NAIA,4,Liberal Arts,libarts
+Morrisville State College,10009275,NY,NONE,NONE,NONE,NONE
+Mount Allison University,10010771,NB,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Mount Holyoke College,420,MA,Division 3,3,NEWMAC,newmac
+Mount Saint Mary College (New York),435,NY,Division 3,3,Metro,metro
+Mount Saint Mary's University (MD),544,MD,Division 1,1,CCSA,ccsa
+Mount San Antonio,593,CA,CCCAA,6,NONE,NONE
+Muskingum University,10002663,OH,NONE,NONE,NONE,NONE
+Napa Community College,10009609,CA,NONE,NONE,NONE,NONE
+Nassau Community College,10009610,NY,NONE,NONE,NONE,NONE
+Nazareth (NY) College,10002664,NY,NONE,NONE,NONE,NONE
+Nazareth College,437,NY,Division 3,3,Empire 8,empire8
+Nebraska Wesleyan University,10005094,NE,Division 3,3,Liberal Arts,libarts
+Neumann University,10020710,PA,Division 3,3,Atlantic East,aec
+New Jersey Institute of Technology,443,NJ,Division 1,1,America East,americaeast
+New Mexico State University,444,NM,Division 1,1,WAC,wac
+New York University,59,NY,Division 3,3,UAA,uaa
+Niagara University,434,NY,Division 1,1,ECAC,ecac
+North Carolina A&T State University,432,NC,Division 1,1,NONE,NONE
+North Carolina State University,394,NC,Division 1,1,ACC,acc
+North Central College,396,IL,Division 3,3,CCIW,cciw
+North Park University,10002666,IL,NONE,NONE,NONE,NONE
+Northeastern Illinois University,10009175,IL,NONE,NONE,NONE,NONE
+Northeastern University,18,MA,Division 1,1,Colonial,caa
+Northern Arizona University,398,AZ,Division 1,1,WAC,wac
+Northern Illinois University,10002667,IL,NONE,NONE,NONE,NONE
+Northern Michigan University,72,MI,Division 2,2,GLIAC,gliac
+Northern State University,618,SD,Division 2,2,Northern Sun,nsic
+Northwestern University,401,IL,Division 1,1,Big Ten,big10
+Norwich University,402,VT,Division 3,3,ECAC,ecac
+Notre Dame (Ohio) College,545,OH,Division 2,2,Mountain East,mountain-east
+Nova Southeastern University,655,FL,Division 2,2,Sunshine,ssc
+Oakland Community College,10009611,MI,NONE,NONE,NONE,NONE
+Oakland University,21,MI,Division 1,1,Horizon,horizon
+Oberlin College,404,OH,Division 3,3,North Coast,ncac
+Occidental College,419,CA,Division 3,3,SCIAC,sciac
+Ocean County College,650,NJ,NJCAA,5,Independent,independen
+Ohio Northern University,406,OH,Division 3,3,Ohio,oac
+Ohio State University,393,OH,Division 1,1,Big Ten,big10
+Ohio University,408,OH,Division 1,1,Mid-American,mac
+Ohio Wesleyan University,409,OH,Division 3,3,North Coast,ncac
+Ohlone College,594,CA,CCCAA,6,NONE,NONE
+Oklahoma Baptist University,10000457,OK,Division 2,2,Rocky Mountain,rmac
+Oklahoma Christian University,10009480,OK,Division 2,2,Rocky Mountain,rmac
+Oklahoma State University,10002668,OK,NONE,NONE,NONE,NONE
+Old Dominion University,410,VA,Division 1,1,CCSA,ccsa
+Olivet College,411,MI,Division 3,3,MIAA,miaa
+Olivet Nazarene University,10001793,IL,NAIA,4,KCAC,kcac
+Oneonta State University,366,NY,Division 3,3,SUNYAC,sunyac
+Oral Roberts University,10009612,OK,NONE,NONE,NONE,NONE
+Orange Coast College,595,CA,CCCAA,6,NONE,NONE
+Oregon State University,68,OR,Division 1,1,Pac 12,pac-12
+Ottawa University of Arizona,10020248,AZ,NAIA,4,NONE,NONE
+Ouachita Baptist University,412,AR,Division 2,2,New South,nsisc
+Pace University,610,NY,Division 2,2,Northeast 10,ne10
+Pacific Lutheran University,414,WA,Division 3,3,Northwest,nwc
+Pacific University,359,OR,Division 3,3,Northwest,nwc
+Palm Beach Community College,10009613,FL,NONE,NONE,NONE,NONE
+Palo Alto College,10009176,CA,NONE,NONE,NONE,NONE
+Palomar College,596,CA,CCCAA,6,NONE,NONE
+Pasadena City College,597,CA,CCCAA,6,NONE,NONE
+Paul Smith College,10003347,NY,Independent,independen,NONE,NONE
+Penn State Behrend University,340,PA,Division 3,3,Allegheny,amcc
+Pennsylvania State University,82,PA,Division 1,1,Big Ten,big10
+Pennsylvania State University - Altoona,415,PA,Division 3,3,Allegheny,amcc
+Pensacola Community College,10009614,FL,NONE,NONE,NONE,NONE
+Pepperdine University,417,CA,Division 1,1,PCSC,paccoast
+Pfeiffer University,460,NC,Division 3,3,NONE,NONE
+Piedmont College,10020194,GA,Division 3,3,NONE,NONE
+Pierce College,589,CA,CCCAA,6,NONE,NONE
+Plymouth State University,476,NH,Division 3,3,Little East,little-east
+Point University,10007495,GA,NAIA,4,Appalachian Athletic,App
+Pomona-Pitzer Colleges,10,CA,Division 3,3,SCIAC,sciac
+Portland State University,10007648,OR,NONE,NONE,NONE,NONE
+Post University,625,CT,Division 2,2,NONE,NONE
+PostGrad-CSUB,10006688,CA,NONE,NONE,NONE,NONE
+Princeton University,477,NJ,Division 1,1,Ivy,ivy
+Principia College,478,IL,Division 3,3,Liberal Arts,libarts
+Providence College,479,RI,Division 1,1,Big East,bigeast
+Purchase College,8479,NY,Division 3,3,Skyline,skyline
+Purdue University,27,IN,Division 1,1,Big Ten,big10
+Queens College (New York),480,NY,Division 2,2,Metro,metro
+Queens University ,10003222,ON,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Queens University of Charlotte,9415,NC,Division 2,2,Bluegrass,bluegrass
+Queensborough Community College,651,NY,NJCAA,5,NONE,NONE
+Quincy University,10005797,IL,Division 2,2,GLVC,glvc
+Radford University,518,VA,NONE,NONE,NONE,NONE
+Ramapo College of New Jersey,538,NJ,Division 3,3,Metro,metro
+Rancho Santiago College,10009615,CA,NONE,NONE,NONE,NONE
+Randolph College,609,VA,Division 3,3,ODAC,odac
+Randolph-Macon College,26,VA,Division 3,3,ODAC,odac
+Regis College (Massachusetts),481,MA,Division 3,3,GNAC,gnac
+Regis University (CO),10002671,CO,NONE,NONE,NONE,NONE
+Rensselaer Polytechnic Institute,45,NY,Division 3,3,Liberty,liberty
+Rhode Island College,10003261,RI,Division 3,3,Little East,little-east
+Rhodes College,540,TN,Division 3,3,SAA,saa
+Rice University,483,TX,Division 1,1,C-USA,c-usa
+Rider University,484,NJ,Division 1,1,MAAC,maac
+Rio Hondo Community College,10009177,CA,NONE,NONE,NONE,NONE
+Ripon College,485,WI,Division 3,3,Midwest,midwest
+Riverside Community College,598,CA,CCCAA,6,NONE,NONE
+Roanoke College,10009616,VA,Division 3,3,ODAC,odac
+Robert Morris University,629,IL,NONE,NONE,NONE,NONE
+Roberts Wesleyan University,10010647,NY,Division 2,2,Metro,metro
+Rochester Institute of Technology,30,NY,Division 3,3,Liberty,liberty
+Rockford College,10007649,IL,NONE,NONE,NONE,NONE
+Roger Williams University,560,RI,Division 3,3,NEISDA,neisda
+Rollins College,486,FL,Division 2,2,Sunshine,ssc
+Rose State College,10009478,OK,NJCAA,5,NONE,NONE
+Rose-Hulman Institute of Technology,502,IN,Division 3,3,Heartland,hcac
+Rowan University,488,NJ,Division 3,3,Metro,metro
+Rutgers University,43,NJ,Division 1,1,Big Ten,big10
+Sacramento City College,599,CA,CCCAA,6,NONE,NONE
+Sacramento State University,10002672,CO,NONE,NONE,NONE,NONE
+Sacred Heart University,475,CT,Division 1,1,Northeast,nec
+Saddleback College,604,CA,CCCAA,6,NONE,NONE
+Saginaw Valley State University,10004316,MI,Division 2,2,GLIAC,gliac
+Saint Ambrose University,10009914,IA,NAIA,4,Chicagoland,chicagoland
+Saint Andrews University,547,NC,NAIA,4,Appalachian Athletic,App
+Saint Catharine College,10001911,KY,NONE,NONE,NONE,NONE
+Saint Catherine University,458,MN,Division 3,3,MIAC,miac
+Saint Cloud State University,96,MN,Division 2,2,GLIAC,gliac
+Saint Francis University (Pennsylvania),474,PA,Division 1,1,ECAC,ecac
+Saint Gregory's University,10006393,OK,NAIA,4,Independent,independen
+Saint Johns (NY),10007650,NY,NONE,NONE,NONE,NONE
+Saint Johns University,461,MN,Division 3,3,MIAC,miac
+Saint Joseph College (Connecticut),463,CT,Division 3,3,GNAC,gnac
+Saint Joseph College (Long Island),10003381,NY,Division 3,3,Skyline,skyline
+Saint Joseph's College (Brooklyn),562,NY,Division 3,3,Skyline,skyline
+Saint Josephs (IN),10007651,IN,NONE,NONE,NONE,NONE
+Saint Josephs College (Maine),620,ME,Division 3,3,GNAC,gnac
+Saint Lawrence University,464,NY,Division 3,3,Liberty,liberty
+Saint Leo University,524,FL,Division 2,2,Sunshine,ssc
+Saint Louis University,491,MO,Division 1,1,Atlantic 10,a-10
+Saint Mary's College (CA),10009635,CA,NONE,NONE,NONE,NONE
+Saint Marys College (Indiana),492,IN,Division 3,3,MIAA,miaa
+Saint Marys College of Maryland,465,MD,Division 3,3,Atlantic East,aec
+Saint Marys University of Minnesota,466,MN,Division 3,3,MIAC,miac
+Saint Michaels College,467,VT,Division 2,2,Northeast 10,ne10
+Saint Peters University,468,NJ,Division 1,1,MAAC,maac
+Saint Petersburg Junior College,10009617,FL,NONE,NONE,NONE,NONE
+Saint Thomas University (Florida),10023296,FL,NAIA,4,Sun Coast,SCC
+Saint Vincent College,8474,PA,Division 3,3,Presidents,presidents
+Salem College,10020619,NC,Division 3,3,ODAC,odac
+Salem State College,494,MA,Bluegrass,bluegrass,NONE,NONE
+Salem University,61,WV,Division 2,2,Bluegrass,bluegrass
+Salisbury University,495,MD,Division 3,3,Metro,metro
+Sample University,10002187,IL,Division 3,3,Independent,independen
+San Diego Mesa College,603,CA,CCCAA,6,NONE,NONE
+San Diego Miramar College,10009178,CA,NONE,NONE,NONE,NONE
+San Diego State University,496,CA,Division 1,1,Mountain West,mwc
+San Francisco State University,498,CA,NONE,NONE,NONE,NONE
+San Joaquin Delta College,602,CA,CCCAA,6,NONE,NONE
+San Jose State University,499,CA,Division 1,1,Mountain West,mwc
+Santa Ana College,601,CA,CCCAA,6,NONE,NONE
+Santa Barbara City College,10009180,CA,NONE,NONE,NONE,NONE
+Santa Clara University,10002674,CA,NONE,NONE,NONE,NONE
+Santa Monica College,557,CA,CCCAA,6,NONE,NONE
+Santa Rosa Junior College,600,CA,CCCAA,6,NONE,NONE
+Sarah Lawrence College,10002012,NY,Division 3,3,Metro,metro
+Savannah College of Art and Design,526,GA,NAIA,4,Bluegrass,bluegrass
+Schoolcraft College,10009618,MI,NONE,NONE,NONE,NONE
+Seattle University,90,WA,Division 1,1,WAC,wac
+Seton Hall University,462,NJ,Division 1,1,Big East,bigeast
+Shasta College,606,CA,CCCAA,6,NONE,NONE
+Shawnee State University,10023753,OH,NAIA,4,NONE,NONE
+Shepherd College,10009619,WV,NONE,NONE,NONE,NONE
+Shippensburg University,93,PA,Division 2,2,PSAC,psac
+Siena College,489,NY,Division 1,1,MAAC,maac
+Sierra College,607,CA,CCCAA,6,NONE,NONE
+Simmons University,487,MA,Division 3,3,GNAC,gnac
+Simon Fraser University,525,BC,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Simpson College,8,IA,NONE,NONE,NONE,NONE
+Skidmore College,449,NY,Division 3,3,Liberty,liberty
+Slippery Rock University,62,PA,NONE,NONE,NONE,NONE
+Smith College,450,MA,Division 3,3,NEWMAC,newmac
+Soka University,362,CA,NAIA,4,PCSC,paccoast
+Solano Community College,608,CA,CCCAA,6,NONE,NONE
+South Dakota State University,451,SD,Division 1,1,Summit,summit
+South Georgia College,10000002,GA,NJCAA,5,Sun Coast,SCC
+Southeast Missouri State,10007653,MO,NONE,NONE,NONE,NONE
+Southern Arkansas University,10009620,AR,NONE,NONE,NONE,NONE
+Southern Connecticut State University,81,CT,Division 2,2,Northeast 10,ne10
+Southern Illinois University,453,IL,Division 1,1,Mid-American,mac
+Southern Methodist University,75,TX,Division 1,1,American Athletic,american
+Southern Oregon,10002675,OR,NONE,NONE,NONE,NONE
+Southern Oregon State University,10009621,OR,NONE,NONE,NONE,NONE
+Southern Virginia University,10021606,VA,Division 3,3,Capital,cac
+Southern Wesleyan University,10013107,SC,NONE,NONE,NONE,NONE
+Southwest Minnesota State University,10009663,MN,Division 2,2,Northern Sun,nsic
+Southwestern College (CA),10009181,CA,NONE,NONE,NONE,NONE
+Southwestern Oregon Community College,10006392,OR,NJCAA,5,Independent,independen
+Southwestern University,455,TX,Division 3,3,SCAC,scac
+Spring Hill College,345,AL,NONE,NONE,NONE,NONE
+Springfield College,24,MA,Division 3,3,NEWMAC,newmac
+St Norbert College,343,WI,Midwest,midwest,NONE,NONE
+St. Bonaventure University,457,NY,Division 1,1,Atlantic 10,a-10
+St. Francis College Brooklyn  (New York),459,NY,Division 1,1,Metro,metro
+St. Olaf College,12,MN,Division 3,3,MIAC,miac
+Stanford University,112,CA,Division 1,1,Pac 12,pac-12
+State Maritime University of New York,561,NY,Division 3,3,Metro,metro
+State University of New York at Brockport,470,NY,Division 3,3,SUNYAC,sunyac
+State University of New York at Cobleskill,305,NY,Division 3,3,NEAC,neac
+State University of New York at Cortland,471,NY,Division 3,3,SUNYAC,sunyac
+State University of New York at Delhi,652,NY,Division 3,3,Allegheny,amcc
+State University of New York at Geneseo,346,NY,Division 3,3,SUNYAC,sunyac
+State University of New York at New Paltz,472,NY,Division 3,3,SUNYAC,sunyac
+State University of New York at Old Westbury,338,NY,Division 3,3,Skyline,skyline
+State University of New York at Oswego,16,NY,Division 3,3,SUNYAC,sunyac
+State University of New York at Potsdam,501,NY,Division 3,3,SUNYAC,sunyac
+State University of New York Institute of Technology,10001462,NY,Division 3,3,NEAC,neac
+Stephens College,8462,MO,Independent,independen,NONE,NONE
+Sterling College,10020657,KS,NAIA,4,KCAC,kcac
+Stevens Institute,313,NJ,Division 3,3,Middle Atlantic,mid-atlantic
+Stevenson University,10004803,MD,Division 3,3,Middle Atlantic,mid-atlantic
+Stonehill College Skyhawks,10023198,MA,Division 2,2,Northeast 10,ne10
+Stony Brook University,418,NY,America East,americaeast,NONE,NONE
+Suffern Community College,10009623,NY,NONE,NONE,NONE,NONE
+Suffolk County Community College,8699,VA,NONE,NONE,NONE,NONE
+SUNY-Canton,10009598,NY,NONE,NONE,NONE,NONE
+Susquehanna University,314,PA,Division 3,3,Landmark,landmark
+Swarthmore College,315,PA,Division 3,3,Centennial,centennial
+Sweet Briar College,316,VA,Division 3,3,ODAC,odac
+Sydney University,10000424,NS,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Syracuse University,317,NY,NONE,NONE,NONE,NONE
+Tabor College,10004629,KS,NAIA,4,KCAC,kcac
+Temple University,10002679,PA,NONE,NONE,NONE,NONE
+Tennessee Wesleyan University,503,TN,NONE,NONE,NONE,NONE
+Texas A&M University,80,TX,Division 1,1,SEC,sec
+Texas Christian University,318,TX,Division 1,1,Big 12,big12
+Texas State University,10002680,TX,NONE,NONE,NONE,NONE
+Texas Tech University,10007654,TX,NONE,NONE,NONE,NONE
+Texas-Permian Basin,529,TX,Division 2,2,New South,nsisc
+The Citadel,10009632,SC,NONE,NONE,NONE,NONE
+The College of New Jersey,52,NJ,Division 3,3,Metro,metro
+The College of Saint Rose,493,NY,Division 2,2,Northeast 10,ne10
+The Master's University,10011277,CA,NAIA,4,PCSC,paccoast
+The University of Akron,209,OH,Division 1,1,Mid-American,mac
+Thomas More,10015010,KY,NAIA,4,Mid-South,mid-south
+Thomas University,10003289,GA,NAIA,4,Independent,independen
+Tiffin University,10003277,OH,Division 2,2,GMAC,GMAC
+Towson University,320,MD,Division 1,1,Colonial,caa
+Transylvania University,115,KY,Division 3,3,Heartland,hcac
+Trent University ,10003223,ON,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Trinity College (Connecticut),321,CT,Division 3,3,NESCAC,nescac
+Trinity Lutheran College,10006395,WA,NAIA,4,Independent,independen
+Trinity University (Texas),322,TX,Division 3,3,SCAC,scac
+Trinity Western University,10003304,BC,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Triton College,10009625,IL,NONE,NONE,NONE,NONE
+Truman State University,126,MO,Division 2,2,GLVC,glvc
+Tufts University,49,MA,Division 3,3,NESCAC,nescac
+Tulane University,349,LA,Division 1,1,American Athletic,american
+U.S. Air Force Academy,337,CO,Division 1,1,Mountain West,mwc
+U.S. Coast Guard Academy,324,CT,Division 3,3,NEWMAC,newmac
+U.S. Merchant Marine Academy,311,NY,Division 3,3,Metro,metro
+U.S. Military Academy (Army),326,NY,Division 1,1,ECAC,ecac
+U.S. Naval Academy (Navy),327,MD,Division 1,1,Patriot,patriot
+UCLA,107,CA,Division 1,1,Pac 12,pac-12
+UMBC,138,MD,Division 1,1,America East,americaeast
+UNC Pembroke,10007516,NC,Mountain East,mountain-east,NONE,NONE
+Union College (Kentucky),348,KY,NAIA,4,Appalachian Athletic,App
+Union College (New York),328,NY,Division 3,3,Liberty,liberty
+Université de Montréal,10003221,PQ,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Universite de Sherbrooke,10010798,QC,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Université du Québec à Trois-Rivières,10003224,PQ,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Université Laval ,10003225,PQ,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University at Buffalo,185,NY,Division 1,1,Mid-American,mac
+University of Alabama,65,AL,Division 1,1,SEC,sec
+University of Alaska-Anchorage,10002635,AK,NONE,NONE,NONE,NONE
+University of Alaska-Fairbanks,528,AK,Division 2,2,PCSC,paccoast
+University of Albany,10002636,NY,NONE,NONE,NONE,NONE
+University of Alberta,10003226,AB,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of Arizona,120,AZ,Division 1,1,Pac 12,pac-12
+University of Arkansas-Fayetteville,47,AR,Division 1,1,SEC,sec
+University of Arkansas-Little Rock,216,AR,Division 1,1,Missouri Valley,mvc
+University of Bridgeport,357,CT,NONE,NONE,NONE,NONE
+University of British Columbia,10003227,BC,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of Calgary,10003228,AB,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of California-Berkeley,110,CA,Division 1,1,Pac 12,pac-12
+University of California-Davis,192,CA,Division 1,1,MPSF,mpsf
+University of California-Irvine,206,CA,NONE,NONE,NONE,NONE
+University of California-Riverside,10002645,CA,NONE,NONE,NONE,NONE
+University of California-San Diego,121,CA,Division 1,1,MPSF,mpsf
+University of California-Santa Barbara,194,CA,Division 1,1,MPSF,mpsf
+University of California-Santa Cruz,182,CA,Division 3,3,PCSC,paccoast
+University of Charleston,10009169,SC,NONE,NONE,NONE,NONE
+University of Chicago,259,IL,Division 3,3,UAA,uaa
+University of Cincinnati,260,OH,Division 1,1,American Athletic,american
+University of Connecticut,28,CT,Division 1,1,Big East,bigeast
+University of Delaware,275,DE,Division 1,1,Colonial,caa
+University of Denver,276,CO,Division 1,1,Summit,summit
+University of Evansville,240,IN,Division 1,1,Mid-American,mac
+University of Findlay,242,OH,Division 2,2,GMAC,GMAC
+University of Florida,117,FL,Division 1,1,SEC,sec
+University of Georgia,124,GA,Division 1,1,SEC,sec
+University of Guelph,10003569,AB,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+"University of Hawaii, Manoa",51,HI,Division 1,1,MPSF,mpsf
+University of Houston,63,TX,Division 1,1,American Athletic,american
+University of Idaho,519,ID,Division 1,1,WAC,wac
+University of Illinois,23,IL,Division 1,1,Big Ten,big10
+University of Illinois at Chicago,158,IL,Division 1,1,Horizon,horizon
+University of Incarnate Word,154,TX,Division 1,1,CCSA,ccsa
+University of Indianapolis,100,IN,Division 2,2,GLVC,glvc
+University of Iowa,166,IA,Division 1,1,Big Ten,big10
+University of Jamestown,10025387,ND,NONE,NONE,NONE,NONE
+University of Kansas,152,KS,Division 1,1,Big 12,big12
+University of Kentucky,176,KY,Division 1,1,SEC,sec
+University of La Verne,131,CA,Division 3,3,SCIAC,sciac
+University of Lethbridge,10003229,AB,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of Louisiana at Monroe,148,LA,NONE,NONE,NONE,NONE
+University of Louisville,174,KY,Division 1,1,ACC,acc
+University of Lynchburg,10016800,VA,Division 3,3,ODAC,odac
+University of Maine,169,ME,Division 1,1,America East,americaeast
+University of Manitoba,10003230,MB,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of Mary,10007748,ND,Division 2,2,Northern Sun,nsic
+University of Mary Washington,144,VA,Division 3,3,Metro,metro
+University of Maryland,39,MD,NONE,NONE,NONE,NONE
+University of Massachusetts (Amherst),421,MA,Division 1,1,Atlantic 10,a-10
+University of Massachusetts (Dartmouth),422,MA,Division 3,3,Little East,little-east
+University of Massacusetts-Lowell,10002660,MA,NONE,NONE,NONE,NONE
+University of Miami (Florida),425,FL,Division 1,1,ACC,acc
+University of Michigan,89,MI,Division 1,1,Big Ten,big10
+University of Minnesota,31,MN,Division 1,1,Big Ten,big10
+University of Minnesota-Morris,617,MN,Division 3,3,Liberal Arts,libarts
+University of Missouri,431,MO,Division 1,1,SEC,sec
+University of Missouri-St. Louis,10002661,MO,Division 2,2,GLVC,glvc
+University of Montana,10002662,MT,NONE,NONE,NONE,NONE
+University of Montevallo,10015135,AL,Division 2,2,New South,nsisc
+University of Mount Union,70,OH,Division 3,3,Ohio,oac
+University of Nebraska at Kearney,438,NE,Division 2,2,Northern Sun,nsic
+"University of Nebraska, Lincoln",439,NE,Division 1,1,Big Ten,big10
+"University of Nebraska, Omaha",97,NE,Division 1,1,Summit,summit
+University of Nevada,441,NV,Division 1,1,Mountain West,mwc
+"University of Nevada, Las Vegas (UNLV)",440,NV,Division 1,1,Mountain West,mwc
+University of New Brunswick,10003231,NB,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of New England,8461,ME,Division 3,3,NEISDA,neisda
+University of New Hampshire,285,NH,Division 1,1,America East,americaeast
+University of New Mexico,445,NM,Division 1,1,Mountain West,mwc
+University of New Orleans,360,LA,NONE,NONE,NONE,NONE
+University of North Carolina Asheville,10001792,NC,Division 1,1,CCSA,ccsa
+"University of North Carolina, Chapel Hill",60,NC,Division 1,1,ACC,acc
+"University of North Carolina, Wilmington",395,NC,Division 1,1,Colonial,caa
+University of North Dakota,106,ND,Division 1,1,NONE,NONE
+University of North Florida,521,FL,Division 1,1,CCSA,ccsa
+University of North Texas,397,TX,Division 1,1,C-USA,c-usa
+University of Northern Colorado,399,CO,Division 1,1,WAC,wac
+University of Northern Iowa,400,IA,Division 1,1,Missouri Valley,mvc
+University of Notre Dame,53,IN,Division 1,1,ACC,acc
+University of Oklahoma,10002669,OK,NONE,NONE,NONE,NONE
+University of Oregon,10002670,OR,NONE,NONE,NONE,NONE
+University of Ottawa,10003232,ON,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of Pennsylvania,416,PA,Division 1,1,Ivy,ivy
+University of Pittsburgh,405,PA,Division 1,1,ACC,acc
+University of Pittsburgh-Bradford,537,PA,Division 3,3,Allegheny,amcc
+University of Prince Edward Island,10003233,PQ,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of Puerto Rico,342,PR,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of Puerto Rico-Mayaguez,341,PR,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of Puget Sound,91,WA,Division 3,3,Northwest,nwc
+University of Redlands,3,CA,Division 3,3,SCIAC,sciac
+University of Regina,10010808,SK,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of Rhode Island,482,RI,Division 1,1,Atlantic 10,a-10
+University of Richmond,37,VA,Division 1,1,Atlantic 10,a-10
+University of Rio Grande,10025360,OH,NAIA,4,Mid-South,mid-south
+University of Rochester,6,NY,Division 3,3,UAA,uaa
+University of Saint Mary,10018098,KS,NAIA,4,KCAC,kcac
+University of Saint Thomas,469,MN,Division 1,1,Summit,summit
+University of San Diego,497,CA,Division 1,1,MPSF,mpsf
+University of Scranton,500,PA,Division 3,3,Landmark,landmark
+University of Sioux Falls,10007689,SD,Division 2,2,Northern Sun,nsic
+University of South Carolina,95,SC,Division 1,1,SEC,sec
+University of South Dakota,83,SD,Division 1,1,Summit,summit
+University of South Florida,10007652,FL,NONE,NONE,NONE,NONE
+University of Southern California,102,CA,Division 1,1,Pac 12,pac-12
+University of Tampa,104,FL,Division 2,2,Sunshine,ssc
+University of Tennessee,44,TN,Division 1,1,SEC,sec
+University of Texas,105,TX,Division 1,1,Big 12,big12
+University of Texas El-Paso,10009624,TX,NONE,NONE,NONE,NONE
+University of Texas-Arlington,10002682,TX,NONE,NONE,NONE,NONE
+University of the District of olumbia,10003069,DC,Division 2,2,NONE,NONE
+University of the Ozarks,10008710,AR,Division 3,3,SCAC,scac
+University of the Pacific,413,CA,Division 1,1,MPSF,mpsf
+University of the South (Sewanee),344,TN,Division 3,3,SAA,saa
+University of Toledo,319,OH,Division 1,1,Mid-American,mac
+University of Toronto,8469,ON,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of Utah,330,UT,Division 1,1,Pac 12,pac-12
+University of Vermont,334,VT,Division 1,1,America East,americaeast
+University of Victoria,10003236,BC,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of Virginia,73,VA,Division 1,1,ACC,acc
+University of Washington,288,WA,NONE,NONE,NONE,NONE
+University of Waterloo,10000423,ON,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of West Florida,10002824,FL,Division 2,2,New South,nsisc
+University of Western Ontario,10003238,ON,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+University of Wisconsin-Eau Claire,367,WI,Division 3,3,WIAC,wiac
+University of Wisconsin-Green Bay,368,WI,Division 1,1,Horizon,horizon
+University of Wisconsin-La Crosse,113,WI,Division 3,3,WIAC,wiac
+University of Wisconsin-Madison,98,WI,Division 1,1,Big Ten,big10
+University of Wisconsin-Milwaukee,369,WI,Division 1,1,Horizon,horizon
+University of Wisconsin-Oshkosh,54,WI,Division 3,3,WIAC,wiac
+University of Wisconsin-Parkside,10009626,WI,NONE,NONE,NONE,NONE
+University of Wisconsin-River Falls,370,WI,WIAC,wiac,NONE,NONE
+University of Wisconsin-Stevens Point,29,WI,Division 3,3,WIAC,wiac
+University of Wisconsin-Whitewater,371,WI,Division 3,3,WIAC,wiac
+University of Wisconsin–Stout,10009627,WI,NONE,NONE,NONE,NONE
+University of Wyoming,374,WY,Division 1,1,Mountain West,mwc
+Urbana University,616,OH,Division 2,2,Mountain East,mountain-east
+Ursinus College,329,PA,Division 3,3,Centennial,centennial
+Ursuline College,653,OH,Division 2,2,GMAC,GMAC
+Utica College,331,NY,Division 3,3,Empire 8,empire8
+Valparaiso University,332,IN,Division 1,1,Missouri Valley,mvc
+Vanderbilt University,532,TN,Division 1,1,SEC,sec
+Vanguard University,8468,CA,NONE,NONE,NONE,NONE
+Vassar College,333,NY,Division 3,3,Liberty,liberty
+Ventura College,551,CA,CCCAA,6,NONE,NONE
+Villa Maria College,10009372,NY,Independent,independen,NONE,NONE
+Villanova University,32,PA,Division 1,1,Big East,bigeast
+Vincennes University,527,IN,NONE,NONE,NONE,NONE
+Virgin Islands,558,VI,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Virginia Commonwealth University,10002683,VA,NONE,NONE,NONE,NONE
+Virginia Military Institute,335,VA,Division 1,1,America East,americaeast
+Virginia Tech,336,VA,Division 1,1,ACC,acc
+Virginia Wesleyan University,10010227,VA,Division 3,3,ODAC,odac
+Wabash College,298,IN,Division 3,3,North Coast,ncac
+Wagner College,296,NY,Division 1,1,Northeast,nec
+Wake Forest University,10009182,NC,NONE,NONE,NONE,NONE
+Warren Wilson College,8463,NC,Independent,independen,Sun Coast,SCC
+Washington & Jefferson College,323,PA,Division 3,3,Presidents,presidents
+Washington and Lee University,286,VA,Division 3,3,ODAC,odac
+Washington College (Maryland),38,MD,Division 3,3,Centennial,centennial
+Washington State University,287,WA,Division 1,1,Pac 12,pac-12
+Washington University (Missouri),94,MO,Division 3,3,UAA,uaa
+Wayland Baptist University,10003582,TX,NONE,NONE,NONE,NONE
+Wayne State College (NE),10002684,NE,NONE,NONE,NONE,NONE
+Wayne State University,289,MI,Division 2,2,GLIAC,gliac
+Webster University,290,MO,NONE,NONE,NONE,NONE
+Wellesley College,291,MA,Division 3,3,NEWMAC,newmac
+Wells College,292,NY,Division 3,3,NEAC,neac
+Wesleyan University,293,CT,Division 3,3,NESCAC,nescac
+West Chester University,109,PA,Division 2,2,PSAC,psac
+West Valley College,605,CA,CCCAA,6,NONE,NONE
+West Virginia Institute of Technology,10000784,WV,NAIA,4,Appalachian Athletic,App
+West Virginia University,294,WV,Division 1,1,Big 12,big12
+West Virginia Wesleyan College,295,WV,Division 2,2,Mountain East,mountain-east
+Westcliff University,10026173,CA,NAIA,4,PCSC,paccoast
+Western Colorado University,10001999,CO,Division 2,2,Rocky Mountain,rmac
+Western Connecticut State University,310,CT,Division 3,3,Little East,little-east
+Western Illinois University,297,IL,Division 1,1,Summit,summit
+Western Kentucky University,284,KY,NONE,NONE,NONE,NONE
+Western Michigan University,10009628,MI,NONE,NONE,NONE,NONE
+Western New England University,300,MA,Division 3,3,Little East,little-east
+Western University (Canada),10003570,AB,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Westfield State University,301,MA,Division 3,3,Little East,little-east
+Westminster College,302,PA,Division 3,3,Presidents,presidents
+Westmont College,10016869,CA,NAIA,4,PCSC,paccoast
+Wheaton College (Illinois),78,IL,Division 3,3,CCIW,cciw
+Wheaton College (Massachusetts),303,MA,Division 3,3,NEWMAC,newmac
+Wheeling University,304,WV,Division 2,2,Mountain East,mountain-east
+Wheelock College,10009274,MA,NONE,NONE,NONE,NONE
+Whitman College,306,WA,Division 3,3,Northwest,nwc
+Whittier College,307,CA,Division 3,3,SCIAC,sciac
+Whitworth University,40,WA,Division 3,3,Northwest,nwc
+Widener University,308,PA,Division 3,3,ECAC,ecac
+Wilfred Laurier University,10003239,ON,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Wilkes University,10005836,PA,Division 3,3,Middle Atlantic,mid-atlantic
+Willamette University,309,OR,Division 3,3,Northwest,nwc
+William & Mary,350,VA,Division 1,1,Colonial,caa
+William Jewell College,10000408,MO,Division 2,2,GLVC,glvc
+William Paterson University of New Jersey,391,NJ,Division 3,3,Metro,metro
+William Peace University,10010314,NC,Division 3,3,Independent,independen
+William Woods University,10009629,MO,NONE,NONE,NONE,NONE
+Williams Baptist University,10010508,AR,NAIA,4,NONE,NONE
+Williams College,119,MA,Division 3,3,NESCAC,nescac
+Wilmington College (Ohio),325,OH,Division 3,3,Ohio,oac
+Wingate University,46,NC,Division 2,2,Bluegrass,bluegrass
+Winona State University,10009630,MN,NONE,NONE,NONE,NONE
+Wittenberg University,9,OH,Division 3,3,North Coast,ncac
+Worcester Polytechnic Institute,372,MA,Division 3,3,NEWMAC,newmac
+Wright State University,373,OH,Division 1,1,NONE,NONE
+Xavier University,375,OH,Division 1,1,Big East,bigeast
+Yale University,376,CT,Division 1,1,Ivy,ivy
+York College (NY),448,NY,Division 3,3,CUNYAC,cunyac
+York College (Pennsylvania),392,PA,Division 3,3,Middle Atlantic,mid-atlantic
+York University (CAN),10003240,ON,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL,INTERNATIONAL
+Youngstown State University,378,OH,Division 1,1,Horizon,horizon
