@@ -1,4 +1,4 @@
-# CollegeSwimmingScraper
+# SwimScraper
 
 Python scraper for college and professional swimming data -  all data from Swimcloud.com
 
