@@ -1,9 +1,9 @@
 Metadata-Version: 2.1
 Name: SwimScraper
-Version: 0.0.5
+Version: 0.0.7
 Summary: A package to scrape professional and college swimming data.
 Home-page: https://github.com/maflancer/SwimScraper
-Author: Matthew Flancer
+Author: Matthew Flaner
 Author-email: maf291@pitt.edu
 License: UNKNOWN
 Project-URL: Bug Tracker, https://github.com/maflancer/SwimScraper/issues

@@ -2,9 +2,9 @@ LICENSE
 README.md
 pyproject.toml
 setup.cfg
+src/SwimScraper/SwimScraper.py
 src/SwimScraper/__init__.py
 src/SwimScraper/getTeamList.py
-src/SwimScraper/mainScraper.py
 src/SwimScraper.egg-info/PKG-INFO
 src/SwimScraper.egg-info/SOURCES.txt
 src/SwimScraper.egg-info/dependency_links.txt
