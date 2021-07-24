@@ -24,8 +24,8 @@ pitt_meetlist_2020 = ss.getTeamMeetList(team_name = 'University of Pittsburgh', 
 * **getCollegeTeams(team_names, conference_names, division_names)** -> returns list of teams where each team has a team_name, team_ID, team_state, team_division, team_division_ID, team_conference, team_conference_ID
   * **Select one of the three inputs:**
   * team_names - ```team_list = ss.getCollegeTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])```
-  * conference_names - ```ACC_teams = ss.getCollegeTeams(division_names = ['ACC'])```
-  * division_names - ```d1_teams = ss.getCollegeTeams(conference_names = ['Division 1'])```
+  * conference_names - ```ACC_teams = ss.getCollegeTeams(conference_names = ['ACC'])```
+  * division_names - ```d1_teams = ss.getCollegeTeams(division_names = ['Division 1'])```
 * **getTeamRankingsList(gender, season_ID, year)** -> returns list of top 50 countries where each team has a team_name, team_ID, and swimcloud_points (score given by swimcloud.com based on team's fastest times)
   * **Select a gender and either a season_ID (e.g., 19 for the 2015-16 season, 24 for the 2020-21 season) or year**
   * season_ID - ```male_rankings_2015 = ss.getTeamRankingsList('M', season_ID = 19)```
