@@ -16,6 +16,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.action_chains import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
 
+#sets path for chrome driver
 executable_path = ChromeDriverManager().install()
 
 teams = pd.read_csv('https://raw.githubusercontent.com/maflancer/SwimScraper/main/src/SwimScraper/collegeSwimmingTeams.csv')
@@ -41,7 +42,7 @@ def cleanName(webName):
 	return first_name + ' ' +  last_name
 
 #gets corresponding team number for a specified team
-def getTeamNumber(team_name):
+def getTeamID(team_name):
 	team_number = -1
 
 	#search for the specified team
@@ -70,6 +71,9 @@ def getYear(season_ID):
 def getEventName(event_ID):
     return list(events.keys())[list(events.values()).index(event_ID)]
 
+def getEventID(event_name):
+	return events.get(event_name)
+
 #extracts state or country from hometown
 def getState(hometown):
 	home = hometown.split(',')[-1].strip()
@@ -87,6 +91,18 @@ def getCity(hometown):
 
 	return city
 
+#converts a time of the format minutes:seconds (1:53.8) to seconds (113.8)
+def convertTime(display_time):
+    if ':' in displayTime:
+        timeArray = displayTime.split(':')
+        seconds = float(timeArray[0]) * 60
+        seconds += float(timeArray[1])
+
+        return seconds
+    elif displayTime.isalpha():
+        pass
+    else:
+        return float(displayTime)
 
 #for data from a html table (data), find the indexes where meet name, date, year, and improvement are
 #returns an array [meet_name_index, date_index, imp_index]
@@ -631,7 +647,7 @@ def getCollegeMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href
 				score = data[5].text.strip()
 				imp = data[7].text.strip()
 
-				results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label, 'time' : swim_time, 'score' : score, 'Improvement' : imp})
+				results.append({'meet_ID': meet_ID, 'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label, 'time' : swim_time, 'score' : score, 'Improvement' : imp})
 
 			else: #page is in a different format for relay events
 				try: #skip over the rows with no data
@@ -642,7 +658,7 @@ def getCollegeMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href
 					swim_time = swim_info[0].text.strip()
 					score = swim_info[1].text.strip()
 
-					results.append({'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label.split('\n')[0], 'time' : swim_time, 'score' : score})
+					results.append({'meet_ID' : meet_ID, 'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label.split('\n')[0], 'time' : swim_time, 'score' : score})
 				except AttributeError:
 					pass
 
@@ -737,7 +753,7 @@ def getProMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href = '
 				swim_FINA_score = data[5].text.strip()
 				imp = data[6].text.strip()
 
-				results.append({'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label, 'time' : swim_time, 'FINA_score' : swim_FINA_score, 'Improvement' : imp})
+				results.append({'meet_ID' : meet_ID, 'swimmer_name' : swimmer_name, 'swimmer_ID' : swimmer_ID, 'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label, 'time' : swim_time, 'FINA_score' : swim_FINA_score, 'Improvement' : imp})
 			else: #relay events are different format
 				try:
 					team = time.find('td', attrs = {'class' : 'u-nowrap'}).find('a').text.strip()
@@ -747,7 +763,7 @@ def getProMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href = '
 					swim_time = swim_info[0].text.strip()
 					FINA_score = swim_info[1].text.strip()
 
-					results.append({'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label.split('\n')[0], 'time' : swim_time, 'FINA_score' : FINA_score})
+					results.append({'meet_ID' : meet_ID, 'team_name' : team, 'team_ID' : team_ID, 'event_name' : event_name, 'event_ID' : event_ID, 'event_type' : group_label.split('\n')[0], 'time' : swim_time, 'FINA_score' : FINA_score})
 				except AttributeError:
 					pass
 	driver.close()
