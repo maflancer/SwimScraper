@@ -1,6 +1,7 @@
 # SwimScraper
 
-Python scraper for college and professional swimming data -  all data is from Swimcloud.com
+* Python scraping package for college and professional swimming data -  all data is from https://swimcloud.com. 
+* The package can be found on https://pypi.org/project/SwimScraper/.
 
 ## Installation
 * You can install SwimScraper using pip:
