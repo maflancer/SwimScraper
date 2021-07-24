@@ -204,7 +204,7 @@ def getRoster(team, gender, team_ID = -1, season_ID = -1, year = -1, pro = False
 		team_number = team_ID
 		team = getTeamName(team_ID)
 	else:
-		team_number = getTeamNumber(team)
+		team_number = getTeamID(team)
 
 	if(year != -1):
 		season_ID = getSeasonID(year)
@@ -496,7 +496,7 @@ def getTeamMeetList(team_name = '', team_ID = -1, season_ID = -1, year = -1):
 	meet_list = list()
 
 	if(team_name != ''):
-		team_number = getTeamNumber(team_name)
+		team_number = getTeamID(team_name)
 	elif(team_ID != -1):
 		team_number = team_ID
 
