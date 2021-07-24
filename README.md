@@ -72,8 +72,8 @@ pitt_meetlist_2020 = ss.getTeamMeetList(team_name = 'University of Pittsburgh', 
 
 ## Other Helper Functions
 
-* **getTeamID(team_name)** - gets corresponding team_ID for the specified team  *currently only for college teams
-* **getTeamName(team_ID)** - gets team_name for the specified team_ID *currently only for college teams
+* **getTeamID(team_name)** - gets corresponding team_ID for the specified team   ***currently only for college teams**
+* **getTeamName(team_ID)** - gets team_name for the specified team_ID   ***currently only for college teams**
 * **getSeasonID(year)** - gets season ID for a specified year
 * **getYear(season_ID)** - gets year for a specified season_ID
 * **getEventID(event_name)** - gets event_ID for a specified event_name
