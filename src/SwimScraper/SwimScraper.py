@@ -2,7 +2,6 @@ import requests
 import csv
 from bs4 import BeautifulSoup as bs
 import pandas as pd
-import json
 import time as _time
 from selenium import webdriver
 from selenium.webdriver.common.by import By

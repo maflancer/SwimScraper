@@ -8,4 +8,5 @@ src/SwimScraper/getTeamList.py
 src/SwimScraper.egg-info/PKG-INFO
 src/SwimScraper.egg-info/SOURCES.txt
 src/SwimScraper.egg-info/dependency_links.txt
+src/SwimScraper.egg-info/requires.txt
 src/SwimScraper.egg-info/top_level.txt
