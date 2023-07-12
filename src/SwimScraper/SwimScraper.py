@@ -358,7 +358,7 @@ def getSwimmerEvents(swimmer_ID):
 	_time.sleep(1) #makes sure the event tab pops up on website
 
 	for tab in tabs: #finds correct tab on swimmer's profile and clicks on it
-		if(tab.text == 'Event'):
+		if(tab.text == 'EVENT PROGRESSION'):
 			tab.click()
 
 	wait = WebDriverWait(driver, 10, ignored_exceptions = ignored_exceptions)
@@ -409,7 +409,7 @@ def getSwimmerTimes(swimmer_ID, event_name, event_ID = -1):
 	_time.sleep(1) #makes sure the event tab pops up on website
 
 	for tab in tabs: #finds correct tab on swimmer's profile and clicks on it
-		if(tab.text == 'Event'):
+		if(tab.text == 'EVENT PROGRESSION'):
 			tab.click()
 
 	wait = WebDriverWait(driver, 10, ignored_exceptions = ignored_exceptions)
