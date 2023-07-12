@@ -13,10 +13,6 @@ from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.action_chains import ActionChains
-from webdriver_manager.chrome import ChromeDriverManager
-
-#sets path for chrome driver
-executable_path = ChromeDriverManager().install()
 
 teams = pd.read_csv('https://raw.githubusercontent.com/maflancer/SwimScraper/main/src/SwimScraper/collegeSwimmingTeams.csv')
 
@@ -151,7 +147,7 @@ def getTeamRankingsList(gender, season_ID = -1, year = -1):
 	#set driver options
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
-	driver = webdriver.Chrome(executable_path, options = chrome_options)
+	driver = webdriver.Chrome(options = chrome_options)
 	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
 
 	teams = list()
@@ -349,7 +345,7 @@ def getSwimmerEvents(swimmer_ID):
 	#set driver options
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
-	driver = webdriver.Chrome(executable_path, options = chrome_options)
+	driver = webdriver.Chrome(options = chrome_options)
 	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
 
 	events = []
@@ -392,7 +388,7 @@ def getSwimmerTimes(swimmer_ID, event_name, event_ID = -1):
 	#set driver options
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
-	driver = webdriver.Chrome(executable_path, options = chrome_options)
+	driver = webdriver.Chrome(options = chrome_options)
 	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
 
 	time_list = list()
@@ -565,7 +561,7 @@ def getCollegeMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href
 	#set driver options
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
-	driver = webdriver.Chrome(executable_path, options = chrome_options)
+	driver = webdriver.Chrome(options = chrome_options)
 	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
 
 	results = list()
@@ -668,7 +664,7 @@ def getProMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href = '
 	#set driver options
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
-	driver = webdriver.Chrome(executable_path, options = chrome_options)
+	driver = webdriver.Chrome(options = chrome_options)
 	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
 
 	results = list()
@@ -775,7 +771,7 @@ def getProMeetResults(meet_ID, event_name, gender, event_ID = -1, event_href = '
 def getMeetSimulator(teams, gender, event_name, year = -1, event_ID = -1):
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
-	driver = webdriver.Chrome(executable_path, options = chrome_options)
+	driver = webdriver.Chrome(options = chrome_options)
 	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
 
 	times = list()
