@@ -353,7 +353,7 @@ def getSwimmerEvents(swimmer_ID):
 
 	driver.get(swimmer_URL)
 
-	tabs = driver.find_elements_by_css_selector('li.c-tabs__item')
+	tabs = driver.find_elements(By.CSS_SELECTOR, 'li.c-tabs__item')
 
 	_time.sleep(1) #makes sure the event tab pops up on website
 
@@ -404,7 +404,7 @@ def getSwimmerTimes(swimmer_ID, event_name, event_ID = -1):
 
 	driver.get(swimmer_URL)
 
-	tabs = driver.find_elements_by_css_selector('li.c-tabs__item')
+	tabs = driver.find_elements(By.CSS_SELECTOR, 'li.c-tabs__item')
 
 	_time.sleep(1) #makes sure the event tab pops up on website
 
@@ -798,7 +798,7 @@ def getMeetSimulator(teams, gender, event_name, year = -1, event_ID = -1):
 		pass #TODO
 
 	#select the specified event from the dropdown
-	event_select = Select(driver.find_element_by_id('select_2'))
+	event_select = Select(driver.find_element(By.ID, 'select_2'))
 	event_select.select_by_visible_text(event_name)
 
 	html = driver.page_source
