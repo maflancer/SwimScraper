@@ -16,7 +16,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 teams = pd.read_csv('https://raw.githubusercontent.com/maflancer/SwimScraper/main/src/SwimScraper/collegeSwimmingTeams.csv')
 
-events = {'25 Free' : 125, '25 Back' : 225, '25 Breast' : 325, '25 Fly' : 425, '50 Free' : 150, '75 Free' : 175, '100 Free' : 1100, '125 Free' : 1125, '200 Free' : 1200, '400 Free' : 1400, '500 Free' : 1500, '800 Free' : 1800, '1000 Free' : 11000, '1500 Free' : 11500, '1650 Free' : 11650, '50 Back' : 250, '100 Back': 2100, '200 Back' : 2200, '50 Breast' : 350, '100 Breast' : 3100, '200 Breast' : 3200, '50 Fly' : 450, '100 Fly' : 4100, '200 Fly' : 4200, '100 IM' : 5100, '200 IM' : 5200, '400 IM' : 5400, '200 Free Relay' : 6200, '400 Free Relay' : 6400, '800 Free Relay' : 6800, '200 Medley Relay' : 7200, '400 Medley Relay' : 7400, '1 M Diving' : 'H1', '3 M Diving' : 'H3', '7M Diving' : 'H75', 'Platform Diving' : 'H2', '50 Individual' : 'H50', '100 Individual' : 'H100', '200 Individual' : 'H200'}
+events = {'25 Y Free' : '125Y', '25 Y Back' : '225 Y', '25 Y Breast' : '325Y', '25 Y Fly' : '425Y', '50 Y Free' : '150Y', '75 Y Free' : '175Y', '100 Y Free' : '1100Y', '125 Y Free' : '1125Y', '200 Y Free' : '1200Y', '400 Y Free' : '1400Y', '500 Y Free' : '1500', '800 Y Free' : '1800Y', '1000 Y Free' : '11000Y', '1500 Y Free' : '11500Y', '1650 Y Free' : '11650Y', '50 Y Back' : '250Y', '100 Y Back': '2100Y', '200 Y Back' : '2200Y', '50 Y Breast' : '350Y', '100 Y Breast' : '3100Y', '200 Y Breast' : '3200Y', '50 Y Fly' : '450Y', '100 Y Fly' : '4100Y', '200 Y Fly' : '4200Y', '100 Y IM' : '5100Y', '200 Y IM' : '5200Y', '400 Y IM' : '5400Y', '200 Free Relay' : 6200, '400 Free Relay' : 6400, '800 Free Relay' : 6800, '200 Medley Relay' : 7200, '400 Medley Relay' : 7400, '1 M Diving' : 'H1', '3 M Diving' : 'H3', '7M Diving' : 'H75', 'Platform Diving' : 'H2', '50 Individual' : 'H50', '100 Individual' : 'H100', '200 Individual' : 'H200'}
 
 us_states = {
 	'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA', 'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'District of Columbia': 'DC', 'Florida': 'FL', 'Georgia': 'GA', 'Hawaii': 'HI', 'Idaho': 'ID',
@@ -99,28 +99,25 @@ def convertTime(display_time):
     else:
         return float(displayTime)
 
-#for data from a html table (data), find the indexes where meet name, date, year, and improvement are
-#returns an array [meet_name_index, date_index, imp_index]
+#for the header of an html table including events
+#returns a dictionary [meet_name_index, date_index, time_index]
 def getIndexes(data):
 	meet_name_index = -1
 	date_index = -1
-	imp_index = -1
-	indexes = []
-
+	additional_info_index = -1
+	print(len(data))
 	i = 0
 	for td in data:
-		if td.has_attr('class') and td['class'][0] == 'hidden-xs':
+		if td.text.strip() == 'Meet':
 			meet_name_index = i
-		elif td.has_attr('class') and td['class'][0] == 'u-text-truncate':
+		elif td.text.strip() == 'Date':
 			date_index = i
-		elif td.has_attr('class') and td['class'][0] == 'u-text-end':
-			imp_index = i
+		elif td.text.strip() == '' and td.has_attr('class') and 'c-table-clean__col-fit' in td['class']:
+			additional_info_index = i
 
 		i = i + 1
 
-	indexes.append(meet_name_index)
-	indexes.append(date_index)
-	indexes.append(imp_index)
+	indexes = {'meet_name_index': meet_name_index, 'date_index': date_index, 'additional_info_index': additional_info_index}
 
 	return indexes
 
@@ -382,7 +379,7 @@ def getSwimmerEvents(swimmer_ID):
 	return events
 
 #takes as an input a swimmer's ID # and returns a list of each indivudal time for the specified event
-def getSwimmerTimes(swimmer_ID, event_name, event_ID = -1):
+def getSwimmerTimes(swimmer_ID, event_name, event_ID = ''):
 	#used chromedriver to interact with the swimcloud website and click on different dropdown menus
 
 	#set driver options
@@ -392,7 +389,7 @@ def getSwimmerTimes(swimmer_ID, event_name, event_ID = -1):
 	ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
 
 	time_list = list()
-	if(event_ID == -1):
+	if(event_ID == ''):
 		event_ID = events.get(event_name)
 	if(event_name == ''):
 		event_name = getEventName(event_ID)
@@ -441,47 +438,44 @@ def getSwimmerTimes(swimmer_ID, event_name, event_ID = -1):
 			soup = bs(html, 'html.parser')
 
 			tables = soup.find_all('table', attrs = {'class' : 'c-table-clean'})
-			i = 0
 
-			#three different tables for the three pool types (LCM (long course meters), SCY (short course yards), SCM (long course meters))
-			for table in tables:
-				pool_type = table.find('caption').text.strip()
+			# Two tables on the page. Second table from the EVENT PROGRESSION tab and contains the times.
+			try:
+				header = tables[1].find_all('tr')[0:1]
+				times = tables[1].find_all('tr')[1:]
+			except AttributeError:
+				header = []
+				times = []
 
-				try:
-					times = tables[i].find_all('tr')[1:]
-				except AttributeError:
-					times = []
+			columns = header[0].find_all('th')
+			indexes = getIndexes(columns) #this function finds the correct indexes for the meet name, date, year, and improvement, as they are different for some swimmers
+			
+			for time in times:
+				data = time.find_all('td')
 
-				for time in times:
-					data = time.find_all('td')
+				time = data[0].text.strip()
 
-					indexes = getIndexes(data) #this function finds the correct indexes for the meet name, date, year, and improvement, as they are different for some swimmers
+				if(indexes['meet_name_index'] == -1): #if no meet name was found
+					meet = 'NA'
+				else:
+					meet = data[indexes['meet_name_index']].text.strip()
 
-					time = data[0].text.strip()
+				if(indexes['date_index'] == -1): #if no date was found
+					date = 'NA'
+					year = 'NA'
+				else:
+					date = data[indexes['date_index']].text.strip()
+					year = date.split(',')[-1]
 
-					if(indexes[0] == -1): #if no meet name was found
-						meet = 'NA'
-					else:
-						meet = data[indexes[0]].text.strip()
+				if(indexes['additional_info_index'] == -1): #if no additional info column was found
+					additional_info = []
+				else:
+					td = data[indexes['additional_info_index']]
+					spans = td.find_all('span')
+					additional_info = [span['title'] for span in spans if span.has_attr('title')] # a list of the additional info provided for an event
 
-					if(indexes[1] == -1): #if no date was found
-						date = 'NA'
-						year = 'NA'
-					else:
-						date = data[indexes[1]].text.strip()
-						year = date.split(',')[-1]
+				time_list.append({'swimmer_ID' : swimmer_ID, 'event': event_name, 'event_ID' : event_ID, 'time' : time, 'meet_name' : meet, 'year' : year, 'date' : date, 'additional_info': additional_info})
 
-					if(indexes[2] == -1): #if no imp was found
-						imp = 'NA'
-					else:
-						imp = data[indexes[2]].text.strip()
-
-					if(imp == '–'): #this character gets encoded weird in an excel doc so just set to NA
-						imp = 'NA'
-
-					time_list.append({'swimmer_ID' : swimmer_ID, 'pool_type' : pool_type, 'event': event_name, 'event_ID' : event_ID, 'time' : time, 'meet_name' : meet, 'year' : year, 'date' : date, 'improvement' : imp})
-
-				i += 1
 
 	driver.close()
 	return time_list
