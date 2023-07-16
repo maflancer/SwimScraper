@@ -18,16 +18,18 @@ def test_getPowerIndex():
     assert ss.getPowerIndex(1228318) == 1.00
     # Samy Helmbacher. Has an old Power Index on ranking page, but no longer listed on his profile 
     assert ss.getPowerIndex(433591) == 100.00
+    # Tests to see if a string input as swimmer_ID works
+    assert ss.getPowerIndex('433591 ') == 100.00
     # Another swimmer with same name in swimcloud. Should not match and still return -1.
     assert ss.getPowerIndex(356597) == -1
     # no recruiting ranking
     assert ss.getPowerIndex(3834) == -1
     #invalid swimmer_IDs
-    with pytest.raises(Exception):
-        assert ss.getPowerIndex(0) == -1
-        assert ss.getPowerIndex('string')
+    with pytest.raises(ValueError):
+        ss.getPowerIndex(0) 
+        ss.getPowerIndex()
 
-    #test two people with the same name -
+    #test two people with the same name - these shouldn't change over time. Both have old power indexes on ranking page.
     print(ss.getPowerIndex(295739)) == 26.60
     print(ss.getPowerIndex(501834)) == 33.16 
 

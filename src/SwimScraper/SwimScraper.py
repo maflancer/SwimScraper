@@ -308,7 +308,7 @@ def getPowerIndex(swimmer_ID):
 	url.encoding = 'utf-8'
 	
 	if url.status_code == 404:
-		raise Exception(f"The swimmer {swimmer_ID} was not found")
+		raise ValueError(f"The swimmer {swimmer_ID} was not found")
 
 	soup = bs(url.text, 'html.parser')
 	
