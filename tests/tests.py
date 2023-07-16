@@ -1,13 +1,13 @@
-from mainScraper import *
+from SwimScraper import SwimScraper as ss
 
 # TESTS ---------------------------------------------------------------------------------------------------------------------------
 
 #getTeams tests ------------------------------------
+def test_function():
+    df = ss.getCollegeTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
+    assert len(df) > 0
 
-#df = getCollegeTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
-#print(df)
-
-#ACC_teams = getCollegeTeams(conference_names = ['ACC'])
+#ACC_teams = getCollegeTeams(conference_names = ['ACC'])_
 #print(ACC_teams)
 
 #div1_teams = getCollegeTeams(division_names = ['Division 1'])
