@@ -1,27 +1,35 @@
 from SwimScraper import SwimScraper as ss
+import pytest
 
 # TESTS ---------------------------------------------------------------------------------------------------------------------------
 
-#getTeams tests ------------------------------------
-def test_function():
+# currently just ensures getTeams returns something
+def test_getTeams():
     df = ss.getCollegeTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
     assert len(df) > 0
-
-#ACC_teams = getCollegeTeams(conference_names = ['ACC'])_
-#print(ACC_teams)
-
-#div1_teams = getCollegeTeams(division_names = ['Division 1'])
-#print(div1_teams)
+    ACC_teams = ss.getCollegeTeams(conference_names = ['ACC'])
+    assert ACC_teams
+    div1_teams = ss.getCollegeTeams(division_names = ['Division 1'])
+    assert div1_teams
 
 #getPowerIndex tests ----------------------------------------
-#invalid swimmer_ID
-#print(getPowerIndex(3834))
+def test_getPowerIndex():
+    # This test may break when Will Modglin graduates in 2023.
+    assert ss.getPowerIndex(1228318) == 1.00
+    # Samy Helmbacher. Has an old Power Index on ranking page, but no longer listed on his profile 
+    assert ss.getPowerIndex(433591) == 100.00
+    # Another swimmer with same name in swimcloud. Should not match and still return -1.
+    assert ss.getPowerIndex(356597) == -1
+    # no recruiting ranking
+    assert ss.getPowerIndex(3834) == -1
+    #invalid swimmer_IDs
+    with pytest.raises(Exception):
+        assert ss.getPowerIndex(0) == -1
+        assert ss.getPowerIndex('string')
 
-#print(getPowerIndex(433591))
-
-#test two people with the same name -
-#print(getPowerIndex(295739))
-#print(getPowerIndex(501834))
+    #test two people with the same name -
+    print(ss.getPowerIndex(295739)) == 26.60
+    print(ss.getPowerIndex(501834)) == 33.16 
 
 #getRoster tests -----------------------------------------------
 

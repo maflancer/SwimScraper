@@ -305,40 +305,40 @@ def getPowerIndex(swimmer_ID):
 	swimmer_url = 'https://swimcloud.com/swimmer/' + str(swimmer_ID)
 
 	url = requests.get(swimmer_url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', 'Referer' : 'https://google.com/'})
-
 	url.encoding = 'utf-8'
+	
+	if url.status_code == 404:
+		raise Exception(f"The swimmer {swimmer_ID} was not found")
 
 	soup = bs(url.text, 'html.parser')
+	
 
-	data_array = soup.find_all('a', {'class' : 'c-list-bar__description'}) #this gets an array of 4 data points for the swimmer -> team, power_index, state rank, yearly rank
+	data_array = soup.find_all('li', {'class' : 'c-list-bar__item'}) # returns the container items containing headers for recruiting stats
+	for d in data_array:
+		if d.find(class_='c-list-bar__subheader').get('title') == 'Power index':
+				return float(d.find(class_='c-list-bar__description').text.strip())
 
-	try:
-		return data_array[1].text.strip() #second element in the array is the swimmer's power index
+	swimmer_name = soup.find('h1', {'class' : 'c-toolbar__title'}).text.strip()
 
-	except IndexError: #there will be an indexError if no power index is found on the swimmer's page -> now, check an alternate page that may have the power index
-		try:
-			swimmer_name = soup.find('h1', {'class' : 'c-title'}).text.strip()
+	swimmer_name_url = 'https://swimcloud.com/recruiting/rankings/?name=' + swimmer_name.replace(' ', '+')
 
-			swimmer_name_url = 'https://swimcloud.com/recruiting/rankings/?name=' + swimmer_name.replace(' ', '+')
+	name_url = requests.get(swimmer_name_url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', 'Referer' : 'https://google.com/'})
 
-			name_url = requests.get(swimmer_name_url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36', 'Referer' : 'https://google.com/'})
+	name_url.encoding = 'utf-8'
 
-			name_url.encoding = 'utf-8'
+	name_soup = bs(name_url.text, 'html.parser')
 
-			name_soup = bs(name_url.text, 'html.parser')
+	swimmer_list = name_soup.find('tbody').find_all('tr')
+	
+	for swimmer in swimmer_list:
+		#check if this is the correct swimmer by looking to see if the link matches their id
+		name = swimmer.find(class_='u-text-semi')
+		swimmer_link = name['href'] if name else ''
+		if(swimmer_link == "/swimmer/" + str(swimmer_ID)):
+			#a power index was found for the specified swimmer_ID!
+			return float(name_soup.find('td', {'class' : 'u-text-end'}).text.strip())
 
-			swimmer_list = name_soup.find('tbody').find_all('tr')
-
-			for swimmer in swimmer_list:
-				#check if this is the correct swimmer using swimmer_ID
-				id = swimmer.find_all('td')[1].find('a')['href'].split('/')[-1]
-				if(int(id) == swimmer_ID):
-					#a power index was found for the specified swimmer_ID!
-					return name_soup.find('td', {'class' : 'u-text-end'}).text.strip()
-
-			return -1 #if no swimmer is found with the correct swimmer ID #, return -1
-		except IndexError: #if 0 swimmers show up on the page
-			return -1
+	return -1 #if no swimmer is found with the correct swimmer ID #, return -1
 
 #takes as an input a swimmer's ID and returns a list of all events that they have participated in
 def getSwimmerEvents(swimmer_ID):
