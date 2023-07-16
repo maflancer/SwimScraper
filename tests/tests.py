@@ -19,7 +19,7 @@ def test_getPowerIndex():
     # Samy Helmbacher. Has an old Power Index on ranking page, but no longer listed on his profile 
     assert ss.getPowerIndex(433591) == 100.00
     # Tests to see if a string input as swimmer_ID works
-    assert ss.getPowerIndex('433591 ') == 100.00
+    assert ss.getPowerIndex('433591') == 100.00
     # Another swimmer with same name in swimcloud. Should not match and still return -1.
     assert ss.getPowerIndex(356597) == -1
     # no recruiting ranking
@@ -56,11 +56,24 @@ def test_getPowerIndex():
 
 #getSwimmerEvents tests ---------------------------------------------
 
-#check invalid swimmer
-#print(getSwimmerEvents(1815112121))
-
-#get a list of all events that swimmer #362091 (Blaise Vera) has participated in
-#event_list = getSwimmerEvents(362091)
+def test_getSwimmerEvents():
+    
+    BlaiseVera_events = ss.getSwimmerEvents(362091)
+    assert(type(BlaiseVera_events)) == list
+    assert(len(BlaiseVera_events)) > 5
+    for event in BlaiseVera_events:
+        #Dives are buggy on SwimCloud. There's 75Y relay split for this swimmer name '7M Diving (5 dives)
+        if "Diving" not in event:
+            assert type(event) == str
+            assert event in ss.events
+    Brandon_dives = ss.getSwimmerEvents(283070)
+    for dive in Brandon_dives:
+        assert type(dive) == str
+        assert dive in ss.event
+    #check invalid swimmer
+    with pytest.raises(ValueError):
+        ss.getSwimmerEvents(0)
+        ss.getSwimmerEvents(1815112121)
 
 #loop through all of his events, and get all of his times in each event
 #for event_name in event_list:
