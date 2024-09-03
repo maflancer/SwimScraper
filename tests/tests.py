@@ -1,27 +1,37 @@
-from mainScraper import *
+from SwimScraper import SwimScraper as ss
+import pytest
 
 # TESTS ---------------------------------------------------------------------------------------------------------------------------
 
-#getTeams tests ------------------------------------
-
-#df = getCollegeTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
-#print(df)
-
-#ACC_teams = getCollegeTeams(conference_names = ['ACC'])
-#print(ACC_teams)
-
-#div1_teams = getCollegeTeams(division_names = ['Division 1'])
-#print(div1_teams)
+# currently just ensures getTeams returns something
+def test_getTeams():
+    df = ss.getCollegeTeams(team_names = ['University of Pittsburgh', 'University of Louisville'])
+    assert len(df) > 0
+    ACC_teams = ss.getCollegeTeams(conference_names = ['ACC'])
+    assert ACC_teams
+    div1_teams = ss.getCollegeTeams(division_names = ['Division 1'])
+    assert div1_teams
 
 #getPowerIndex tests ----------------------------------------
-#invalid swimmer_ID
-#print(getPowerIndex(3834))
+def test_getPowerIndex():
+    # This test may break when Will Modglin graduates in 2023.
+    assert ss.getPowerIndex(1228318) == 1.00
+    # Samy Helmbacher. Has an old Power Index on ranking page, but no longer listed on his profile 
+    assert ss.getPowerIndex(433591) == 100.00
+    # Tests to see if a string input as swimmer_ID works
+    assert ss.getPowerIndex('433591') == 100.00
+    # Another swimmer with same name in swimcloud. Should not match and still return -1.
+    assert ss.getPowerIndex(356597) == -1
+    # no recruiting ranking
+    assert ss.getPowerIndex(3834) == -1
+    #invalid swimmer_IDs
+    with pytest.raises(ValueError):
+        ss.getPowerIndex(0) 
+        ss.getPowerIndex()
 
-#print(getPowerIndex(433591))
-
-#test two people with the same name -
-#print(getPowerIndex(295739))
-#print(getPowerIndex(501834))
+    #test two people with the same name - these shouldn't change over time. Both have old power indexes on ranking page.
+    print(ss.getPowerIndex(295739)) == 26.60
+    print(ss.getPowerIndex(501834)) == 33.16 
 
 #getRoster tests -----------------------------------------------
 
@@ -46,11 +56,24 @@ from mainScraper import *
 
 #getSwimmerEvents tests ---------------------------------------------
 
-#check invalid swimmer
-#print(getSwimmerEvents(1815112121))
-
-#get a list of all events that swimmer #362091 (Blaise Vera) has participated in
-#event_list = getSwimmerEvents(362091)
+def test_getSwimmerEvents():
+    
+    BlaiseVera_events = ss.getSwimmerEvents(362091)
+    assert(type(BlaiseVera_events)) == list
+    assert(len(BlaiseVera_events)) > 5
+    for event in BlaiseVera_events:
+        #Dives are buggy on SwimCloud. There's 75Y relay split for this swimmer name '7M Diving (5 dives)
+        if "Diving" not in event:
+            assert type(event) == str
+            assert event in ss.events
+    Brandon_dives = ss.getSwimmerEvents(283070)
+    for dive in Brandon_dives:
+        assert type(dive) == str
+        assert dive in ss.event
+    #check invalid swimmer
+    with pytest.raises(ValueError):
+        ss.getSwimmerEvents(0)
+        ss.getSwimmerEvents(1815112121)
 
 #loop through all of his events, and get all of his times in each event
 #for event_name in event_list:
